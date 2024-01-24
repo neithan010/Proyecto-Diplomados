@@ -1,0 +1,55 @@
+master: nombre rama principalgit
+
+git branch name   : crea branch
+git checkout name : accede branch
+git merge master: master a la rama actual
+
+SIEMPRE USAR 
+git pull origin master: actualiza repo local con info sv, origin sv, master rama
+git push origin master : subir archivo, origin sv, master rama a subir 
+git add archivo/ add . : subir archivo para commit 
+git commit -m mensaje: mensaje se lee en historial versiones
+git status : revisa estado del repositorio
+
+PASOS:
+
+1. git add archivo para hacer commit
+2. git commit -m mensaje  Arreglo codigo
+3. git pull origin master
+4. git push origin master
+
+SIEMPRE PULL ANTES DE PUSH, GENERA CONFLICTO ENTRE VERSIONES, GIT NO SABE QUE BORRAR O MANTENER.
+SIEMPRE HACER MERGE EN SENTIDO CONTRARIO PRIMERO, DE MASTER A RAMA
+
+PULL REQUEST EN GITHUB, ELEGIR RAMA A ACTUALIZAR, RAMA UNIR A MASTER
+
+
+
+
+class Cartas(nombre: String, fuerza: Int, tipo:  String, descripcion: String){
+    val Nombre: String = nombre
+    var Fuerza: Int = fuerza
+    val Tipo: String = tipo
+    val Descripción: String = descripcion
+
+    
+}
+
+
+
+import scala.util.Random
+import src.main.scala.gwent.Cartas.cartas.scala
+
+
+class Jugador(nombre: String, sección_tablero: Bool, gemas: Int, mazo: Int , mano: Int ){
+    val Nombre: String = nombre
+    val Sección_tablero: Bool = sección_tablero 
+    var Gemas: Int = gemas
+    var Mazo: Int = mazo
+    var Mano: Int = mano
+
+    def Jugar_Carta(){
+        var r = Random.nextInt(mano)
+        
+    }
+}
