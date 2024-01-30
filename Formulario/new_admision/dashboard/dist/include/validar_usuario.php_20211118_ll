@@ -1,0 +1,12 @@
+<?php
+session_start();
+
+if($_POST['usuario'].$_POST['password']==$_POST['usuario'].'2021'){
+
+    $_SESSION["usuario"] = $_POST['usuario'];
+    header("Location: ../index.php");
+}else{
+    header("Location: ../login.html?err=login");
+}
+
+?>

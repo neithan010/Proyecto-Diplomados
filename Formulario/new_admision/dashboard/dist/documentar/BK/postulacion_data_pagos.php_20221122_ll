@@ -1,0 +1,122 @@
+<?php
+include('../../cn/cn_PDO.php');
+
+$id_postulacion		= $_REQUEST['id_postulacion'];
+$id_financiamiento	= $_REQUEST['id_financiamiento'];
+$moneda_pago		= $_REQUEST['moneda_pago'];
+
+$monto_tc1_link_pago='';
+if(isset($_REQUEST['monto_tc1_link_pago'])){
+    $monto_tc1_link_pago = str_replace(".","",$_REQUEST['monto_tc1_link_pago']);
+}
+$monto_tc2_link_pago='';
+if(isset($_REQUEST['monto_tc2_link_pago'])){
+    $monto_tc2_link_pago = str_replace(".","",$_REQUEST['monto_tc2_link_pago']);
+}
+
+$monto_usd_link_pago=isset($_REQUEST['monto_usd_link_pago'])?$_REQUEST['monto_usd_link_pago']:'';
+
+
+if($monto_usd_link_pago<>''){
+
+	$pos_punto=strpos($monto_usd_link_pago,".");
+	$pos_coma=strpos($monto_usd_link_pago,",");
+
+//echo 'pos_punto: '.$pos_punto.' pos_coma: '.$pos_coma;
+
+	if(substr_count($monto_usd_link_pago,",")==1){
+		$monto_usd_link_pago = str_replace(".","",$monto_usd_link_pago);
+	}
+	if(substr_count($monto_usd_link_pago,",")==0){
+		$arr_cifra=explode($monto_usd_link_pago,".");
+		if(strlen(end($arr_cifra))<3){
+			echo 'Error formato monto ingresado';
+			exit();
+		}
+		
+	}
+	if(substr_count($monto_usd_link_pago,",")>1 || $pos_punto>$pos_coma){
+			echo '<div class="alert alert-danger" role="alert">Error formato monto ingresado</div>';
+			exit();
+	}   
+    $monto_usd_link_pago = str_replace(",",".",$monto_usd_link_pago);
+}
+
+
+$sql_data = "INSERT INTO intranet.postulacion_data_pagos
+		(id_postulacion, id_financiamiento, moneda_pago, monto_tc1_link_pago, monto_tc2_link_pago, monto_usd_link_pago)
+	VALUES
+		(".$id_postulacion.", '".$id_financiamiento."', '".$moneda_pago."', '".$monto_tc1_link_pago."', '".$monto_tc2_link_pago."', '".$monto_usd_link_pago."')
+	ON DUPLICATE KEY UPDATE
+    	id_financiamiento='".$id_financiamiento."', 
+    	moneda_pago='".$moneda_pago."', 
+    	monto_tc1_link_pago='".$monto_tc1_link_pago."',
+    	monto_tc2_link_pago='".$monto_tc2_link_pago."', 
+    	monto_usd_link_pago='".$monto_usd_link_pago."'";
+
+$sql_data = str_replace("''","NULL", $sql_data);
+$sql_data = str_replace("'undefined'","NULL", $sql_data);
+
+
+//echo '<pre>'.$sql_data.'</pre>';
+
+$stmt_data = $con->prepare($sql_data);
+$stmt_data ->setFetchMode(PDO::FETCH_ASSOC);
+$stmt_data ->execute();
+$num_stmt_data =$stmt_data ->rowCount();	
+
+
+if($moneda_pago=='USD'){
+
+	$sql_postulacion_desceunto="INSERT INTO intranet.postulacion_descuento
+	(id_postulacion, cod_diploma, diploma, moneda, valor, desc_promocion, desc_aplicable, DE_aplicable, letra_aplicable, desc_excepcional, DE_excepcional, letra_excepcional, desc_excep2, DE_excep2, letra_excep2, total_descuento, orden_compra, fecha, usuario, clave)
+		SELECT 
+			p.ID_POSTULACION,
+			p.cod_diploma,
+			p.POSTULACION,
+			'$moneda_pago' AS moneda, 
+			'$monto_usd_link_pago' AS monto, 
+			0, 
+			0, 
+			0,
+			0, 
+			0, 
+			0, 
+			0, 
+			0, 
+			0, 
+			0, 
+			0, 
+			0, 
+			NOW(), 
+			p.rut,
+			CONCAT('pay',p.ID_POSTULACION) AS clave
+		FROM unegocios_nuevo.postulacion p 
+		WHERE p.ID_POSTULACION=$id_postulacion
+	ON DUPLICATE KEY UPDATE
+		moneda='USD', 
+		valor='$monto_usd_link_pago', 
+		desc_promocion=0, 
+		desc_aplicable=0, 
+		DE_aplicable=0, 
+		letra_aplicable=0, 
+		desc_excepcional=0, 
+		DE_excepcional=0, 
+		letra_excepcional=0, 
+		desc_excep2=0, 
+		DE_excep2=0, 
+		letra_excep2=0, 
+		total_descuento=0, 
+		orden_compra=0,
+		clave=CONCAT('pay',p.ID_POSTULACION) ,
+		fecha =NOW() 
+	";
+	$stmt_pd = $con->prepare($sql_postulacion_desceunto);
+	$stmt_pd ->setFetchMode(PDO::FETCH_ASSOC);
+	$stmt_pd ->execute();
+	$stmt_pd =$stmt_pd ->rowCount();	
+
+}
+
+//echo $sql_postulacion_desceunto;
+?>
