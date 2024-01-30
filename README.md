@@ -53,33 +53,40 @@ Los atributos serán enumerados y ordenados (a criterio propio), la estructura e
     B-Learning, Charla, CharlaFEN, Consultoria, Curso, Curso Conducente,
     Curso sin nota, Diploma, Fen, Online, Programa, Taller, Workshop.
 
-    Ahora se...
+    Con los cambios hechos, no se necesita hacer cambios en este atributo, ya que, no se pueden utilizar estos tipos(a partir de 2024).
 
-12. Nombre Coordinador postulación* (Diplomados.nom_coordnador_admisión)
+
+12. ID coordinador postulación (Diplomados.usr_coordinador_ad)
+    Se cambia el nombre del atributo por usr_coordinador_ej
+
+13. Nombre Coordinador postulación* (Diplomados.nom_coordinador_admisión)
     Se llama en realidad Ejecutivo de Admisión.
+    Se cambia el nombre del atributo por nom_ejecutivo_admisión
 
-13. Telefono Coordinador postulación (Diplomados.telefono_coordinador_admision)
+14. Telefono Coordinador postulación (Diplomados.telefono_coordinador_admision)
+    Se cambia el nombre del atributo por telefono_ejecutivo_admisión
 
-14. Mail envio postulacion (Diplomados.mail_envio)
+15. Mail envio postulacion (Diplomados.mail_envio)
 
-15. Deshabilitado (Diplomados.habilitado)
+16. Deshabilitado (Diplomados.habilitado)
     Indica si esta habilitado o no el diplomado, esta en formato binario.
 
-16. Programa Web Habilitado (Diplomados.web_habilitado) 
+17. Programa Web Habilitado (Diplomados.web_habilitado) 
     Indica si esta habilitado o no un diplomado Online.
 
-17. ID Director Academico (Diplomados.ID_DA)
+18. ID Director Academico (Diplomados.id_DA)
 
-18. Director Academico* (Diplomados.Director)
-
-19. ID coordinador curso (Diplomados.usr_coordinador_ad)
+19. Director Academico* (Diplomados.Director) 
 
 20. Nombre Coordinador curso* (Diplomados.nombre_coordinador_curso)
     Se llama en realidad Coordinador Docente.
+    Se cambia el nombre del atributo a nombre_coordinador_docente.
 
 21. Telefono Coordinador curso (Diplomados.telefono_coordinador_curso)
+    Se cambia el nombre del atributo a telefono_coordinador_docente.
 
 22. Email Coordinador curso (Diplomados.email_coordinador_curso)
+    Se cambia el nombre del atributo a email_coordinador_docente.
 
 23. token
 
@@ -124,7 +131,7 @@ Los atributos serán enumerados y ordenados (a criterio propio), la estructura e
 38. DIAS
 
 39. Periodicidad (Diplomados.periodicidad)
-    Dice si hay 2 bloques de clase contiguos
+    Dice si hay 2 bloques de clase contiguos, ya no se usa.
 
 40. DURACIÓN HORAS
     -
@@ -185,10 +192,9 @@ Los atributos serán enumerados y ordenados (a criterio propio), la estructura e
 58. Coordinador Docente Corporativo* (Diplomados.usr_consultor_ corp)
 
 59. tipo de Programa* (Diplomados.tipo_programa) (actualizar)
-    Es el tipo de programa, que puede ser:
-    B-Learning, Certificación, Charla, Consultoria, Curso, Curso Conducente, Curso Virtual,
-    Diploma, FEN, Programa, Simposio, Sumit, Taller, Workshop, NULL.
-
+    Es el tipo de programa, las opciones que se utilizaban antes son :B-Learning, Certificación, Charla, Consultoria, Curso, Curso Conducente, Curso Virtual, Diploma, FEN, 
+    Programa, Simposio, Sumit, Taller, Workshop, NULL.
+    Ahora se utilizarán: Curso, Curso Conducente, Diploma, Programa, Taller, Certificación, Charla.
 
 60. Modalidad del Programa* (Diplomados.modalidad_progama) (actualizar)
     Es el modo en el que se impartiran las clases o catedras, los tipos que se utilizaban antes de 2024 son: B-Learning, Curso, Mixto, Online, Presencial, Taller, Virtual, Vitual, NULL.
@@ -198,7 +204,7 @@ Los atributos serán enumerados y ordenados (a criterio propio), la estructura e
 61. ID_ORDEN
     -
 
-62. Area de Negocios (Diplomados.area_conocimiento)
+62. Area de Negocios (Diplomados.area_negocios)
     Es el area de desempeño del Diplomado, los tipos que pueden ser son:
     Finanzas, Marketing y Venta, Dirección de Personas y Equipos, Management, _, 
     Dirección de Instituciones de Salud, Consultoría, Corporativa, Sostenibilidad, Taller,
@@ -237,3 +243,7 @@ Hay varias tablas que actualizar:
 6. Horario: Se crea tabla jornada_diplomados. (No Documentada)
 7. Tipo usuarios: Actualizada. (Documentada)
 8. Tipo Diplomados: Se agrega Diploma Postítulo.
+
+
+# Especificaciones
+Esta sección es para detallar las relaciones entre los diferentes atributos.
