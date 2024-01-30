@@ -19,13 +19,13 @@ Los atributos serán enumerados y ordenados (a criterio propio), la estructura e
 
 
 1. Código interno(Diplomados.Cod_interno)
-    Codigo que representa un diploma Unico en la tabla
+    Codigo que representa un diploma Unico en la tabla, normalmente se representa con las siglas del nombre abreviado del diplomado.
 
 2. CECOS(Diplomados.ccos)
 
 3. Código Diplomado(Diplomados.cod_diploma)
     Código único que identifica un Diploma, se define de la siguiente manera:
-    Código abreviado.Año(2011 = 11).Semestre.X
+    Código abreviado.Año(2011 = 11).Semestre.Version
 
 4. Versión Diplomado(Diplomados.version)
     Se usa cuando hay más de un mismo Diplomado cursandose en el mismo semestre.
@@ -36,8 +36,8 @@ Los atributos serán enumerados y ordenados (a criterio propio), la estructura e
     Código Diplomado pero abreviado solo a las siglas del Nombre del Diplomado.
 
 7. Jornada Diplomado* (Diplomados.jornada)(actualizar)
-    Se refiere a la jornada del Diplomado, la cual puede ser una de las siguientes opciones: 
-    B, D, e, M, O, T, V, W
+    Se refiere a la jornada del Diplomado, la cual antes de 2024 se usaban las siguientes siglas: B, D, e, M, O, T, V, W.
+    Lo anterior no estaba anexado a una tabla jornada, por lo cual se creo la tabla jornada_diplomados, con las siguientes opciones: AM, PM, WK, Tu decides (TD).
 
 8. Nombre Diplomado(Diplomados.DIPLOMADOS)
     Nombre completo del diplomado que tiene el siguiente formato: TIPO Diplomado + NOMBRE ABREVIADO Diplomado.
@@ -49,9 +49,11 @@ Los atributos serán enumerados y ordenados (a criterio propio), la estructura e
     Nombre que aparece en la pagina web de U-negocios(puede no ser el mismo que los anteriores).
 
 11. tipo* (Diplomados.tipo) (actualizar)
-    Es el tipo de programa que deberia ser(Atributo no optimizado). Los posibles tipos son:
+    Es el tipo de programa que deberia ser. Las opciones que se usaban anteriormente son las siguientes:
     B-Learning, Charla, CharlaFEN, Consultoria, Curso, Curso Conducente,
-    Curso sin nota, Diploma, Fen, Online, Programa, Taller, Workshop
+    Curso sin nota, Diploma, Fen, Online, Programa, Taller, Workshop.
+
+    Ahora se...
 
 12. Nombre Coordinador postulación* (Diplomados.nom_coordnador_admisión)
     Se llama en realidad Ejecutivo de Admisión.
@@ -70,9 +72,7 @@ Los atributos serán enumerados y ordenados (a criterio propio), la estructura e
 
 18. Director Academico* (Diplomados.Director)
 
-    MARCA: No se usa, y no se usará.
-
-19. ID coordinador curso (Diplomados.usr_coordinador_id)
+19. ID coordinador curso (Diplomados.usr_coordinador_ad)
 
 20. Nombre Coordinador curso* (Diplomados.nombre_coordinador_curso)
     Se llama en realidad Coordinador Docente.
@@ -86,9 +86,11 @@ Los atributos serán enumerados y ordenados (a criterio propio), la estructura e
 24. Costo Diplomado (Diplomados.valor_diplomado)
 
 25. Tipo de Moneda  (Diplomados.moneda)
+    Se creo una tabla pequeña con los tipos de monedas, ya que, anteriormente no se tenia, los tipos de monedas que existe en la tabla tipo_monedas son: CLP, UF , US.
 
 26. Periodo Diplomado* (Diplomados.periodo)
     El periodo especifica el año y el semestre en el cual se dictó o dictara el Diplomado, su formato es: 'Año+S+1/2'.
+    Además, el periodo esta en una tabla llamada periodos.
 
 27. Fecha Inicio Diplomado* (Diplomados.fecha_inicio)
     Es la fecha(tentativa) a la cual el Diplomado puede iniciar sus actividades/catedras/etc.
@@ -116,13 +118,10 @@ Los atributos serán enumerados y ordenados (a criterio propio), la estructura e
     Número de estudiantes que deben estudiar.
 
 36. Metas de ingresos (Diplomados.metas)
-    
 
 37. Valor Metas de ingresos (Diplomados.valor_meta)
 
-
 38. DIAS
-
 
 39. Periodicidad (Diplomados.periodicidad)
     Dice si hay 2 bloques de clase contiguos
@@ -146,13 +145,14 @@ Los atributos serán enumerados y ordenados (a criterio propio), la estructura e
 
 44. Link pdf
 
-
 45. Codigo de Sala (Diplomados.cod_sala)
+    Codigo de la reserva de la sala, se usa luego de la creación del diplomado y de su respectivo horario.
 
-46. Secretaria (Diplomados.secretaria) (Encargado Asistencia)
-
+46. Secretaria (Diplomados.secretaria)
+    Persona que se encarga de tomar la asistencia en un diplomado, existe una tabla secretaria para referenciarse.
 
 47. Sala Coffee Break (Diplomados.sala_cafe)
+    Codigo de la sala en la cual se hará el coffee break, nuevamente se usar este campo cuando se tiene el horario ya establecido.
 
 48. Detalles/Hora Coffee Break (Diplomados.in_coffee)
 
@@ -182,8 +182,7 @@ Los atributos serán enumerados y ordenados (a criterio propio), la estructura e
 
 57. Coordinador Comercial* (Diplomados.usr_coordinador_comercial)
 
-58. Coordinador Docente Corporativo* (Diplomados.usr_coordinador_ corp)
-    Persona de la Empresa que esta encargada
+58. Coordinador Docente Corporativo* (Diplomados.usr_consultor_ corp)
 
 59. tipo de Programa* (Diplomados.tipo_programa) (actualizar)
     Es el tipo de programa, que puede ser:
@@ -192,8 +191,9 @@ Los atributos serán enumerados y ordenados (a criterio propio), la estructura e
 
 
 60. Modalidad del Programa* (Diplomados.modalidad_progama) (actualizar)
-    Es el modo en el que se impartiran las clases o catedras, los tipos que puede ser son:
-    B-Learning, Curso, Mixto, Online, Presencial, Taller, Virtual, Vitual, NULL.
+    Es el modo en el que se impartiran las clases o catedras, los tipos que se utilizaban antes de 2024 son: B-Learning, Curso, Mixto, Online, Presencial, Taller, Virtual, Vitual, NULL.
+    Ahora se utilizarán los siguientes: Presencial, B-Learnnig, Virtual, Mixto e Hibrido.
+    Para ello se creó la tabla modalidad_diplomados con sus respectivas opciones, cualquier duda, la misma tabla tiene los detalles/descripciones de cada modalidad.
 
 61. ID_ORDEN
     -
@@ -217,6 +217,23 @@ Los atributos serán enumerados y ordenados (a criterio propio), la estructura e
 66. Reglamento* (Diplomados.reglamento)
     Se indica en binario, si se aplica el reglamento para el diplomado.
 
+67. nivel (Diplomados.nivel)
+    Se refiere al nivel del diplomado, puede ser nivel basico, intermedio, experto o avanzado.
+
+    MARCA: No se usa, y no se usará.
+
 # Complicaciones
 Como se puede ver hay muchas columnas redundantes y poco intuitivas de manejar, por lo cual se creará una nueva tabla "Diplomados_niveles"
-Pero antes de ello
+Pero antes de ello se deben revisar, crear, rellenar las tablas competentes a cada elemento de los Diplomados.
+
+# Tablas 
+Hay varias tablas que actualizar:
+
+1. intranet.tipo_usuarios: Se actualizó la tabla agregando filas y editando nombres de algunos tipos de usuarios. (No Documentada)
+2. area_conocimiento: Se actualizó la tabla agregando filas. (No Documentada)
+3. productos: 
+4. nivel: Se crea tabla nivel, que enseña el nivel de un diplomado.(Documentada)
+5. modalidad: Se crea tabla modalidad_diplomados, que enseña la modalidad de un diplomado. (Documentada)
+6. Horario: Se crea tabla jornada_diplomados. (No Documentada)
+7. Tipo usuarios: Actualizada. (Documentada)
+8. Tipo Diplomados: Se agrega Diploma Postítulo.
