@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2024-01-29T20:33:35.723Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.0.2 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="iBQDOwwzStZ9_GnYepvd" version="23.0.2" type="device">
+<mxfile host="Electron" modified="2024-01-31T20:02:55.781Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.0.2 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="MYHO2MHu2NziFIgKSml3" version="23.0.2" type="device">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="3801" dy="2433" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3498" dy="2433" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -201,7 +201,7 @@
         <mxCell id="Y3jKgYXB_ApYThglsX_Y-73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="ab9UltgPTbyfIHj8jIaH-27" target="ab9UltgPTbyfIHj8jIaH-96" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ab9UltgPTbyfIHj8jIaH-27" value="Area Negocios Diplomado* ok" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16.7;align=center;spacing=9;strokeOpacity=0;fillOpacity=100;rounded=1;absoluteArcSize=1;arcSize=7.5;fillColor=#d7e9ff;strokeWidth=1.5;lucidId=1.17IZkgmfNq;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="ab9UltgPTbyfIHj8jIaH-27" value="Area Negocios Diplomado* ok" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16.7;align=center;spacing=9;strokeOpacity=0;fillOpacity=100;rounded=1;absoluteArcSize=1;arcSize=7.5;fillColor=#d7e9ff;strokeWidth=1.5;lucidId=1.17IZkgmfNq;gradientColor=#FFFFFF;shadow=0;glass=0;perimeterSpacing=0;gradientDirection=radial;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-1560" y="-456" width="120" height="90" as="geometry" />
         </mxCell>
         <mxCell id="ab9UltgPTbyfIHj8jIaH-32" value="Botón para subir/cargar Diplomado ok" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16.7;align=center;spacing=9;strokeOpacity=0;fillOpacity=100;rounded=1;absoluteArcSize=1;arcSize=7.5;fillColor=#d7e9ff;strokeWidth=1.5;lucidId=1.17IZkgmfNq;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
@@ -435,7 +435,7 @@
         <mxCell id="Y3jKgYXB_ApYThglsX_Y-98" value="Coordinador comercial*&lt;br&gt;&amp;nbsp;ok" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16.7;align=center;spacing=9;strokeOpacity=0;fillOpacity=100;rounded=1;absoluteArcSize=1;arcSize=7.5;fillColor=#d7e9ff;strokeWidth=1.5;lucidId=1.17IZkgmfNq;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-1000" y="-600" width="120" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="Y3jKgYXB_ApYThglsX_Y-99" value="Consultor Corporativo*&lt;br&gt;&amp;nbsp;ok" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16.7;align=center;spacing=9;strokeOpacity=0;fillOpacity=100;rounded=1;absoluteArcSize=1;arcSize=7.5;fillColor=#d7e9ff;strokeWidth=1.5;lucidId=1.17IZkgmfNq;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="Y3jKgYXB_ApYThglsX_Y-99" value="Consultor Corporativo*&lt;br&gt;&amp;nbsp;ok&lt;br&gt;IGNORAR" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16.7;align=center;spacing=9;strokeOpacity=0;fillOpacity=100;rounded=1;absoluteArcSize=1;arcSize=7.5;fillColor=#d7e9ff;strokeWidth=1.5;lucidId=1.17IZkgmfNq;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="-923" y="-480" width="120" height="90" as="geometry" />
         </mxCell>
         <mxCell id="Y3jKgYXB_ApYThglsX_Y-100" value="Reglamento&amp;nbsp;&lt;br&gt;ok" style="html=1;overflow=block;blockSpacing=1;whiteSpace=wrap;fontSize=16.7;align=center;spacing=9;strokeOpacity=0;fillOpacity=100;rounded=1;absoluteArcSize=1;arcSize=7.5;fillColor=#d7e9ff;strokeWidth=1.5;lucidId=1.17IZkgmfNq;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
