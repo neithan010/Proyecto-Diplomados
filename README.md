@@ -246,4 +246,15 @@ Hay varias tablas que actualizar:
 
 
 # Especificaciones
-Esta sección es para detallar las relaciones entre los diferentes atributos.
+Como el objetivo es crear un formulario hay diferentes archivos dentro del repositorio, por lo cual hay varios archivos importantes que observar para entender el proceso del proyecto, dichos archivos son:
+
+1. Diagrama Plantilla Diplomados: Se abre con draw.io(buscar en navegador) y enseña un esquema básico de quien trabaja los campos necesarios para la creación de un programa.
+
+2. Esquema Formulario Programas: Se abre con draw.io y enseña un esquema de como crear y formar la plantilla en base a diferentes documentos con sus respectivos elementos(botones, campos, etc).
+
+3. intranet.sql: Consulta que genera la base de datos de intranet, que es diferente ya que se agregaron las tablas necesarias para poder hacer bien las consultas y tener todos los datos estructurados y en regla.
+
+4. Formulario: Carpeta que contiene una carpeta llamada "form", dicha carpeta  contiene el template de la pagina web hecha para intranet, es en la cual se trabajará para crear el respectivo Formulario.
+
+# Extras
+Como practicante no tengo solo una tarea, por lo cual hay más cosas que a veces hay que hacer, en el repositorio hay una carpeta llamada Otros, que esta organizada para ver diferentes consultas o similares.
