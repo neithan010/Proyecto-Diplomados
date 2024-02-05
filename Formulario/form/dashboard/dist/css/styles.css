@@ -10260,3 +10260,8 @@ body {
 .sb-sidenav-light .sb-sidenav-footer {
   background-color: #e9ecef;
 }
+.text-create-program .text-edit-program {
+  margin: 50px;
+  background-color: #005cbf;
+  padding: 0.75rem;
+}

@@ -9,7 +9,7 @@
    //$password = '';
 
 
-   $hostname = 'localhost';
+   $hostname = '127.0.0.1';
    $database = 'intranet';
    $username = 'root';
    $password = '';

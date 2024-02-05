@@ -11,7 +11,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
                                 Postulaciones
                             </a>
-                            <a class="nav-link" href="Diplomados.php">
+                            <a class="nav-link" href="diplomados.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
                                 Formulario Diplomados
                             </a>

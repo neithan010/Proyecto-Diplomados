@@ -256,5 +256,15 @@ Como el objetivo es crear un formulario hay diferentes archivos dentro del repos
 
 4. Formulario: Carpeta que contiene una carpeta llamada "form", dicha carpeta  contiene el template de la pagina web hecha para intranet, es en la cual se trabajará para crear el respectivo Formulario.
 
+## Query's
+Se realizaron varias query's para poder ingresar la información en los campos rellenables, dependiendo de si se
+va a crear o editar.
+
+1. Crear Programa de 0: Query que obtiene id, programa, tipo, area_conocimiento, modaliadad, realizacion_en, periodo, nivel, fecha_inicio, jornada.
+
+2. Crear Programa en base a otro: Query que busca un programa según su id, obteniendo los campos de crear un programa de 0, además, si es que algun dato tiene info que no es parte de las opciones, va a aparecer como un campo vacío.
+
+3. Editar Programa: Query que busca un programa según su id, obtiene todos los campos relevantes que se deban editar.
+
 # Extras
 Como practicante no tengo solo una tarea, por lo cual hay más cosas que a veces hay que hacer, en el repositorio hay una carpeta llamada Otros, que esta organizada para ver diferentes consultas o similares.
