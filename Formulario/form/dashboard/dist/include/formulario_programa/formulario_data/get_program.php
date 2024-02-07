@@ -2,9 +2,6 @@
 
 session_start();
 
-include('include/header.php');
-include('../cn/cn_PDO.php');
-
 $nombre_programa = '';
 $tipo_programa = $REQUEST['tipo_programa'];
 $area = $REQUEST['area_conocimiento'];

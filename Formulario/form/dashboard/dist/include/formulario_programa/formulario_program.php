@@ -1,24 +1,17 @@
 <?php
 
-session_start();
-
-if(buscar == 1){
-    formulario-create-main-body
-}
+$buscar = $_POST['buscar'];
 ?>
-<form action="tu_archivo.php" method="<?php echo ($condicion) ? 'post' : 'get'; ?>">
-    <!-- Aquí van los campos del formulario -->
-</form>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <div class = "formulario-create-main">
     <legend> Crear Programa </legend>
-    <form id = "formulario-create-main-body" action = "get_or_post_data.php" method = "<?php echo ($buscar) ? 'get' : 'post'; ?>">
+    <form id = "formulario-create-main-body" method = "<?php echo ($buscar) ? 'get' : 'post'; ?>">
         <p>
             <p>
                 <label>
                     Nombre Programa:
-                    <input type = "text" maxlength = "100" required/>
+                    <input name = "nombre_programa" type = "text" maxlength = "100" required/>
                 </label>
             </p>
             <p>
@@ -40,7 +33,7 @@ if(buscar == 1){
             <p>
                 <label>
                     Area
-                    <select name= "area" required>
+                    <select name = "area" required>
                         <option value= "innovación">
                             Innovación
                         </option>
@@ -161,7 +154,7 @@ if(buscar == 1){
             <p>
                 <label>
                     ¿Donde se realizará?
-                    <select name = "realización-en" required>
+                    <select name = "realización_en" required>
                         <option value = "fen">
                             FEN
                         </option>
@@ -184,16 +177,36 @@ if(buscar == 1){
         <p>
             <label>
                 Fecha de Inicio
-                <input type = "date" name = "fecha-de-inicio" required>
+                <input type = "date" name = "fecha_de_inicio" required>
             </label>
-        </p>
-        <p> 
-            <p>
-                <button type = "submit"> Guardar </button>
-            </p>
-            <p>
-                <button type = "reset"> Limpiar Formulario </button>
-            </p>
         </p>
     </form>
 </div>
+
+<script>
+    var tipo_producto = document.getElementById('tipo_producto');
+    var area = document.getElementById('area');
+    var tipo_programa = document.getElementById('tipo_programa');
+    var modalidad = document.getElementById('modalidad');
+    var periodo = document.getElementById('periodo');
+    var horario = document.getElementById('horario');
+    var nivel = document.getElementById('nivel');
+    var realización_en = document.getElementById('realización_en');
+    var fecha_de_inicio = d = document.getElementById('fecha_de_inicio');
+
+    if(var buscar = <?php echo $buscar; ?>; == 'true'){
+        tipo_producto.removeAttribute('required');
+        area.removeAttribute('required');
+        tipo_programa.removeAttribute('required');
+        modalidad.removeAttribute('required');
+        periodo.removeAttribute('required');
+        horario.removeAttribute('required');
+        nivel.removeAttribute('required');
+        realización_en.removeAttribute('required');
+        fecha_de_inicio.removeAttribute('required');
+        include('formulario_buttons/buscar_button.php');
+    }
+    else{
+        include('formulario_buttons/create_buttons.php');
+    }
+</script>
