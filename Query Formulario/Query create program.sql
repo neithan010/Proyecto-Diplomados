@@ -1,7 +1,6 @@
 #Query para insertar un nuevo programa
 SELECT 
 		#Atributos para crear formulario
-		 d.ID_DIPLOMA,
 		 d.nom_diploma AS Nombre, 
 		 d.tipo_programa AS Producto,
 		 d.area_conocimiento AS Area,
@@ -13,7 +12,7 @@ SELECT
 		 d.realizacion_en AS Realización,
 		 d.fecha_inicio,
 		 
-		 #Atributos a completar cuando se crea formulario.
+		 #Atributos a completar cuando se crea programa.
 		 d.codcatedraab AS Siglas_Nombre,
 		 #cod_diploma = Siglas Nombre.Siglas Años.1 o 2(semestre).Modalidad+versión(1 o 2).
 		 d.cod_diploma,

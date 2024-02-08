@@ -8,12 +8,14 @@ include('include/header.php');
 </div>
 
 <div class = "options-create/edit_program">
-    <a class="panel_panel-default_panel-icon_panel-secondary" href="create_program.php">
         <div class="panel-body">
-            <h3>Crear Programa</h3>
+            <h3>
+                <a class="panel_panel-default_panel-icon_panel-secondary" href="create_program.php">
+                Crear Programa
+                </a>
+            </h3>
             <p class="text-create-program">Puedes crear un programa desde cero o crearlo en base a uno ya existente</p>
         </div>
-    </a>
 
     <a class="panel_panel-default_panel-icon_panel-secondary" href="edit_program.php">
         <div class="panel-body">

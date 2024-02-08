@@ -6,13 +6,14 @@ $buscar = $_POST['buscar'];
 
 <div class = "formulario-create-main">
     <legend> Crear Programa </legend>
-    <form id = "formulario-create-main-body" method = "<?php echo ($buscar) ? 'get' : 'post'; ?>">
+    <form id = "formulario-create-main-body" method = 'post'>
         <p>
             <p>
                 <label>
                     Nombre Programa:
                     <input name = "nombre_programa" type = "text" maxlength = "100" required/>
                 </label>
+
             </p>
             <p>
                 <label>
@@ -96,17 +97,17 @@ $buscar = $_POST['buscar'];
                 <label>
                     Periodo
                     <select name= "periodo" required>
-                        <option value= "2023S1">
-                            Primer Semestre 2023
-                        </option>
-                        <option value= "2023S2">
-                            Segundo Semestre 2023
-                        </option>
                         <option value= "2024S1">
                             Primer Semestre 2024
                         </option>
                         <option value= "2024S2">
                             Segundo Semestre 2024
+                        </option>
+                        <option value= "2025S1">
+                            Primer Semestre 2025
+                        </option>
+                        <option value= "2025S2">
+                            Segundo Semestre 2025
                         </option>
                     </select> 
                 </label>
@@ -165,7 +166,7 @@ $buscar = $_POST['buscar'];
                             Oriente
                         </option>
                         <option value = "oriente-fen">
-                            OrienteFEN
+                            Oriente FEN
                         </option>
                         <option value = "internacional">
                             INTERNACIONAL 
