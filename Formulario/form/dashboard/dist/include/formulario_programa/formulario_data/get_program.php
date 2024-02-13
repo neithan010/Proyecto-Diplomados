@@ -1,12 +1,23 @@
 <?php
 
-session_start();
-
 #obtener todos los campos rellenados en la busqueda
-$list_campos_no_vacios = $_POST['list_campos_no_vacios'];
-$list_nombres_no_vacios = $_POST['list_nombres_no_vacios'];
-$list_nombres = ['nombre_programa','tipo_producto','area','modalidad','periodo','horario','nivel','realización_en','fecha_de_inicio'];
+$list_campos_data = $_POST['list_campos_data'];
+$list_nombres = ['nombre_programa','tipo_producto','area','modalidad','periodo','horario','nivel','realización_en','fecha_de_inicio','version'];
 
+#Discriminamos para saber que valores fueron entregados en el formulario
+?>
+<script>
+    var list_campos_data = <?php echo $list_campos_data;?>;
+    var list_nombres = <?php echo $list_nombres;?>;
+    var L = list_campos_data.length;
+    if(L < 10){
+        list_campos_data.
+    }
+    for (var i = 0; i < L; i++){
+        
+    }
+</script>
+<?php
 'SELECT *
 FROM intranet.diplomados d
 WHERE'
@@ -44,3 +55,5 @@ function get_program($list_campos_no_vacios, $list_nombres_no_vacios){
     }
 }
 include('display_program_results.php')
+
+?>

@@ -128,7 +128,7 @@ $getted_program = $_POST['getted_program'];
                         <option value = "wk">
                             WK
                         </option>
-                        <option value = "tu-decides">
+                        <option value = "td">
                             TD
                         </option>
                     </select>
@@ -182,6 +182,7 @@ $getted_program = $_POST['getted_program'];
                 <input type = "date" name = "fecha_de_inicio" required>
             </label>
         </p>
+        <input type="hidden" name="buscar" value="<?php echo $buscar; ?>">
     </form>
 </div>
 
@@ -196,8 +197,9 @@ $getted_program = $_POST['getted_program'];
     var realización_en = document.getElementById('realización_en');
     var fecha_de_inicio = d = document.getElementById('fecha_de_inicio');
 
-    
-    if(var buscar = <?php echo $buscar; ?>; == 'true'){
+    var getted_program = <?php echo $getted_program; ?>;
+    var buscar = <?php echo $buscar;?>;
+    if(buscar){
         tipo_producto.removeAttribute('required');
         area.removeAttribute('required');
         tipo_programa.removeAttribute('required');
@@ -209,27 +211,11 @@ $getted_program = $_POST['getted_program'];
         fecha_de_inicio.removeAttribute('required');
 
         include('formulario_buttons/buscar_button.php');
-
-        document.getElementById('formulario-create-main-body').addEventListener('submit', function(event) {
-            /**
-             * Obtenemos el valor de los campos
-             */
-            var campo_tipo_producto = tipo_producto.value;
-            var campo_area = area.value;
-            var campo_tipo_programa = tipo_programa.value;
-            var campo_modalidad = modalidad.value;
-            var campo_periodo = periodo.value;
-            var campo_horario = horario.value;
-            var campo_nivel = nivel.value;
-            var campo_realizacion_en = realización_en.value;
-            var campo_fecha_de_inicio = fecha_de_inicio.value;
-        });
     }
 
     else{
-        include('formulario_buttons/create_buttons.php');
-
-        if($getted_program){
+        if(getted_program){
+            //Agregar versión obtenida de get_program
             version_option = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9'];
             var formulario = document.getElementById("formulario-create-main-body");
             var version = document.createElement("select");
@@ -242,6 +228,45 @@ $getted_program = $_POST['getted_program'];
                 version.appendChild(opcion);
             }            
             formulario.appendChild(version);
+
+            var version = document.getElementById('version');
+            var version_data = new FormData();
+            version_data.append('version', version);
+
+            // Hacer la solicitud para list_campos_no_vacios
+            fetch('get_or_post_data.php', {
+            method: 'POST',
+            body: version_data
+            })
+            .catch(error => {
+            // Manejar errores
+            });
         }
+
+        var buscar_data = new FormData();
+        buscar_data.append('buscar', buscar);
+
+        // Hacer la solicitud para list_campos_no_vacios
+        fetch('get_or_post_data.php', {
+        method: 'POST',
+        body: buscar_data
+        })
+        .catch(error => {
+        // Manejar errores
+        });
+
+        var getted_program_2_data = new FormData();
+        getted_program_2_data.append('getted_program_2', getted_program);
+
+        // Hacer la solicitud para list_campos_no_vacios
+        fetch('get_or_post_data.php', {
+        method: 'POST',
+        body: getted_program_2_data
+        })
+        .catch(error => {
+        // Manejar errores
+        });
+        
+        include('formulario_buttons/create_buttons.php');
     }
 </script>
