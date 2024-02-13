@@ -27,7 +27,6 @@ function generate_siglas($nombre_programa){
     return $siglas;
 }
 
-
 function generate_cod_diploma($siglas, $modalidad){
     $cod_diploma = '';
     $cod_diploma .= $siglas.'.'.substr($modalidad, 2, 3).substr($modalidad, 5, 5);

@@ -30,10 +30,10 @@ include('include/header.php');
         else{
             buscar = false;
         }
+        
+        xhttp.open("POST", "formulario_program.php?buscar=" + seleccionado, true);
+        xhttp.send();
     });
-
-    xhttp.open("POST", "formulario_program.php?buscar=" + x, true);
-    xhttp.send();
   </script>
 <?php
 include('formulario_program.php');

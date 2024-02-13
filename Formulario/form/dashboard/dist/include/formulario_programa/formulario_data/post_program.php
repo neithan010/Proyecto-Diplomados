@@ -6,7 +6,6 @@ include('functions_program.php');
 
 $siglas = $generate_siglas($nombre_programa);
 #cod_diploma = Siglas Nombre.Siglas Años.1 o 2(semestre).Modalidad+versión(1 o 2).
-#Cod_interno = consultar
 #DIPLOMADO = consultar
 #d.tipo
 #area = ver siglas
@@ -26,20 +25,15 @@ $insert_program = "INSERT INTO intranet.diplomados d
                     
                     d.codcatedraab AS Siglas_Nombre,
                     d.cod_diploma,
-                    d.Cod_interno,
                     d.DIPLOMADO,
                     d.version,
-                    d.orden,
-
                     d.Habilitado,
                     d.web_habilitado,
                     d.area,
                     d.area_negocios)
 
-                    VALUES ($siglas, $tipo_producto, $area, $tipo_programa, $modalidad,
+                    VALUES ($nombre_programa, $tipo_producto, $area, $tipo_programa, $modalidad,
                             $periodo, $jornada, $nivel, $realizacion_en, $fecha_de_inicio,
-                            siglas, cod_diploma, cod_interno, DIPLOMADO, version, orden,
-                            1, 0, area, area_negocios)";
-
-" . ($variable == 'condicion' ? "'valor2_condicion'" : "'valor2_otra_condicion'") . "
+                            siglas, cod_diploma, cod_interno, DIPLOMADO, version,
+                            1, 0, area, Ejecutiva)";
 ?>

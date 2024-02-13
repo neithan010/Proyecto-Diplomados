@@ -1,11 +1,12 @@
 <?php
 
 $buscar = $_POST['buscar'];
+$getted_program = $_POST['getted_program'];
 ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <div class = "formulario-create-main">
-    <legend> Crear Programa </legend>
+    <legend id = "legend"></legend>
     <form id = "formulario-create-main-body" method = 'post'>
         <p>
             <p>
@@ -195,6 +196,7 @@ $buscar = $_POST['buscar'];
     var realización_en = document.getElementById('realización_en');
     var fecha_de_inicio = d = document.getElementById('fecha_de_inicio');
 
+    
     if(var buscar = <?php echo $buscar; ?>; == 'true'){
         tipo_producto.removeAttribute('required');
         area.removeAttribute('required');
@@ -205,9 +207,41 @@ $buscar = $_POST['buscar'];
         nivel.removeAttribute('required');
         realización_en.removeAttribute('required');
         fecha_de_inicio.removeAttribute('required');
+
         include('formulario_buttons/buscar_button.php');
+
+        document.getElementById('formulario-create-main-body').addEventListener('submit', function(event) {
+            /**
+             * Obtenemos el valor de los campos
+             */
+            var campo_tipo_producto = tipo_producto.value;
+            var campo_area = area.value;
+            var campo_tipo_programa = tipo_programa.value;
+            var campo_modalidad = modalidad.value;
+            var campo_periodo = periodo.value;
+            var campo_horario = horario.value;
+            var campo_nivel = nivel.value;
+            var campo_realizacion_en = realización_en.value;
+            var campo_fecha_de_inicio = fecha_de_inicio.value;
+        });
     }
+
     else{
         include('formulario_buttons/create_buttons.php');
+
+        if($getted_program){
+            version_option = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9'];
+            var formulario = document.getElementById("formulario-create-main-body");
+            var version = document.createElement("select");
+            version.name = "version";
+
+            for (var i = 0; i < version_option.length; i++) {
+                var opcion = document.createElement("option");
+                opcion.value = "V" + (i + 1);
+                opcion.text = "V" + (i + 1);
+                version.appendChild(opcion);
+            }            
+            formulario.appendChild(version);
+        }
     }
 </script>

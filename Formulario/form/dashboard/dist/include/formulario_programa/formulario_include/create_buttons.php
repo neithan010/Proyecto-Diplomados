@@ -4,6 +4,6 @@
             <button type = "submit" formaction = 'get_or_post_data.php'> Guardar </button>
         </p>
         <p>
-            <button type = "reset" formaction = 'create_program.php'> Limpiar Formulario </button>
+            <button type = "reset"> Limpiar Formulario </button>
         </p>
     </p>
