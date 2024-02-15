@@ -1,5 +1,7 @@
 <?php
 include('cn/cn_PDO.php');
+include('functions_program.php');
+include('../header.php');
 
 $nombre_programa = htmlspecialchars(addslashes($_POST['nombre_programa']));
 $tipo_producto = $_POST['tipo_producto'];
@@ -18,6 +20,7 @@ $buscar = $_POST['buscar'];
 #En caso de que ya hayamos obtenido el programa, veremos que getted_program_2 deberia ser true
 #el objetivo es obtener la version, que se solicita cuando se toma un programa ya creado.
 $getted_program_2 = $_POST['getted_program_2'];
+
 if($getted_program_2){
     $version = $_POST['version'];
 } 
@@ -48,7 +51,7 @@ $getted_program = false;
         
         // Crear un objeto FormData para enviar los datos
         var list_campos_data = new FormData();
-        list_campos_data.append('list_campos', list_campos);
+        list_campos_data.append('list_campos_data', list_campos);
 
         // Hacer la solicitud para list_campos_no_vacios
         fetch('get_program.php', {
@@ -74,4 +77,6 @@ else{
     $getted_program = false;
     include('post_program.php');
 }
+
+include_once('../footer.php');
 ?>

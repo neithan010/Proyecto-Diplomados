@@ -69,6 +69,10 @@ $getted_program = $_POST['getted_program'];
                         <option value = "">
                             COMPLETAR
                         </option>
+
+                    </select>
+                </label>
+            </p>
             <p>
                 <label>
                     Modalidad

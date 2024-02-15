@@ -1,11 +1,7 @@
 <?php
-
-include('functions_program.php');
 #Aqui ya tenemos los datos necesarios para insertar un programa nuevo.
 #Aqui debemos insertar el programa nuevo completando todos los campos necesarios.
 
-$siglas = $generate_siglas($nombre_programa);
-$cod_diploma = $generate_cod_diploma($siglas, $modalidad);
 #cod_diploma = Siglas Nombre.Siglas Años.1 o 2(semestre).periodo+versión.
 #DIPLOMADO = consultar
 #d.tipo
@@ -25,25 +21,27 @@ $cod_diploma = $generate_cod_diploma($siglas, $modalidad);
  * fecha_de_inicio = fecha_inicio
  * version         = version
 **/
-$insert_program = "INSERT INTO intranet.diplomados d
-                    (d.nom_diploma AS Nombre, 
-                    d.tipo_programa AS Producto,
-                    d.area_conocimiento AS Area,
+$siglas = $generate_siglas($nombre_programa);
+$cod_diploma = $generate_cod_diploma($siglas, $modalidad);
+$sql_insert_program = "INSERT INTO intranet.diplomados d
+                    (d.nom_diploma, 
                     d.tipo_programa,
-                    d.modalidad_programa AS Modalidad,
+                    d.area_conocimiento,
+                    d.tipo_programa,
+                    d.modalidad_programa,
                     d.Periodo,
-                    d.jornada AS Horario,
-                    d.nivel AS Nivel,
-                    d.realizacion_en AS Realización,
+                    d.jornada,
+                    d.nivel,
+                    d.realizacion_en,
                     d.fecha_inicio,
                     d.version,
                     
-                    d.codcatedraab AS Siglas_Nombre,
+                    d.codcatedraab,
                     d.cod_diploma,
-                    d.DIPLOMADO,
+                    --d.DIPLOMADO,
                     d.Habilitado,
                     d.web_habilitado,
-                    d.area,
+                    --d.area,
                     d.area_negocios)
 
                     VALUES ($nombre_programa, 
@@ -58,12 +56,16 @@ $insert_program = "INSERT INTO intranet.diplomados d
                             $fecha_de_inicio,
                             $version,
                             
-                            $siglas, 
-                            cod_diploma, 
-                            cod_interno, 
-                            DIPLOMADO, 
+                            $siglas,
+                            $cod_diploma, 
+                            --DIPLOMADO, 
                             1, 
                             0, 
-                            area, 
+                            --area, 
                             Ejecutiva)";
+
+
+$stmt_insert_program = $con->prepare($sql_insert_program);
+$stmt_insert_program->setFetchMode(PDO::FETCH_ASSOC);
+$stmt_insert_program->execute();
 ?>

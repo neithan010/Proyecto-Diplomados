@@ -1,8 +1,6 @@
 <?php
-
-include('include/header.php');
+include('../header.php');
 ?>
-
 <div class="container-fluid">
     <h1 class="mt-4">Programas</h1>
 </div>
@@ -26,5 +24,5 @@ include('include/header.php');
 </div>
 
 <?php
-include_once('include/footer.php');
+include_once('../footer.php');
 ?>

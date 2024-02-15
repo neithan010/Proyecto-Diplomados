@@ -124,6 +124,6 @@ while ($rw_programas = $stmt_programas->fetch()){
         "rechazadas"    => $rechazadas,
         "pendientes"    => $pendientes,
         "eliminadas"    => $eliminadas
-    );
-}
+   );
+} 
 ?>
