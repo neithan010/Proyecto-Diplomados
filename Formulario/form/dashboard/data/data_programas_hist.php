@@ -1,5 +1,5 @@
 <?php
-include_once('cn.php');
+include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
 
 $sql_periodo="SELECT 
     p.periodo 
@@ -37,7 +37,7 @@ $sql_programas="
         intranet.diplomados d 
         
     WHERE 
-        d.usr_cordinador_ad like '%'
+        d.usr_cordinador_ej like '%'
         AND d.tipo_programa like '".$tipo_programa."'
         AND d.modalidad_programa like '".$modalidad_programa."'
         AND d.habilitado=0

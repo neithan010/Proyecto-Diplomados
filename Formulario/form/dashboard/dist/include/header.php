@@ -68,7 +68,7 @@ if($_SESSION["usuario_intranet"]==''){
     </nav>
     <div id="layoutSidenav">
 
-        <?php include_once('include/menu_izq.php');?>
+        <?php include_once('menu_izq.php');?>
 
         <div id="layoutSidenav_content">
             <main>
