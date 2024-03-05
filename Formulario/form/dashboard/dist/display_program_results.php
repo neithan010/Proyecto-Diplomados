@@ -21,7 +21,7 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                                 <th>CODIGO DIPLOMA</th>
                                 <th>TIPO PROGRAMA</th>
                                 <th>AREA</th>
-                                <th>TIPO</th>
+                                <th>MODALIDAD</th>
                                 <th>HORARIO</th>
                                 <th>NIVEL</th>
                                 <th>REALIZACION</th>
@@ -34,7 +34,7 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                                 <th>CODIGO DIPLOMA</th>
                                 <th>TIPO PROGRAMA</th>
                                 <th>AREA</th>
-                                <th>TIPO</th>
+                                <th>MODALIDAD</th>
                                 <th>HORARIO</th>
                                 <th>NIVEL</th>
                                 <th>REALIZACION</th>
@@ -50,7 +50,7 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                                     <td class ="text-center"> <?php echo $programa['Codigo Diploma'];?></td>
                                     <td class ="text-center"> <?php echo $programa['Tipo Programa'];?></td>
                                     <td class ="text-center"> <?php echo $programa['Area Conocimiento'];?></td>
-                                    <td class ="text-center"> <?php echo $programa['Tipo'];?></td>
+                                    <td class ="text-center"> <?php echo $programa['Modalidad'];?></td>
                                     <td class ="text-center"> <?php echo $programa['Horario'];?></td>
                                     <td class ="text-center"> <?php echo $programa['Nivel'];?></td>
                                     <td class ="text-center"> <?php echo $programa['Realización'];?></td>
@@ -69,6 +69,8 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                         </div>
                     </form>
                     <script>
+                        var table = document.getElementById('dataTableprogramas');
+                        
                         function select_program() {
                             var radioButtons = document.getElementsByName('programa_seleccionado');
                             var info = '';
@@ -95,4 +97,14 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                 </div>
             </div>
         </div>
+        <script>
+            $( document ).ready(function() {
+                $('#dataTableprogramas').DataTable({
+                language: {
+                url: '../../js/es-mx.json'
+                }
+            });
+        });
+            
+        </script>
 </body>

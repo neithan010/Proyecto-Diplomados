@@ -43,7 +43,7 @@ function generate_siglas($nombre_programa, $conectores){
 
 function generate_cod_diploma($siglas, $periodo, $jornada, $version){
     $cod_diploma = '';
-    $cod_diploma .= $siglas.".".substr($periodo, 2, 2).".".substr($periodo, 5, 5).".".strtoupper($jornada).".".preg_replace('/[^0-9]/', '', $version);
+    $cod_diploma .= $siglas.".".substr($periodo, 2, 2).".".substr($periodo, 5, 5).".".strtoupper($jornada).".".$version;
     if($version == ''){
         $version = 'V1';
         $cod_diploma .= substr($version, 1, 1);
@@ -56,14 +56,62 @@ function generate_cod_diploma($siglas, $periodo, $jornada, $version){
 function generate_cod_interno(){}
 
 function generate_DIPLOMADO($nombre_programa, $tipo_programa){
-    $DIPLOMADO = "";
-    $DIPLOMADO .= $tipo_programa." ".$nombre_programa;
-    return $DIPLOMADO; 
+    $nom_diploma = "";
+    $nom_diploma .= $tipo_programa. " en ". $nombre_programa;
+    return $nom_diploma;
 }
 
-function generate_area($area){}
+function generate_nom_diploma($nombre_programa, $cod_diploma){
+    $nom_diploma = "";
+    $nom_diploma .= $nombre_programa . " - ". $cod_diploma;
+    return $nom_diploma;
+}
 
-function consultar_buscador($busqueda){
+function generate_tipo_programa($tipo_producto, $modalidad){
+    $tipo_programa = $tipo_producto. " - " . $modalidad;
+    return $tipo_programa;
+}
+
+function generate_area($area){
+    $siglas_area = "";
+    if($area == 'Innovación'){
+        $siglas_area = "INEM";
+    } elseif($area == 'Finanzas e Inversiones'){
+        $siglas_area = 'FIN';
+    } elseif($area == 'Marketing y Ventas'){
+        $siglas_area = 'MKT';
+    } elseif($area == 'Estrategia y Gestión'){
+        $siglas_area = 'GDN';
+    } elseif($area == 'Personas y Equipos'){
+        $siglas_area = 'RRHH';
+    } elseif($area == 'Operaciones y Logística'){
+        $siglas_area = 'OPLO'; 
+    } elseif($area == 'Dirección de Instituciones de Salud'){
+        $siglas_area = 'SLD';
+    } else{
+        echo "Error 20: Area no encontrada, siglas de area vacías";
+    }
+    return $siglas_area;
+}
+
+function generate_version($version, $periodo){
+    $n_version = "";
+    if($version == ''){
+        $n_version = "V1";
+    }
+    else{
+        //verificamos que este dentro de un lapso de 2 años
+        if($periodo<'2023S1'){
+            $n_version = "V1";
+        } else{
+            //numero de la versión
+            $n = +$version[1];
+            $n_1 = $n+1;
+            $n_version .= $version[0] . $n_1;
+            return $n_version;
+        }
+    }
+    return $n_version;
 }
 
 
@@ -83,7 +131,7 @@ function generate_conditions($list_campos_data){
             $value = is_string($item[1]) ? "'" . $item[1] . "'" : $item[1];
             // Para el primer elemento, usamos LIKE, de lo contrario usamos =
             // Primer elemento es el nombre del diploma(en base de datos es diplomados.nom_diploma)
-            $condition = ($item[0] == 'nombre_program') ? "d.nom_diploma LIKE '%".$item[1]."%'" : "d.$item[0] = " . $value;
+            $condition = ($item[0] == 'nombre_program') ? "d.DIPLOMADO LIKE '%".$item[1]."%'" : "d.$item[0] = " . $value;
             $conditions[] = $condition;
         }
     }
@@ -106,8 +154,7 @@ function search_edit_query($conditions){
     d.jornada,                      
     d.DIPLOMADO,                    
     d.nom_diploma,                
-    d.nombre_web,                  
-    d.tipo,                        
+    d.nombre_web,                                          
     d.mail_envio,                 
     d.Habilitado,                  
     d.web_habilitado,              
@@ -181,7 +228,6 @@ function search_create_query($conditions){
     d.nom_diploma, 
     d.tipo_programa,
     d.area_conocimiento,
-    d.tipo,
     d.modalidad_programa,
     d.Periodo,
     d.jornada,
@@ -213,19 +259,6 @@ function search_create_query($conditions){
     return $sql_buscar_programa;
 }
 
-//ignorar
-function my_sql($conditions){
-    if($edit_create == 'buscar_create'){
-        $sql_buscar_programa = search_create_query($conditions);
-    }
-    elseif($edit_create == 'buscar_edit'){
-        $sql_buscar_programa = search_edit_query($conditions);
-    }
-    else{
-        //error inesperado, algo falló en el formulario
-    }
-}
-
 //Esta funcion crea y deberia ejecutar una query creada
 //se crea segun el parametro entregado "edit_create"
 function get_program($list_campos_data, $edit_create){
@@ -238,6 +271,7 @@ function get_program($list_campos_data, $edit_create){
         $stmt_buscar = $con->prepare($sql_buscar_programa);
         $stmt_buscar ->setFetchMode(PDO::FETCH_ASSOC);
         $stmt_buscar ->execute();
+
     }
     elseif($edit_create == "buscar_edit"){
         $sql_buscar_programa = search_edit_query($conditions);
@@ -261,7 +295,6 @@ function get_program($list_campos_data, $edit_create){
                 "Nombre Diploma"    =>  $row['nom_diploma'],
                 "Tipo Programa"     =>  $row['tipo_programa'],
                 "Area Conocimiento" =>  $row['area_conocimiento'],
-                "Tipo"              =>  $row['tipo'],
                 "Modalidad"         =>  $row['modalidad_programa'],
                 "Periodo"           =>  $row['Periodo'],
                 "Horario"           =>  $row['jornada'],
@@ -288,7 +321,6 @@ function get_program($list_campos_data, $edit_create){
                 "Nombre Diploma"                =>  $row['nom_diploma'],
                 "Tipo Programa"                 =>  $row['tipo_programa'],
                 "Area Conocimiento"             =>  $row['area_conocimiento'],
-                "Tipo"                          =>  $row['tipo'],
                 "Modalidad"                     =>  $row['modalidad_programa'],
                 "Periodo"                       =>  $row['Periodo'],
                 "Horario"                       =>  $row['jornada'],

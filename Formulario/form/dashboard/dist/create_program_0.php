@@ -25,11 +25,13 @@ include('formulario_program.php');
     button_remover.innerHTML = "Borrar";
     button_remover.setAttribute("type", "reset");
     document.getElementById("submit_form_button_2").appendChild(button_remover);
+    
+    var version = document.getElementById('hide-version');
+    version.setAttribute("hidden", "true");
+    version.setAttribute("disable", "disable");
 
     var tipo_producto = document.getElementById("tipo_producto");
-    tipo_producto.setAttribute('required', "true");
     var area = document.getElementById("area");
-    var tipo_programa = document.getElementById("tipo_programa");
     var modalidad = document.getElementById("modalidad");
     var periodo = document.getElementById("periodo");
     var horario = document.getElementById("horario");
@@ -39,13 +41,24 @@ include('formulario_program.php');
 
     tipo_producto.setAttribute('required', "true");
     area.setAttribute('required', "true");
-    tipo_programa.setAttribute('required', "true");
     modalidad.setAttribute('required', "true");
     periodo.setAttribute('required', "true");
     horario.setAttribute('required', "true");
     nivel.setAttribute('required', "true");
     realización_en.setAttribute('required', "true");
     fecha_de_inicio.setAttribute('required', "true");
+
+    //Nos aseguramos de que la variable global este definida
+    if(<?php isset($_SESSION['can_load'])?>){
+        var getted_program = <?php $_SESSION['can_load'] >?;
+        //nos aseguramos de que se haya seleccionado un programa y que se haya enviado.
+        if(isset($_POST['programaSeleccionado'])){
+            $getted_program = true;
+            if($getted_program){
+                
+            }
+        }
+    }
 </script>
 <?php
 include('C:\laragon\www\form\dashboard\dist\include\footer.php');

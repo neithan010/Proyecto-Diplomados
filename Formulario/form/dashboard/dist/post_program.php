@@ -44,9 +44,9 @@ $sql_insert_program = "INSERT INTO intranet.diplomados
                         marca,
                         horario_web,
                         area,
-                        vacantes)
+                        vacantes,)
         
-                        VALUES (:nombre_programa, 
+                        VALUES (:DIPLOMADO, 
                                 :tipo_producto, 
                                 :area, 
                                 :tipo_programa, 
@@ -61,17 +61,17 @@ $sql_insert_program = "INSERT INTO intranet.diplomados
                                 :siglas,
                                 'Ejecutiva',
 
-                                :DIPLOMADO,
+                                :nombre_programa,
                                 '',
                                 1,
                                 0,
                                 0,
-                                'horario de prueba',
-                                'COR',
+                                '',
+                                :siglas_area,
                                 35)";
         
 $stmt_insert_program = $con->prepare($sql_insert_program);
-$stmt_insert_program->bindParam(':nombre_programa', $nombre_programa);
+$stmt_insert_program->bindParam(':DIPLOMADO', $nom_diploma);
 $stmt_insert_program->bindParam(':tipo_producto', $tipo_producto);
 $stmt_insert_program->bindParam(':area', $area);
 $stmt_insert_program->bindParam(':tipo_programa', $tipo_programa);
@@ -84,5 +84,7 @@ $stmt_insert_program->bindParam(':fecha_de_inicio', $fecha_de_inicio);
 $stmt_insert_program->bindParam(':version', $version);
 $stmt_insert_program->bindParam(':cod_diploma', $siglas);
 $stmt_insert_program->bindParam(':siglas', $cod_diploma);
-$stmt_insert_program->bindParam(':DIPLOMADO', $DIPLOMADO);
+$stmt_insert_program->bindParam(':nombre_programa', $DIPLOMADO);
+$stmt_insert_program->bindParam(':siglas_area', $siglas_area);
+$stmt_insert_program->execute();
 ?>

@@ -2,28 +2,30 @@
     session_start();
     include_once('C:/laragon/www/form/dashboard/dist/include/header.php');
     include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
-    #podria recibir solo un nombre de programa
-    if (isset($_POST['nombre_program']) and isset($_POST['tipo_producto'])  and isset($_POST['area'])      and isset($_POST['tipo_programa']) and
-        isset($_POST['modalidad'])      and isset($_POST['periodo'])        and isset($_POST['horario'])   and isset($_POST['nivel'])   and
-        isset($_POST['realización_en']) and isset($_POST['fecha_de_inicio'])) {
+    #crear programa nuevo, uno no existente
+    if (isset($_POST['nombre_program']) and isset($_POST['tipo'])  and isset($_POST['area'])   and
+        isset($_POST['modalidad'])      and isset($_POST['periodo'])        and isset($_POST['jornada'])   and isset($_POST['nivel'])   and
+        isset($_POST['realizacion_en']) and isset($_POST['fecha_de_inicio'])) {
 
         $nombre_programa = $_POST['nombre_program'];
         $name_program = htmlspecialchars(addslashes($nombre_programa));
-        $tipo_producto = $_POST['tipo_producto'];
+        $tipo_producto = $_POST['tipo'];
         $area = $_POST['area'];
-        $tipo_programa = $_POST['tipo_programa'];
         $modalidad = $_POST['modalidad'];
         $periodo = $_POST['periodo'];
-        $jornada = $_POST['horario'];
+        $jornada = $_POST['jornada'];
         $nivel = $_POST['nivel'];
-        $realizacion_en = $_POST['realización_en'];
+        $realizacion_en = $_POST['realizacion_en'];
         $fecha_de_inicio = $_POST['fecha_de_inicio'];
-        $version = '';
-
+        $version = 'V1';
+ 
         include('functions_program.php');
         $siglas = generate_siglas($name_program, $conectores);
         $cod_diploma = generate_cod_diploma($siglas, $periodo, $jornada, $version);
-        $DIPLOMADO = generate_DIPLOMADO($nombre_programa, $tipo_programa);
+        $DIPLOMADO = generate_DIPLOMADO($name_program, $tipo_producto);
+        $tipo_programa = generate_tipo_programa($tipo_producto,$modalidad);
+        $siglas_area = generate_area($area);
+        $nom_diploma = generate_nom_diploma($name_program, $cod_diploma);
         include('post_program.php');
 
     } else {
@@ -48,7 +50,7 @@
         </div>
 </div>
 <?php
-    if($stmt_insert_program->execute()){
+    if(true){
         #se cargo correctamente el programa en la base de datos
         ?>
         <script>
