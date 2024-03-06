@@ -17,7 +17,7 @@
         $nivel = $_POST['nivel'];
         $realizacion_en = $_POST['realizacion_en'];
         $fecha_de_inicio = $_POST['fecha_de_inicio'];
-        $version = 'V1';
+        $version = "V1";
  
         include('functions_program.php');
         $siglas = generate_siglas($name_program, $conectores);
@@ -26,6 +26,18 @@
         $tipo_programa = generate_tipo_programa($tipo_producto,$modalidad);
         $siglas_area = generate_area($area);
         $nom_diploma = generate_nom_diploma($name_program, $cod_diploma);
+        if(isset($_SESSION['can_load'])){
+            $getted_program = $_SESSION['can_load'];
+            //nos aseguramos de que se haya seleccionado un programa y que se haya enviado.
+            if(isset($_POST['programaSeleccionado'])){
+                $getted_program = true;
+                if($getted_program){
+                    if(isset($_POST['V'])){
+                        $version = $_POST['V'];
+                    }
+                }
+            }
+        }
         include('post_program.php');
 
     } else {

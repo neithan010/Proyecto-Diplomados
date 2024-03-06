@@ -107,7 +107,7 @@ function generate_version($version, $periodo){
             //numero de la versión
             $n = +$version[1];
             $n_1 = $n+1;
-            $n_version .= $version[0] . $n_1;
+            $n_version .= $version[0] . strval($n_1);
             return $n_version;
         }
     }

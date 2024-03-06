@@ -33,7 +33,7 @@ $_SESSION['can_load'] = false;
                                 <option value= "Curso" id = "Curso">
                                     CURSO
                                 </option>
-                                <option name = 'otro' id = 'otro' disable = "disable" hidden>
+                                <option value = 'otro' id = 'otro' disable = "disable" hidden>
                                     _   
                                 </option>
                             </select> 
@@ -46,7 +46,7 @@ $_SESSION['can_load'] = false;
                             Area
                             <select name = "area" id = "area">
                                 <option value = "" selected = "true" disable = "disable" hidden></option>
-                                <option value= "Innovación" id = "Innovación y Emprendimiento">
+                                <option value= "Innovación y Emprendimiento" id = "Innovación y Emprendimiento">
                                     Innovación y Emprendimiento
                                 </option>
                                 <option value= "Finanzas e Inversiones" id ="Finanzas e Inversiones">
@@ -56,12 +56,12 @@ $_SESSION['can_load'] = false;
                                     Marketing y Ventas
                                 </option>
                                 <option value = "Estrategia y Gestión" id ="Estrategia y Gestión">
-                                    Estrategia
+                                    Estrategia y Gestión
                                 </option>
                                 <option value = "Personas y Equipos" id= "Personas y Equipos">
                                     Personas y Equipos
                                 </option>
-                                <option value = "Operaciones y Logística" id= "Operaciones y Logistica">
+                                <option value = "Operaciones y Logística" id= "Operaciones y Logística">
                                     Operaciones y Logística
                                 </option>
                                 <option value = "Dirección de Instituciones de Salud" id="Dirección de Instituciones de Salud">
@@ -223,6 +223,7 @@ $_SESSION['can_load'] = false;
                         <label >
                             Version
                             <select id = "version">
+                            <option value = "" selected = "true" disable = "disable" hidden></option>
                             </select>
                         </label>
                     </div>
@@ -251,6 +252,11 @@ $_SESSION['can_load'] = false;
         </div>
     </form>
 </div>
+<script>
+    var version = document.getElementById('hide-version')
+    version.setAttribute("hidden","true");
+    version.setAttribute("disable", "disable");
+</script>
 <?php
 
 //Nos aseguramos de que la variable global este definida
@@ -315,7 +321,31 @@ if(isset($_SESSION['can_load'])){
                     if(area_conocimiento == "Finanzas"){
                         var area_val = document.getElementById('Finanzas e Inversiones');
                         area_val.setAttribute("selected", "true");
-                    } else{
+
+                    } else if(area_conocimiento == "Innovación"){
+                        var area_val = document.getElementById('Innovación y Emprendimiento');
+                        area_val.setAttribute("selected", "true");
+
+                    } else if(area_conocimiento == "Dirección de Personas y Equipos"){
+                        var area_val = document.getElementById('Personas y Equipos');
+                        area_val.setAttribute("selected","true");
+
+                    } else if(area_conocimiento == 'Estrategia y Gestión de Negocios'){
+                        var area_val = document.getElementById('Estrategia y Gestión');
+                        area_val.setAttribute("selected", "true");
+
+                    } else if(area_conocimiento == 'Gestión de Instituciones de Salud'){
+                        var area_val = document.getElementById('Dirección de Instituciones de Salud');
+                        area_val.setAttribute('selected', 'true');
+
+                    } else if(area_conocimiento == 'Marketing y Venta'){
+                        var area_val = document.getElementById('Marketing y Ventas');
+                        area_val.setAttribute('selected', 'true');
+
+                    } else if(area_conocimiento == 'Operaciones y Logística\n'){
+                        var area_val = document.getElementById('Operaciones y Logí')
+                    }
+                    else{
                         var area_val = document.getElementById('otro');
                         area_val.setAttribute("selected","true");
                         area_val.value = area_conocimiento;
@@ -358,22 +388,27 @@ if(isset($_SESSION['can_load'])){
                     var horario_val = document.getElementById(horario);
                     horario_val.setAttribute("selected", "true");
                 }
-
-                //Agregar versión obtenida de get_program
-                var label_version = document.getElementById("hide-version");
-                label_version.removeAttribute("hidden");
-                label_version.removeAttribute("disable");
-
+                
                 var version_option = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9'];
-                var version = document.getElementById('version');
 
-                for (var i = 0; i < version_option.length; i++) {
+                var show_version = document.getElementById('hide-version')
+                show_version.removeAttribute("hidden");
+                show_version.removeAttribute("disable");
+                
+                var version = document.getElementById('version');
+                
+                for (var i = 0; i < version_option.length; i++){
                     var opcion = document.createElement("option");
                     opcion.setAttribute("id", version_option[i]);
-                    opcion.setAttribute("name", version_option[i]);
+                    opcion.setAttribute("name", "V");
                     opcion.value = version_option[i];
                     opcion.text = version_option[i];
                     version.appendChild(opcion);
+                }
+                
+                if(version_option.include(version)){
+                    var this_version = document.getElementById(version);
+                    this_version.setAttribute('selected', 'true');
                 }
             </script>
             <?php

@@ -44,7 +44,7 @@ $sql_insert_program = "INSERT INTO intranet.diplomados
                         marca,
                         horario_web,
                         area,
-                        vacantes,)
+                        vacantes)
         
                         VALUES (:DIPLOMADO, 
                                 :tipo_producto, 

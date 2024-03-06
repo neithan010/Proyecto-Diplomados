@@ -15,28 +15,13 @@ include_once('C:/laragon/www/form/dashboard/dist/include/header.php');
 include('formulario_program.php');
 ?>
 <script>
-    var button_guardar = document.createElement("button");
-    button_guardar.innerHTML = "Guardar";
-    button_guardar.setAttribute("type", "submit");
-    button_guardar.setAttribute("formaction","post_data.php");
-    document.getElementById("submit_form_button").appendChild(button_guardar);
-
-    var button_remover = document.createElement("button");
-    button_remover.innerHTML = "Borrar";
-    button_remover.setAttribute("type", "reset");
-    document.getElementById("submit_form_button_2").appendChild(button_remover);
-    
-    var version = document.getElementById('hide-version');
-    version.setAttribute("hidden", "true");
-    version.setAttribute("disable", "disable");
-
     var tipo_producto = document.getElementById("tipo_producto");
     var area = document.getElementById("area");
     var modalidad = document.getElementById("modalidad");
     var periodo = document.getElementById("periodo");
     var horario = document.getElementById("horario");
     var nivel = document.getElementById("nivel");
-    var realización_en = document.getElementById("realización_en");
+    var realización_en = document.getElementById("realizacion_en");
     var fecha_de_inicio = d = document.getElementById("fecha_de_inicio");
 
     tipo_producto.setAttribute('required', "true");
@@ -48,17 +33,16 @@ include('formulario_program.php');
     realización_en.setAttribute('required', "true");
     fecha_de_inicio.setAttribute('required', "true");
 
-    //Nos aseguramos de que la variable global este definida
-    if(<?php isset($_SESSION['can_load'])?>){
-        var getted_program = <?php $_SESSION['can_load'] >?;
-        //nos aseguramos de que se haya seleccionado un programa y que se haya enviado.
-        if(isset($_POST['programaSeleccionado'])){
-            $getted_program = true;
-            if($getted_program){
-                
-            }
-        }
-    }
+    var button_guardar = document.createElement("button");
+    button_guardar.innerHTML = "Guardar";
+    button_guardar.setAttribute("type", "submit");
+    button_guardar.setAttribute("formaction","post_data.php");
+    document.getElementById("submit_form_button").appendChild(button_guardar);
+
+    var button_remover = document.createElement("button");
+    button_remover.innerHTML = "Borrar";
+    button_remover.setAttribute("type", "reset");
+    document.getElementById("submit_form_button_2").appendChild(button_remover);
 </script>
 <?php
 include('C:\laragon\www\form\dashboard\dist\include\footer.php');
