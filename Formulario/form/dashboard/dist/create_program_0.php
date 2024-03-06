@@ -22,7 +22,8 @@ include('formulario_program.php');
     var horario = document.getElementById("horario");
     var nivel = document.getElementById("nivel");
     var realización_en = document.getElementById("realizacion_en");
-    var fecha_de_inicio = d = document.getElementById("fecha_de_inicio");
+    var fecha_de_inicio = document.getElementById("fecha_de_inicio");
+    var ejecutivo_venta = document.getElementById("ejecutivo_ventas_id");
 
     tipo_producto.setAttribute('required', "true");
     area.setAttribute('required', "true");
@@ -32,6 +33,7 @@ include('formulario_program.php');
     nivel.setAttribute('required', "true");
     realización_en.setAttribute('required', "true");
     fecha_de_inicio.setAttribute('required', "true");
+    ejecutivo_venta.setAttribute('required', 'true');
 
     var button_guardar = document.createElement("button");
     button_guardar.innerHTML = "Guardar";

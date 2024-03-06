@@ -3,10 +3,10 @@
     include_once('C:/laragon/www/form/dashboard/dist/include/header.php');
     include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
     #crear programa nuevo, uno no existente
-    if (isset($_POST['nombre_program']) and isset($_POST['tipo'])  and isset($_POST['area'])   and
-        isset($_POST['modalidad'])      and isset($_POST['periodo'])        and isset($_POST['jornada'])   and isset($_POST['nivel'])   and
-        isset($_POST['realizacion_en']) and isset($_POST['fecha_de_inicio'])) {
-
+    if (isset($_POST['nombre_program']) and isset($_POST['tipo'])            and isset($_POST['area'])                  and
+        isset($_POST['modalidad'])      and isset($_POST['periodo'])         and isset($_POST['jornada'])               and isset($_POST['nivel'])   and
+        isset($_POST['realizacion_en']) and isset($_POST['fecha_de_inicio']) and isset($_POST['ejecutivo_ventas_id'])   and isset($_POST['version'])){
+            
         $nombre_programa = $_POST['nombre_program'];
         $name_program = htmlspecialchars(addslashes($nombre_programa));
         $tipo_producto = $_POST['tipo'];
@@ -17,29 +17,32 @@
         $nivel = $_POST['nivel'];
         $realizacion_en = $_POST['realizacion_en'];
         $fecha_de_inicio = $_POST['fecha_de_inicio'];
-        $version = "V1";
- 
+        $usr_cordinador_ej = $_POST['ejecutivo_ventas_id'];
+        $version = $_POST['version'];
+        
+        //se debe revisar la version
+        //si se esta tomando un programa ya existente, se deben comparar los periodos
+        //si es el mismo periodo, entonces se mantiene la version escogido
+        //si no son del mismo periodo y no hay otro programa con el mismo nombre, entonces queda como version 1.
         include('functions_program.php');
-        $siglas = generate_siglas($name_program, $conectores);
-        $cod_diploma = generate_cod_diploma($siglas, $periodo, $jornada, $version);
+        
+        include('get_ejecutivo_ventas.php');
+        $nom_ejecutivo_admision = $arr_ejecutivo[0]['Nombre'];
+        $telefono_ejecutivo_admision = str_replace(" ", "",$arr_ejecutivo[0]['Telefono']);
+        $mail_envio = $arr_ejecutivo[0]['Email'];
         $DIPLOMADO = generate_DIPLOMADO($name_program, $tipo_producto);
         $tipo_programa = generate_tipo_programa($tipo_producto,$modalidad);
         $siglas_area = generate_area($area);
-        $nom_diploma = generate_nom_diploma($name_program, $cod_diploma);
-        if(isset($_SESSION['can_load'])){
-            $getted_program = $_SESSION['can_load'];
-            //nos aseguramos de que se haya seleccionado un programa y que se haya enviado.
-            if(isset($_POST['programaSeleccionado'])){
-                $getted_program = true;
-                if($getted_program){
-                    if(isset($_POST['V'])){
-                        $version = $_POST['V'];
-                    }
-                }
-            }
-        }
-        include('post_program.php');
+        $siglas = generate_siglas($DIPLOMADO, $conectores);
+        
 
+        $cod_diploma_first = generate_cod_diploma($siglas, $periodo, $jornada, $version);
+        $version = aprobe_version($version, $periodo, $DIPLOMADO, $cod_diploma_first);
+
+        $new_cod_diploma = generate_cod_diploma($siglas, $periodo, $jornada, $version);
+        $nom_diploma = generate_nom_diploma($name_program, $new_cod_diploma);
+        include('post_program.php');
+        
     } else {
         echo "Error Inesperado, datos perdidos";
     }

@@ -74,7 +74,7 @@ function generate_tipo_programa($tipo_producto, $modalidad){
 
 function generate_area($area){
     $siglas_area = "";
-    if($area == 'Innovación'){
+    if($area == 'Innovación y Emprendimiento'){
         $siglas_area = "INEM";
     } elseif($area == 'Finanzas e Inversiones'){
         $siglas_area = 'FIN';
@@ -114,7 +114,67 @@ function generate_version($version, $periodo){
     return $n_version;
 }
 
+function aprobe_version($version, $periodo, $name_program){
+    //buscar programas que coincidan en nombre y periodo y codigo diploma
+    $result = find_coincidence($name_program, $periodo);
 
+    //numero de versiones
+    $count_result = count($result);
+
+    $val_version = array();
+    //recorremos los resultados
+    for($i = 0; $i < $count_result; $i++){
+        $val_version[] = array(
+            "Value Version" =>  $result[$i]['Version'][1]
+        );
+    }
+    //si no hay coincidencias quiere decir que es primera vez que se dicta dicho programa
+    if($count_result == 0){
+        return $version;
+    } else{
+        for($i = 0; $i < count($val_version); $i++){
+            //Si el indice y el valor son distintos, quiere decir que se eliminó un programa entre todas las versiones
+            if($i+1 != $val_version[$i]['Value Version']){
+                $version = "V". strval(intval($i)+1);
+                break;
+            }
+            else{
+                //si estamos en el ultimo quiere decir que no encontramos ningun espacio en las versiones anteriores
+                //generamos una version nueva
+                if($i == count($val_version)-1){
+                    $version = "V". strval(intval($val_version[$i]['Value Version'])+1);
+                    break;
+                }
+            }
+        }
+    }
+    return $version;
+}
+
+function find_coincidence($name_program, $periodo){
+    include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
+
+    $sql_buscar_coincidencias = "SELECT
+                                    d.version, d.codcatedraab
+                                    FROM intranet.diplomados d
+                                    WHERE d.Periodo = :periodo AND d.DIPLOMADO = :name_program
+                                    ORDER BY d.cod_diploma";
+
+    $stmt_buscar_coincidencias = $con->prepare($sql_buscar_coincidencias);
+    $stmt_buscar_coincidencias ->setFetchMode(PDO::FETCH_ASSOC);
+    $stmt_buscar_coincidencias->bindParam(':periodo', $periodo);
+    $stmt_buscar_coincidencias->bindParam(':name_program', $name_program);
+    $stmt_buscar_coincidencias ->execute();
+
+    $results = array();
+    while($row = $stmt_buscar_coincidencias->fetch()){
+        $results[] =array(
+            "Version" => $row['version'],
+            "Siglas" => $row['codcatedraab']
+        );
+    }   
+    return $results;
+}
 //genera condiciones, recibe una lista de datos de la forma: array[array[nombre campo, valor campo], ...]
 function generate_conditions($list_campos_data){
     #Creamos las condiciones de la sig forma: d.area = AREA AND...
@@ -246,7 +306,8 @@ function search_create_query($conditions){
     d.marca,
     d.horario_web,
     d.area,
-    d.vacantes
+    d.vacantes,
+    d.usr_cordinador_ej
     "
     #Escogemos los atributos con los que buscamos
     #Obtenemos otros atributos
@@ -292,28 +353,29 @@ function get_program($list_campos_data, $edit_create){
 
         if($edit_create == 'buscar_create'){
             $arr_programas[] =array(
-                "Nombre Diploma"    =>  $row['nom_diploma'],
-                "Tipo Programa"     =>  $row['tipo_programa'],
-                "Area Conocimiento" =>  $row['area_conocimiento'],
-                "Modalidad"         =>  $row['modalidad_programa'],
-                "Periodo"           =>  $row['Periodo'],
-                "Horario"           =>  $row['jornada'],
-                "Nivel"             =>  $row['nivel'],
-                "Realización"       =>  $row['realizacion_en'],
-                "Fecha Inicio"      =>  $row['fecha_inicio'],
-                "Version"           =>  $row['version'],
-                "Siglas"            =>  $row['codcatedraab'],
-                "Codigo Diploma"    =>  $row['cod_diploma'],
-                "Area Negocios"     =>  $row['area_negocios'],
+                "Nombre Diploma"            =>  $row['nom_diploma'],
+                "Tipo Programa"             =>  $row['tipo_programa'],
+                "Area Conocimiento"         =>  $row['area_conocimiento'],
+                "Modalidad"                 =>  $row['modalidad_programa'],
+                "Periodo"                   =>  $row['Periodo'],
+                "Horario"                   =>  $row['jornada'],
+                "Nivel"                     =>  $row['nivel'],
+                "Realización"               =>  $row['realizacion_en'],
+                "Fecha Inicio"              =>  $row['fecha_inicio'],
+                "Version"                   =>  $row['version'],
+                "Siglas"                    =>  $row['codcatedraab'],
+                "Codigo Diploma"            =>  $row['cod_diploma'],
+                "Area Negocios"             =>  $row['area_negocios'],
 
-                "DIPLOMADO"         =>  $row['DIPLOMADO'],
-                "Mail Envio"        =>  $row['mail_envio'],
-                "Habilitado"        =>  $row['Habilitado'],
-                "Habilitado Web"    =>  $row['web_habilitado'],
-                "Marca"             =>  $row['marca'],
-                "Horario Web"       =>  $row['horario_web'],
-                "Area"              =>  $row['area'],
-                "Vacantes"          =>  $row['vacantes']
+                "DIPLOMADO"                 =>  $row['DIPLOMADO'],
+                "Mail Envio"                =>  $row['mail_envio'],
+                "Habilitado"                =>  $row['Habilitado'],
+                "Habilitado Web"            =>  $row['web_habilitado'],
+                "Marca"                     =>  $row['marca'],
+                "Horario Web"               =>  $row['horario_web'],
+                "Area"                      =>  $row['area'],
+                "Vacantes"                  =>  $row['vacantes'],
+                "Usr Coordinador Ejecutivo" =>  $row['usr_cordinador_ej']
             );
         }
         elseif($edit_create == 'buscar_edit'){

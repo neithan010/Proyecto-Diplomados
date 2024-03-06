@@ -45,15 +45,19 @@
             $edit_create = $_POST['buscar_edit/create_program'];
         } else{$edit_create = '';}
             
-        if(isset($_POST['version'])){
-            $version = isset($_POST['version']);
-        } else{$version = '';}
+
+        if(isset($_POST['ejecutivo_ventas_id'])){
+            $usr_ejecutivo_ventas = $_POST['ejecutivo_ventas_id'];
+        } else{
+            $usr_ejecutivo_ventas = '';
+        }   
 
         $list_campos = [['nombre_program',$name_program], ['tipo_producto',$tipo_producto], ['area',$area], 
         ['tipo_programa',$tipo_programa], ['modalidad',$modalidad], ['periodo',$periodo], ['horario',$jornada],
-        ['nivel',$nivel], ['realización_en',$realizacion_en], ['fecha_de_inicio',$fecha_de_inicio], 
-        ['version', $version]];
-        $list_nombres_r = ['nombre_program','tipo_producto','area','tipo_programa','modalidad','periodo','horario','nivel','realización_en','fecha_de_inicio','version'];
+        ['nivel',$nivel], ['realización_en',$realizacion_en], ['fecha_de_inicio',$fecha_de_inicio], ['usr_cordinador_ej', $usr_ejecutivo_ventas]];
+
+        $list_nombres_r = ['nombre_program','tipo_producto','area','tipo_programa','modalidad','periodo','horario','nivel','realización_en','fecha_de_inicio',
+                           'usr_cordinador_ej'];
         $L = count($list_campos) - 1;
         $list_nombres = [];
 

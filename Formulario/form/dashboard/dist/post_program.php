@@ -44,7 +44,10 @@ $sql_insert_program = "INSERT INTO intranet.diplomados
                         marca,
                         horario_web,
                         area,
-                        vacantes)
+                        vacantes,
+                        usr_cordinador_ej,
+                        nom_ejecutivo_admision,
+                        telefono_ejecutivo_admision)
         
                         VALUES (:DIPLOMADO, 
                                 :tipo_producto, 
@@ -62,15 +65,19 @@ $sql_insert_program = "INSERT INTO intranet.diplomados
                                 'Ejecutiva',
 
                                 :nombre_programa,
-                                '',
+                                :mail_envio,
                                 1,
                                 0,
                                 0,
                                 '',
                                 :siglas_area,
-                                35)";
+                                35,
+                                :usr_cordinador_ej,
+                                :nom_ejecutivo_admision,
+                                :telefono_ejecutivo_admision)";
         
 $stmt_insert_program = $con->prepare($sql_insert_program);
+$stmt_insert_program->setFetchMode(PDO::FETCH_ASSOC);
 $stmt_insert_program->bindParam(':DIPLOMADO', $nom_diploma);
 $stmt_insert_program->bindParam(':tipo_producto', $tipo_producto);
 $stmt_insert_program->bindParam(':area', $area);
@@ -83,8 +90,12 @@ $stmt_insert_program->bindParam(':realizacion_en', $realizacion_en);
 $stmt_insert_program->bindParam(':fecha_de_inicio', $fecha_de_inicio);
 $stmt_insert_program->bindParam(':version', $version);
 $stmt_insert_program->bindParam(':cod_diploma', $siglas);
-$stmt_insert_program->bindParam(':siglas', $cod_diploma);
+$stmt_insert_program->bindParam(':siglas', $new_cod_diploma);
 $stmt_insert_program->bindParam(':nombre_programa', $DIPLOMADO);
 $stmt_insert_program->bindParam(':siglas_area', $siglas_area);
+$stmt_insert_program->bindParam(':mail_envio', $mail_envio);
+$stmt_insert_program->bindParam(':usr_cordinador_ej', $usr_cordinador_ej);
+$stmt_insert_program->bindParam(':nom_ejecutivo_admision', $nom_ejecutivo_admision);
+$stmt_insert_program->bindParam(':telefono_ejecutivo_admision', $telefono_ejecutivo_admision);
 $stmt_insert_program->execute();
 ?>

@@ -25,6 +25,7 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                                 <th>HORARIO</th>
                                 <th>NIVEL</th>
                                 <th>REALIZACION</th>
+                                <th>VERSION</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -38,6 +39,7 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                                 <th>HORARIO</th>
                                 <th>NIVEL</th>
                                 <th>REALIZACION</th>
+                                <th>VERSION</th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -54,6 +56,7 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                                     <td class ="text-center"> <?php echo $programa['Horario'];?></td>
                                     <td class ="text-center"> <?php echo $programa['Nivel'];?></td>
                                     <td class ="text-center"> <?php echo $programa['Realización'];?></td>
+                                    <td class ="text-center"> <?php echo $programa['Version'];?></td>
                                 </tr>
                             <?php
                             }
@@ -64,7 +67,7 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                         <input type="hidden" id="programaSeleccionado" name="programaSeleccionado" value="">
                         <div class ="margin-left">
                             <button value="Enviar" onclick = "select_program()">
-                                Enviar
+                                Seleccionar
                             </button>
                         </div>
                     </form>
