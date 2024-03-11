@@ -9,9 +9,9 @@ $_SESSION['can_load'] = false;
     <legend id = "legend"></legend>
     <form id = "formulario-create-main-body" method = 'post'> 
         <div class="container text-center">
-            <div class="row row-cols-3 row-cols-lg-4 g-lg-3">
+            <div class="row row-cols-4 row-cols-lg-4 g-lg-3">
                 <div class="col">
-                    <div class="p-2">
+                    <div class="">
                         <label>
                             Nombre Programa:
                             <input name = "nombre_program" id = "nombre_program" type = "text" maxlength = "100" required/>
@@ -19,9 +19,10 @@ $_SESSION['can_load'] = false;
                     </div>
                 </div>
                 <div class="col">
-                    <div class="p-2">
+                    <div class="">
                         <label>
                             Tipo Producto:
+                            <br>
                             <select name = "tipo" id ="tipo_producto">
                                 <option value = "" selected = "true" disable = "disable" hidden></option>
                                 <option value= "Diploma" id="Diploma">
@@ -44,9 +45,10 @@ $_SESSION['can_load'] = false;
                     </div>
                 </div>
                 <div class="col">
-                    <div class="p-2">
+                    <div class="">
                         <label>
                             Area
+                            <br>
                             <select name = "area" id = "area">
                                 <option value = "" selected = "true" disable = "disable" hidden></option>
                                 <option value= "Innovación y Emprendimiento" id = "Innovación y Emprendimiento">
@@ -78,9 +80,10 @@ $_SESSION['can_load'] = false;
                     </div>
                 </div>
                 <div class="col">
-                    <div class="p-4">
+                    <div class="">
                         <label>
                             Modalidad
+                            <br>
                             <select name = "modalidad" id = "modalidad">
                                 <option value = "" selected = "true" disable = "disable" hidden></option>
                                 <option value = "Presencial" id = "Presencial">
@@ -109,9 +112,10 @@ $_SESSION['can_load'] = false;
                     </div>
                 </div>
                 <div class="col">
-                    <div class="p-1">
+                    <div class="">
                         <label>
                             Periodo
+                            <br>
                             <select name = "periodo" id = "periodo" onchange = "restringir_fechas()">
                                 <option value = "" selected = "true" disable = "disable" hidden></option>
                                 <option value= "2022S1" id = "2022S1" disable = "disable" hidden>
@@ -143,7 +147,7 @@ $_SESSION['can_load'] = false;
                     </div>
                 </div>
                 <div class="col">
-                    <div class="p-1">
+                    <div class="">
                         <label>
                             Horario
                             <br>
@@ -166,7 +170,7 @@ $_SESSION['can_load'] = false;
                     </div>
                 </div>
                 <div class="col">
-                    <div class="p-1">
+                    <div class="">
                         <label>
                             Nivel
                             <br>
@@ -189,9 +193,10 @@ $_SESSION['can_load'] = false;
                     </div>
                 </div>
                 <div class="col">
-                    <div class="p-2">
+                    <div class="">
                         <label>
                             ¿Donde se realizará?
+                            <br>
                             <select name = "realizacion_en" id = "realizacion_en">
                                 <option value = "" selected = "true" disable = "disable" hidden></option>
                                 <option value = "FEN" id="FEN">
@@ -214,17 +219,19 @@ $_SESSION['can_load'] = false;
                     </div>
                 </div>
                 <div class="col">
-                    <div class="p-2">
+                    <div class="">
                         <label>
                             Fecha de Inicio
+                            <br>
                             <input name = "fecha_de_inicio" type = "date" id = "fecha_de_inicio">
                         </label>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="p-2">
+                    <div class="">
                         <label>
                             Ejecutivo de Ventas
+                            <br>
                             <select name = "ejecutivo_ventas_id" id = "ejecutivo_ventas_id">
                                 <option value = "" selected = "true" disable = "disable" hidden></option>
                                 <option value = "covando" id="covando">
@@ -247,7 +254,7 @@ $_SESSION['can_load'] = false;
                     </div>
                 </div>
                 <div class="col" id = "hide-version">
-                    <div class="p-2">
+                    <div class="">
                         <label >
                             Version
                             <select id = "version" name ="version">

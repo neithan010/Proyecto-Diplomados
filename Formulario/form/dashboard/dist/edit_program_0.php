@@ -11,6 +11,7 @@ include_once('C:/laragon/www/form/dashboard/dist/include/header.php');
         <li class="breadcrumb-item"><a href = "edit_program.php">Buscar Programa</a></li>
         <li class="breadcrumb-item"><a href = '#'>Resultados</a></li>
         <li class="breadcrumb-item">Editar Programa</li>
+        <li class= "breadcrumb-item" id = "selected_option_edit_program"></li>
     </ol>
 </div>
 <?php 

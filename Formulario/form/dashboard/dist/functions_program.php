@@ -278,8 +278,7 @@ function search_edit_query($conditions){
     d.tipo_programa,                
     d.modalidad_programa,           
     d.ID_ORDEN,                     
-    d.area_negocios,                
-    d.cuenta_contable,              
+    d.area_negocios,                           
     d.reglamento,                   
     d.nivel                         
     "
