@@ -1,0 +1,2 @@
+SELECT c.categoria_programa
+FROM intranet.categoria_programa c
