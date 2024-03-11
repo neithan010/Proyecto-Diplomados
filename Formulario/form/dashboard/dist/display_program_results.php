@@ -63,7 +63,7 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                             ?>
                         </tbody>
                     </table>
-                    <form action="create_program_0.php" name="frm_periodo" id="frm_periodo" method="POST">
+                    <form action = "create_program_0.php" name="frm_periodo" id="frm_periodo" method="POST">
                         <input type="hidden" id="programaSeleccionado" name="programaSeleccionado" value="">
                         <div class ="margin-left">
                             <button value="Enviar" onclick = "select_program()">
@@ -72,6 +72,16 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                         </div>
                     </form>
                     <script>
+                        <?php  
+                            if(!$create){
+                                echo $create;
+                                ?>
+                                var frm_periodo = document.getElementById('frm_periodo');
+                                frm_periodo.removeAttribute('action');
+                                frm_periodo.setAttribute('action', 'edit_program_0.php');   
+                                <?php
+                            }
+                        ?>
                         var table = document.getElementById('dataTableprogramas');
                         
                         function select_program() {
@@ -108,6 +118,5 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                 }
             });
         });
-            
         </script>
 </body>

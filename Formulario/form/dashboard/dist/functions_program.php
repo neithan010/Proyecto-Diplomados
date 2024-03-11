@@ -67,8 +67,11 @@ function generate_nom_diploma($nombre_programa, $cod_diploma){
     return $nom_diploma;
 }
 
-function generate_tipo_programa($tipo_producto, $modalidad){
+function generate_tipo_programa($tipo_producto, $modalidad, $conducente){
     $tipo_programa = $tipo_producto. " - " . $modalidad;
+    if($conducente){
+        $tipo_programa = $tipo_producto. " Conducente - ". $modalidad;
+    }
     return $tipo_programa;
 }
 
@@ -181,21 +184,32 @@ function generate_conditions($list_campos_data){
     #Pero no consideramos el nombre, ya que, para el nombre del diplomado
     #debemos crear un buscador mucho más exhaustivo que tome ciertas consideraciones:
     #1. Eliminar caracteres especiales
-
-    $conditions = array();
     
+    $conditions = array();
+
+    $my_conducent_program = "";
+    //verificamos si el ultimo campo es conducente viendo si es una variable booleana
+    if(is_bool(end($list_campos_data)[1])){
+        //agregamos condicion
+        $my_conducent_program .= "d.tipo = 'Curso conducente'";
+        array_pop($list_campos_data);
+    }
     foreach ($list_campos_data as $item) {
         // Verifica si el valor es diferente de vacío antes de agregarlo a las condiciones
         if ($item[1] !== "") {
+
             // Agrega comillas simples alrededor de los valores de tipo string
             $value = is_string($item[1]) ? "'" . $item[1] . "'" : $item[1];
-            // Para el primer elemento, usamos LIKE, de lo contrario usamos =
-            // Primer elemento es el nombre del diploma(en base de datos es diplomados.nom_diploma)
+
             $condition = ($item[0] == 'nombre_program') ? "d.DIPLOMADO LIKE '%".$item[1]."%'" : "d.$item[0] = " . $value;
             $conditions[] = $condition;
         }
     }
     
+    if($my_conducent_program != ""){
+        $conditions[] = $my_conducent_program;
+    }
+
     $conditions_str = implode(" AND ", $conditions);
     return $conditions_str;
 }
@@ -322,27 +336,22 @@ function search_create_query($conditions){
 
 //Esta funcion crea y deberia ejecutar una query creada
 //se crea segun el parametro entregado "edit_create"
-function get_program($list_campos_data, $edit_create){
+function get_program($list_campos_data, $create){
     include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
 
     $conditions = generate_conditions($list_campos_data);
 
-    if($edit_create == "buscar_create"){
+    if($create){
         $sql_buscar_programa = search_create_query($conditions);
         $stmt_buscar = $con->prepare($sql_buscar_programa);
         $stmt_buscar ->setFetchMode(PDO::FETCH_ASSOC);
         $stmt_buscar ->execute();
 
-    }
-    elseif($edit_create == "buscar_edit"){
+    } else{
         $sql_buscar_programa = search_edit_query($conditions);
         $stmt_buscar = $con->prepare($sql_buscar_programa);
         $stmt_buscar ->setFetchMode(PDO::FETCH_ASSOC);
         $stmt_buscar ->execute();
-    }
-    else{
-        //error inesperado, algo falló en el formulario
-        echo "Error en la funcion get_program";
     }
 
     $num_buscar =$stmt_buscar ->rowCount();
@@ -351,7 +360,7 @@ function get_program($list_campos_data, $edit_create){
 
     while($row = $stmt_buscar->fetch()){
 
-        if($edit_create == 'buscar_create'){
+        if($create){
             $arr_programas[] =array(
                 "Nombre Diploma"            =>  $row['nom_diploma'],
                 "Tipo Programa"             =>  $row['tipo_programa'],
@@ -378,7 +387,7 @@ function get_program($list_campos_data, $edit_create){
                 "Usr Coordinador Ejecutivo" =>  $row['usr_cordinador_ej']
             );
         }
-        elseif($edit_create == 'buscar_edit'){
+        else{
             $arr_programas[] =array(
                 "Nombre Diploma"                =>  $row['nom_diploma'],
                 "Tipo Programa"                 =>  $row['tipo_programa'],
@@ -447,11 +456,7 @@ function get_program($list_campos_data, $edit_create){
                 "Reglamento"                    =>  $row['reglamento']
             );
         }
-        else{
-            //Error Inesperado, revise sus datos.
-        }
     }
-
     //se entrega el array(N, lista con los datos) 
     $arr_f = array($num_buscar, $arr_programas);
     return $arr_f;

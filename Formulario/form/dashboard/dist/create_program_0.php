@@ -15,6 +15,17 @@ include_once('C:/laragon/www/form/dashboard/dist/include/header.php');
 include('formulario_program.php');
 ?>
 <script>
+    var button_guardar = document.createElement("button");
+    button_guardar.innerHTML = "Guardar";
+    button_guardar.setAttribute("type", "submit");
+    button_guardar.setAttribute("formaction","post_data.php");
+    document.getElementById("submit_form_button").appendChild(button_guardar);
+
+    var button_remover = document.createElement("button");
+    button_remover.innerHTML = "Borrar";
+    button_remover.setAttribute("type", "reset");
+    document.getElementById("submit_form_button_2").appendChild(button_remover);
+
     var tipo_producto = document.getElementById("tipo_producto");
     var area = document.getElementById("area");
     var modalidad = document.getElementById("modalidad");
@@ -34,17 +45,6 @@ include('formulario_program.php');
     realización_en.setAttribute('required', "true");
     fecha_de_inicio.setAttribute('required', "true");
     ejecutivo_venta.setAttribute('required', 'true');
-
-    var button_guardar = document.createElement("button");
-    button_guardar.innerHTML = "Guardar";
-    button_guardar.setAttribute("type", "submit");
-    button_guardar.setAttribute("formaction","post_data.php");
-    document.getElementById("submit_form_button").appendChild(button_guardar);
-
-    var button_remover = document.createElement("button");
-    button_remover.innerHTML = "Borrar";
-    button_remover.setAttribute("type", "reset");
-    document.getElementById("submit_form_button_2").appendChild(button_remover);
 </script>
 <?php
 include('C:\laragon\www\form\dashboard\dist\include\footer.php');

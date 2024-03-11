@@ -23,14 +23,14 @@ $_SESSION['can_load'] = false;
                         <label>
                             Tipo Producto:
                             <select name = "tipo" id ="tipo_producto">
-                                <option value = "" selected = "true"  id= 'none' name = 'none' disable = "disable" hidden></option>
+                                <option value = "" selected = "true" disable = "disable" hidden></option>
                                 <option value= "Diploma" id="Diploma">
                                     DIPLOMA
                                 </option>
                                 <option value= "Diploma Postitulo" id="Diploma Postitulo">
                                     DIPLOMA POSTITULO
                                 </option>
-                                <option value= "Curso" id = "Curso" name = 'Curso'>
+                                <option value= "Curso" id = "Curso">
                                     CURSO
                                 </option>
                                 <option value = 'otro' id = 'otro' disable = "disable" hidden>
@@ -38,9 +38,8 @@ $_SESSION['can_load'] = false;
                                 </option>
                             </select> 
                         </label>
-                        <label hidden disable="disable" id = "Curso Conducente" name = "Curso Conducente">
-                            <input type="checkbox" id="cbox1" value="first_checkbox">
-                            ¿Es un Curso Conducente?
+                        <label id = "curso_conducente" disable = "disable" hidden>
+                            <input type="checkbox" id="curso_conducente_box" name ="curso_conducente_box" value="Conducente"/> ¿Es un Curso Conducente?
                         </label>
                     </div>
                 </div>
@@ -113,7 +112,7 @@ $_SESSION['can_load'] = false;
                     <div class="p-1">
                         <label>
                             Periodo
-                            <select name = "periodo" id = "periodo">
+                            <select name = "periodo" id = "periodo" onchange = "restringir_fechas()">
                                 <option value = "" selected = "true" disable = "disable" hidden></option>
                                 <option value= "2022S1" id = "2022S1" disable = "disable" hidden>
                                     Primer Semestre 2022
@@ -217,33 +216,33 @@ $_SESSION['can_load'] = false;
                 <div class="col">
                     <div class="p-2">
                         <label>
-                            Ejecutivo de Ventas
-                            <select name = "ejecutivo_ventas_id" id = "ejecutivo_ventas_id">
-                                <option value = "" selected = "true" disable = "disable" hidden></option>
-                                <option value = "covando" id = "covando">
-                                    Carolina Ovando
-                                </option>   
-                                <option value ="cgalan" id = "cgalan">
-                                    Consuelo Galán
-                                </option>
-                                <option value ="fgonzalez" id = "fgonzalez">
-                                    Fallon Gonzalez
-                                </option>
-                                <option value = "mcastro" id = "mcastro">
-                                    Marisol Castro
-                                </option>
-                                <option value = "nhormazabal" id = "nhormazabal">
-                                    Nataly Hormazabal
-                                </option>
-                            </select>
+                            Fecha de Inicio
+                            <input name = "fecha_de_inicio" type = "date" id = "fecha_de_inicio">
                         </label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="p-2">
                         <label>
-                            Fecha de Inicio
-                            <input name = "fecha_de_inicio" type = "date" id = "fecha_de_inicio">
+                            Ejecutivo de Ventas
+                            <select name = "ejecutivo_ventas_id" id = "ejecutivo_ventas_id">
+                                <option value = "" selected = "true" disable = "disable" hidden></option>
+                                <option value = "covando" id="covando">
+                                    Carolina Ovando
+                                </option>
+                                <option value = "cgalan" id ="cgalan">
+                                    Consuelo Galán
+                                </option>
+                                <option value = "fgonzalez" id ="fgonzalez">
+                                    Fallon Gonzalez
+                                </option>
+                                <option value = "mcastro" id="mcastro">
+                                    Marisol Castro
+                                </option>
+                                <option value = "nhormazabal" id ="nhormazabal">
+                                    Nataly Hormazabal
+                                </option>
+                            </select>
                         </label>
                     </div>
                 </div>
@@ -251,8 +250,8 @@ $_SESSION['can_load'] = false;
                     <div class="p-2">
                         <label >
                             Version
-                            <select id = "version" name = "version">
-                            <option value = "V1" name = "V1" id = "V1" selected = "true" disable = "disable" hidden>V1</option>
+                            <select id = "version" name ="version">
+                            <option value = "V1" selected = "true" disable = "disable" hidden></option>
                             </select>
                         </label>
                     </div>
@@ -272,8 +271,8 @@ $_SESSION['can_load'] = false;
                 <div class="col">
                     <div class="p-4">
                         <select name = "buscar_edit/create_program" id = "buscar_edit/create_program" autocomplete = 'off' hidden>
-                                <option value = "buscar_edit" disable = "disable" hidden></option>
-                                <option value = "buscar_create" disable = "disable" hidden></option>
+                                <option value = "buscar_edit" id= "buscar_edit" disable = "disable" hidden></option>
+                                <option value = "buscar_create" id = "buscar_create" disable = "disable" hidden></option>
                         </select>
                     </div>
                 </div>
@@ -282,19 +281,78 @@ $_SESSION['can_load'] = false;
     </form>
 </div>
 <script>
-    var version = document.getElementById('hide-version')
+    var version = document.getElementById('hide-version');
     version.setAttribute("hidden","true");
     version.setAttribute("disable", "disable");
 
-    var curso = document.getElementById('Curso');
-    if(curso.getAttribute('selected')){
-        var curso_conducente = document.getElementById('Curso Conducente');
-        curso_conducente.removeAttribute('hidden');
-        curso_conducente.removeAttribute('disable');
-    }
+    //agregamos la opcion de curso conducente como un checkbox
+    document.getElementById('tipo_producto').addEventListener('change', function(){
+        var tipo_producto = this.value;
+        var curso_conducente = document.getElementById('curso_conducente');
+
+        if(tipo_producto == "Curso"){
+            curso_conducente.removeAttribute('disable');
+            curso_conducente.removeAttribute('hidden');
+        }
+    })
+    //Restringimos fechas seleccionadas por semestre.
+    document.getElementById('periodo').addEventListener('change', function() {
+        var periodo = this.value;
+        var fechaInicio = document.getElementById('fecha_de_inicio');
+        var fechaActual = new Date();
+
+        if (periodo === '2022S1') {
+            fechaInicio.setAttribute('min', '2022-01-01');
+            fechaInicio.setAttribute('max', '2022-06-30');
+        } else if (periodo === '2022S2') {
+            fechaInicio.setAttribute('min', '2022-07-01');
+            fechaInicio.setAttribute('max', '2022-12-31');
+        } 
+
+        if (periodo === '2023S1') {
+            fechaInicio.setAttribute('min', '2023-01-01');
+            fechaInicio.setAttribute('max', '2023-06-30');
+        } else if (periodo === '2023S2') {
+            fechaInicio.setAttribute('min', '2023-07-01');
+            fechaInicio.setAttribute('max', '2023-12-31');
+        } 
+
+        if (periodo === '2024S1') {
+            fechaInicio.setAttribute('min', '2024-01-01');
+            fechaInicio.setAttribute('max', '2024-06-30');
+        } else if (periodo === '2024S2') {
+            fechaInicio.setAttribute('min', '2024-07-01');
+            fechaInicio.setAttribute('max', '2024-12-31');
+        }
+
+        if (periodo === '2025S1') {
+            fechaInicio.setAttribute('min', '2025-01-01');
+            fechaInicio.setAttribute('max', '2025-06-30');
+        } else if (periodo === '2025S2') {
+            fechaInicio.setAttribute('min', '2025-07-01');
+            fechaInicio.setAttribute('max', '2025-12-31');
+        } 
+
+        if (new Date(fechaInicio.value) < new Date(fechaInicio.min)) {
+            fechaInicio.value = fechaInicio.min;
+        } else if (new Date(fechaInicio.value) > new Date(fechaInicio.max)) {
+            fechaInicio.value = fechaInicio.max;
+        }
+    });
+
+    document.getElementById('fecha_de_inicio').addEventListener('change', function() {
+        var fechaSeleccionada = new Date(this.value);
+        var fechaMin = new Date(this.min);
+        var fechaMax = new Date(this.max);
+
+        if (fechaSeleccionada < fechaMin) {
+            this.value = this.min;
+        } else if (fechaSeleccionada > fechaMax) {
+            this.value = this.max;
+        }
+    });
 </script>
 <?php
-
 //Nos aseguramos de que la variable global este definida
 if(isset($_SESSION['can_load'])){
     $getted_program = $_SESSION['can_load'];
@@ -331,10 +389,7 @@ if(isset($_SESSION['can_load'])){
                 var horario_web = '<?php echo $array_data[18];?>';
                 var area = '<?php echo $array_data[19];?>';
                 var vacantes = '<?php echo $array_data[20];?>';
-                var usr_ejecutivo_ventas = '<?php echo $array_data[21];?>';
 
-
-                //display nombre programa encontrado
                 var new_nom_diploma = "";
                 for(var i = 0; i<nom_diploma.length ; i++){
                     if(nom_diploma[i] == ' ' && nom_diploma[i+1] == '-'){
@@ -347,15 +402,13 @@ if(isset($_SESSION['can_load'])){
                 var nombre_program = document.getElementById('nombre_program');
                 nombre_program.value = new_nom_diploma;
 
-                //display tipo programa si es que coincide
                 if(tipo_programa == "Diploma" || tipo_programa == "Diploma Postitulo" || tipo_programa == "Curso"){
                         var tipo_producto = document.getElementById(tipo_programa);
                         tipo_producto.setAttribute("selected","true");
                 }
 
-                //display area del programa si es que coincide
                 if(area_conocimiento == "Innovación y Emprendimiento" || area_conocimiento == "Finanzas e Inversiones" || area_conocimiento == "Marketing y Ventas" || area_conocimiento == "Estrategia y Gestión" ||
-                area_conocimiento == "Personas y Equipos" || area_conocimiento == "Operaciones y Logística" || area_conocimiento == "Dirección de Instituciones de Salud" || area_conocimiento == "Operaciones y Logistica"){
+                area_conocimiento == "Personas y Equipos" || area_conocimiento == "Operaciones y Logística" || area_conocimiento == "Dirección de Instituciones de Salud"){
                     var area_val = document.getElementById(area_conocimiento);
                     area_val.setAttribute("selected", "true");
                 } else{
@@ -383,8 +436,9 @@ if(isset($_SESSION['can_load'])){
                         var area_val = document.getElementById('Marketing y Ventas');
                         area_val.setAttribute('selected', 'true');
 
-                    } else if(area_conocimiento == 'Operaciones y Logística\n'){
-                        var area_val = document.getElementById('Operaciones y Logí')
+                    } else if(area_conocimiento.includes('Operacion')){
+                        var area_val = document.getElementById('Operaciones y Logística');
+                        area_val.setAttribute('selected', 'true');
                     }
                     else{
                         var area_val = document.getElementById('otro');
@@ -395,7 +449,6 @@ if(isset($_SESSION['can_load'])){
                     }
                 }
 
-                //display modalidad si es que coincide
                 if(modalidad_programa == "Presencial" || modalidad_programa == "B-Learning" || modalidad_programa == "E-Learning" || modalidad_programa == "Virtual" ||
                     modalidad_programa == "Mixto" || modalidad_programa == "Híbrido"){
                         var modalidad = document.getElementById(modalidad_programa);
@@ -408,65 +461,49 @@ if(isset($_SESSION['can_load'])){
 
                 }
 
-                //display periodo si es de los ultimos 2 años
                 if(periodo == '2022S1' || periodo == '2022S2' || periodo == '2023S1' || periodo == '2023S2' || periodo =='2024S1' ||
                     periodo == '2024S2'){
                         var periodo_select = document.getElementById(periodo);
                         periodo_select.setAttribute("selected", "true");
                         var fecha_inicio = document.getElementById('fecha_de_inicio');
                         fecha_inicio.value = fecha_de_inicio;
-                }
+                    }
 
-                //display realizacion si es que coincide con las actuales
                 if(realizacion_en == "FEN" || realizacion_en == "FUERA" || realizacion_en == "INTERNACIONAL" || realizacion_en == "Oriente"){
                     var realizacion = document.getElementById(realizacion_en);
                     realizacion.setAttribute("selected", "true");
                 }
                 
-                //display nivel
                 if(nivel == 'Inicial' || nivel == 'Intermedio' || nivel == 'Avanzado' || nivel == 'Experto'){
                     var nivel_val = document.getElementById(nivel);
                     nivel_val.setAttribute("selected", "true");
                 }
 
-                //display horario si es que coincide
                 if(horario == 'AM' || horario == 'PM' || horario == 'WK' || horario == 'TD'){
                     var horario_val = document.getElementById(horario);
                     horario_val.setAttribute("selected", "true");
                 }
                 
-                //creamos opciones de versiones y si es que coincide con una se enseña, si no queda V1 default
-                var version_option = ['V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9'];
+                var version_option = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9'];
 
                 var show_version = document.getElementById('hide-version')
                 show_version.removeAttribute("hidden");
                 show_version.removeAttribute("disable");
-                var v1_version = document.getElementById('V1');
-                v1_version.removeAttribute('hidden');
-                v1_version.removeAttribute('disable');
-                v1_version.removeAttribute('selected');
-
-                var version_select = document.getElementById('version');
+                
+                var version = document.getElementById('version');
                 
                 for (var i = 0; i < version_option.length; i++){
                     var opcion = document.createElement("option");
                     opcion.setAttribute("id", version_option[i]);
-                    opcion.setAttribute("name", version_option[i]);
-                    opcion.setAttribute("value", version_option[i]);
+                    opcion.setAttribute("name", "V");
+                    opcion.value = version_option[i];
                     opcion.text = version_option[i];
-                    version_select.appendChild(opcion);
-
-                    if(version_option[i] == version){
-                        var this_version = document.getElementById(version);
-                        this_version.setAttribute('selected', 'true');
-                    }
+                    version.appendChild(opcion);
                 }
-
-                //display usr_coordinador_ejecutivo
-                if(usr_ejecutivo_ventas == 'covando' || usr_ejecutivo_ventas == 'cgalan' ||
-                    usr_ejecutivo_ventas== 'fgonzalez' || usr_ejecutivo_ventas == 'mcastro' || usr_ejecutivo_ventas == 'nhormazabal'){
-                        var select_ejecutivo = document.getElementById(usr_ejecutivo_ventas);
-                        select_ejecutivo.setAttribute('selected', 'true');
+                
+                if(version_option.include(version)){
+                    var this_version = document.getElementById(version);
+                    this_version.setAttribute('selected', 'true');
                 }
             </script>
             <?php
