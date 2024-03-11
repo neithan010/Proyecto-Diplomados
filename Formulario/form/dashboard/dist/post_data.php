@@ -19,7 +19,15 @@
         $fecha_de_inicio = $_POST['fecha_de_inicio'];
         $usr_cordinador_ej = $_POST['ejecutivo_ventas_id'];
         $version = $_POST['version'];
-        
+        $conducente = false;
+
+        if($tipo_producto == 'Curso'){
+            if(isset($_POST['curso_conducente_box'])){
+                if($_POST['curso_conducente_box'] == 'Conducente'){
+                    $conducente = true;
+                }
+            }
+        }
         //se debe revisar la version
         //si se esta tomando un programa ya existente, se deben comparar los periodos
         //si es el mismo periodo, entonces se mantiene la version escogido
@@ -30,11 +38,11 @@
         $nom_ejecutivo_admision = $arr_ejecutivo[0]['Nombre'];
         $telefono_ejecutivo_admision = str_replace(" ", "",$arr_ejecutivo[0]['Telefono']);
         $mail_envio = $arr_ejecutivo[0]['Email'];
+        
         $DIPLOMADO = generate_DIPLOMADO($name_program, $tipo_producto);
-        $tipo_programa = generate_tipo_programa($tipo_producto,$modalidad);
+        $tipo_programa = generate_tipo_programa($tipo_producto,$modalidad, $conducente);
         $siglas_area = generate_area($area);
         $siglas = generate_siglas($DIPLOMADO, $conectores);
-        
 
         $cod_diploma_first = generate_cod_diploma($siglas, $periodo, $jornada, $version);
         $version = aprobe_version($version, $periodo, $DIPLOMADO, $cod_diploma_first);

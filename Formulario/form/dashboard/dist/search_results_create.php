@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once('C:/laragon/www/form/dashboard/dist/include/header.php');
+$create = true;
 include('get_data.php');
 ?>
 <div class="container-fluid">
@@ -14,24 +15,6 @@ include('get_data.php');
     </ol>
 </div>
 <?php
-    //deberia enseñar la tabla con los datos obtenidos segun la query
-    $create = true;
     include('display_program_results.php');
-
-    ?>
-    <script>
-        //ignorar
-        var edit_create = <?php echo $edit_create;?>;
-        //Aqui nos aseguramos de poner la opcion correcta en la barra superior
-        //Para eso, desde editar o crear enviamos un valor booleano que representa si es uno o el oto
-        if(edit_create == 'buscar_edit'){
-            edit_or_create_section.setAttribute("href","edit_program.php");
-        } 
-        if(edit_create == 'buscar_create'){
-            edit_or_create_section.setAttribute("href","create_program.php");
-        }
-        edit_or_create_section.appendChild("Buscar Programa");
-    </script>
-    <?
     include_once('C:\laragon\www\form\dashboard\dist\include\footer.php');
 ?>
