@@ -1,0 +1,226 @@
+<?php
+include_once('cn.php');
+
+
+$id_postulacion='';
+if(isset($_REQUEST['id_postulacion'])){
+    $id_postulacion=$_REQUEST['id_postulacion'];
+}
+
+$sql_postulante="SELECT 
+        p.ID_POSTULACION,
+        p.NOMBRES,
+        p.APELLIDO_PAT,
+        p.APELLIDO_MAT,
+        p.es_rut,
+        p.RUT,
+        concat(p.DIREC_PARTICULAR,' ',p.numero,if(p.depto_of_par<>'',CONCAT(' depto ',p.depto_of_par),''),', ',com.nombre,', ',reg.nombre) direccion,
+        p.EMAIL,
+        p.GENERO,
+        p.FECHA_NAC,
+        p.NACIONALIDAD,
+        p.CARRERA_PRO,
+        p.TituloProfesional,
+        p.RAZON_SOCIAL,
+        p.CARGO,
+        p.CV,
+        p.TELEFONO,
+        p.CELULAR,
+        p.EX_ALUMNO,
+        p.FECHA_POST AS fecha_postulacion,
+        p.ID_FINANCIAMIENTO AS financiamiento, 
+        p.MOTIVACION_ESTUDIO AS motivacion,
+        p.CARRERA_PRO,
+        p.titulado_uni,
+        p.TituloProfesional,
+        p.UNIVERSIDAD,
+
+
+        d.cod_diploma,
+        d.Cod_interno AS ceco,
+        d.DIPLOMADO,
+        d.fecha_inicio,
+        d.fecha_termino,
+
+        pd.linkedin, 
+        pd.twitter, 
+        pd.sin_estudios, 
+        pd.tecnico, 
+        pd.institucion_tecnica, 
+        pd.carrera_tecnica, 
+        pd.r_carrera_tec, 
+        pd.fecha_tec, 
+        pd.magister, 
+        pd.universidad_mag, 
+        pd.carrera_magister, 
+        pd.r_magister, 
+        pd.fecha_magister, 
+        pd.doctorado, 
+        pd.universidad_doc, 
+        pd.carrera_doctorado, 
+        pd.r_doctorado, 
+        pd.fecha_doc, 
+        pd.otro_estudio, 
+        pd.estudio_1, 
+        pd.estudio_2, 
+        pd.ultimo_estudio, 
+        pd.empleado, 
+        pd.busca_empleo, 
+        pd.year_posicion, 
+        pd.personal_cargo, 
+        pd.personas_a_cargo, 
+        pd.empleado_publico, 
+        pd.experiencia_lab, 
+        pd.empresa, 
+        pd.industria, 
+        pd.actividad, 
+        pd.cargo, 
+        pd.fecha_ini, 
+        pd.fecha_fin, 
+        pd.empresa_2, 
+        pd.industria_2, 
+        pd.actividad_2, 
+        pd.cargo_2, 
+        pd.fecha_ini_2, 
+        pd.fehca_fin_2, 
+        pd.empresa_3, 
+        pd.industria_3, 
+        pd.actividad_3, 
+        pd.cargo_3, 
+        pd.fecha_ini_3, 
+        pd.fecha_fin_3, 
+        pd.motivacion_1, 
+        pd.motivacion_2, 
+        pd.motivacion_3, 
+        pd.motivacion_4, 
+        pd.carta_recomendacion, 
+        pd.certificado_titulo, 
+        pd.periodo, 
+        pd.certificado_titulo_valida
+    FROM 
+        unegocios_nuevo.postulacion p
+        LEFT JOIN unegocios_nuevo.comunas com ON p.COMUNA=com.cod_comuna
+        LEFT JOIN unegocios_nuevo.regiones reg ON p.region=reg.cod_region
+        INNER JOIN intranet.diplomados d ON d.cod_diploma=p.cod_diploma
+        LEFT JOIN unegocios_nuevo.postulacion_datos pd ON p.RUT=pd.rut
+    WHERE 
+        p.ID_POSTULACION=".$id_postulacion;
+
+//echo '<pre>'.$sql_programas.'</pre>';
+
+$stmt_postulante = $con->prepare($sql_postulante);
+$stmt_postulante->setFetchMode(PDO::FETCH_ASSOC);
+$stmt_postulante->execute();
+$num_postulante = $stmt_postulante->rowCount();	
+//echo '::'.$num_convenios;
+
+//$arr_programas=[];
+while ($rw_postulante = $stmt_postulante->fetch()){
+    
+    
+    $url_img='https://intranet.unegocios.cl/fotos/upload_pic/'.$rw_postulante['RUT'].'.jpg';
+    //if(!is_readable($url_img)){
+    if(false){
+      $url_img='https://intranet.unegocios.cl/fotos/upload_pic/1-0.jpg';
+    }
+    
+    $nombre         = utf8_encode($rw_postulante['NOMBRES']);
+    $apellido_pat   = utf8_encode($rw_postulante['APELLIDO_PAT']);
+    $apellido_mat   = utf8_encode($rw_postulante['APELLIDO_MAT']);
+    $rut            = $rw_postulante['RUT'];
+    $direccion      = utf8_encode($rw_postulante['direccion']);
+    $email          = $rw_postulante['EMAIL'];
+    $fecha_nac      = $rw_postulante['FECHA_NAC'];
+    $nacionalidad   = $rw_postulante['NACIONALIDAD'];
+    $carrera_pro    = $rw_postulante['CARRERA_PRO'];
+    $titulo         = $rw_postulante['TituloProfesional'];
+    $genero         = $rw_postulante['GENERO'];
+
+    $es_rut             = $rw_postulante['es_rut'];
+    $RAZON_SOCIAL       = $rw_postulante['RAZON_SOCIAL'];
+    $CARGO              = $rw_postulante['CARGO'];
+    $CV                 = $rw_postulante['CV'];
+    $telefono           = $rw_postulante['TELEFONO'];
+    $celular            = $rw_postulante['CELULAR'];
+    $ex_alumno          = $rw_postulante['EX_ALUMNO'];
+    $fecha_postulacion  = $rw_postulante['fecha_postulacion'];
+    $CARRERA_PRO        = $rw_postulante['CARRERA_PRO'];
+    $titulado_uni       = $rw_postulante['titulado_uni'];
+    $TituloProfesional  = $rw_postulante['TituloProfesional'];
+    $UNIVERSIDAD        = $rw_postulante['UNIVERSIDAD'];
+    $cod_diploma        = $rw_postulante['cod_diploma'];
+    $ceco               = $rw_postulante['ceco'];
+    $programa           = $rw_postulante['DIPLOMADO'];
+    $fecha_inicio       = $rw_postulante['fecha_inicio'];
+    $fecha_termino      = $rw_postulante['fecha_termino'];
+
+    
+    $financiamiento     = $rw_postulante['financiamiento'];
+    $motivacion     = $rw_postulante['motivacion'];
+    
+
+    $linkedin           = $rw_postulante['linkedin'];
+    $twitter            = $rw_postulante['twitter'];
+    $sin_estudios       = $rw_postulante['sin_estudios'];
+    
+    $tecnico            = $rw_postulante['tecnico'];
+    $institucion_tecnica= $rw_postulante['institucion_tecnica'];
+    $carrera_tecnica    = $rw_postulante['carrera_tecnica'];
+    $r_carrera_tec      = $rw_postulante['r_carrera_tec'];
+    $fecha_tec          = $rw_postulante['fecha_tec'];
+    
+    $magister           = $rw_postulante['magister'];
+    $universidad_mag    = $rw_postulante['universidad_mag'];
+    $carrera_magister   = $rw_postulante['carrera_magister'];
+    $r_magister         = $rw_postulante['r_magister'];
+    $fecha_magister     = $rw_postulante['fecha_magister'];
+    
+    $doctorado          = $rw_postulante['doctorado'];
+    $universidad_doc    = $rw_postulante['universidad_doc'];
+    $carrera_doctorado  = $rw_postulante['carrera_doctorado'];
+    $r_doctorado        = $rw_postulante['r_doctorado'];
+    $fecha_doc          = $rw_postulante['fecha_doc'];
+    
+    $otro_estudio       = $rw_postulante['otro_estudio'];
+    $estudio_1          = $rw_postulante['estudio_1'];
+    $estudio_2          = $rw_postulante['estudio_2'];
+    $ultimo_estudio     = $rw_postulante['ultimo_estudio'];
+    
+    $empleado           = $rw_postulante['empleado'];
+    $busca_empleo       = $rw_postulante['busca_empleo'];
+    $year_posicion      = $rw_postulante['year_posicion'];
+    $personal_cargo     = $rw_postulante['personal_cargo'];
+    $personas_a_cargo   = $rw_postulante['personas_a_cargo'];
+    $empleado_publico   = $rw_postulante['empleado_publico'];
+    
+    $experiencia_lab    = $rw_postulante['experiencia_lab'];
+    $empresa            = utf8_encode($rw_postulante['empresa']);
+    $industria          = utf8_encode($rw_postulante['industria']);
+    $actividad          = utf8_encode($rw_postulante['actividad']);
+    $cargo              = $rw_postulante['cargo'];
+    $fecha_ini          = $rw_postulante['fecha_ini'];
+    $fecha_fin          = $rw_postulante['fecha_fin'];
+    
+    $empresa_2          = utf8_encode($rw_postulante['empresa_2']);
+    $industria_2        = utf8_encode($rw_postulante['industria_2']);
+    $actividad_2        = utf8_encode($rw_postulante['actividad_2']);
+    $cargo_2            = $rw_postulante['cargo_2'];
+    $fecha_ini_2        = $rw_postulante['fecha_ini_2'];
+    $fehca_fin_2        = $rw_postulante['fehca_fin_2'];
+    $empresa_3          = $rw_postulante['empresa_3'];
+    $industria_3        = $rw_postulante['industria_3'];
+    $actividad_3        = $rw_postulante['actividad_3'];
+    $cargo_3            = $rw_postulante['cargo_3'];
+    $fecha_ini_3        = $rw_postulante['fecha_ini_3'];
+    $fecha_fin_3        = $rw_postulante['fecha_fin_3'];
+    
+    $motivacion_1       = $rw_postulante['motivacion_1'];
+    $motivacion_2       = $rw_postulante['motivacion_2'];
+    $motivacion_3       = $rw_postulante['motivacion_3'];
+    $motivacion_4       = $rw_postulante['motivacion_4'];
+    $carta_recomendacion= $rw_postulante['carta_recomendacion'];
+    $certificado_titulo = $rw_postulante['certificado_titulo'];
+    $periodo            = $rw_postulante['periodo'];
+    $certificado_titulo_valida=$rw_postulante['certificado_titulo_valida'];
+}
+?>

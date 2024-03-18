@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"/>
+    
+</head>
+<body>
+    
+    
+
+
+<script>
+
+    $.fn.dataTable.ext.type.order['html-pre'] = function (a) {
+        return !a ?
+                '' :
+                a.replace ?
+                        $.trim(a.replace(/<.*?>/g, "").replace(/[\u200b]/g, "").toLowerCase()) :
+                a + '';
+    };
+
+    $(document).ready(function () {
+
+        $('#toollist').dataTable({
+            "iDisplayLength": 10,
+            "scrollY": "500px",
+            "scrollCollapse": true,
+            "lengthMenu": [5, 10, 25, 50, 100],
+
+        });
+    });
+
+</script>
+
+<table id="toollist" class="display table-bordered ">
+    <thead>
+    <tr>
+        <th>Column1</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td rowspan="1">
+            <a href="https://www.google.com">
+                <strong>A</strong></a></td>
+
+    </tr>
+    <tr>
+        <td rowspan="1"><strong>A</strong><br/></td>
+
+    </tr>
+    <tr>
+        <td rowspan="1">
+            <strong>C</strong><br/></td>
+
+    </tr>
+    <tr>
+        <td rowspan="1"><strong>B</strong><br/></td>
+
+    </tr>
+    <tr>
+        <td rowspan="1">
+            <a href="https://www.google.com"><strong>D</strong></a></td>
+
+    </tr>
+
+    <tr>
+        <td rowspan="1">
+            <a href="https://www.google.de">
+                <strong>E</strong></a></td>
+
+    </tr>
+    </tbody>
+</table> 
+</body>
+</html>

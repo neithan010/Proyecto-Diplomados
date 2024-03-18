@@ -1,0 +1,15 @@
+<?php
+include_once('cn.php');
+
+$sql_periodo="SELECT p.periodo FROM intranet.periodos p WHERE p.vigente_adm=1";
+
+$stmt_periodos = $con->prepare($sql_periodo);
+$stmt_periodos->setFetchMode(PDO::FETCH_ASSOC);
+$stmt_periodos->execute();
+$num_periodos=$stmt_periodos->rowCount();	
+
+while ($rw_periodos = $stmt_periodos->fetch()){
+    $arr_periodos[]=$rw_periodos['periodo'];
+}
+?>
+
