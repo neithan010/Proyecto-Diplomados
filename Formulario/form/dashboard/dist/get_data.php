@@ -59,17 +59,23 @@
                 }
             }
         }
+        
         $list_campos = [['nombre_program',$name_program], ['tipo_programa',$tipo_producto], ['area',$area], 
         ['modalidad',$modalidad], ['periodo',$periodo], ['horario',$jornada],
         ['nivel',$nivel], ['realización_en',$realizacion_en], ['fecha_de_inicio',$fecha_de_inicio],
-         ['usr_cordinador_ej', $usr_ejecutivo_ventas] /*,['version', $version]*/, ['conducente', $conducente]];
+        ['usr_cordinador_ej', $usr_ejecutivo_ventas] /*,['version', $version]*/, ['conducente', $conducente]];
 
-        $list_nombres_r = ['nombre_program','tipo_programa  ','area','modalidad','periodo','horario','nivel','realización_en','fecha_de_inicio',
-                           'usr_cordinador_ej' /*,'version'*/, 'conducente'];
+        if($list_campos[8][1] === ''){
+            unset($list_campos[8]);
+        } else{
+            if(verify_date($fecha_de_inicio)){
+                //si es menor a la fecha actual, cambiamos a la fecha actual
+                $list_campos[8][1] = get_this_date();
+            }
+        }
 
+        $list_campos = array_values($list_campos);
         $L = count($list_campos) - 1;
-        $list_nombres = [];
-
         //recorremos los datos, si encontramos uno vacio entonces eliminamos el nombre y el valor de dicha variable.
         //aqui se filtran los datos, para solo dejar los entregados por el usuario.
         for ($i = $L; $i >= 0; $i--) {
@@ -77,9 +83,10 @@
             if($i == $L){
                 if(!$list_campos[$i][1]){
                     unset($list_campos[$i]);
+                    echo "no era conducente";
                 }
             } else{
-                if($list_campos[$i][1] === ''){
+                if($list_campos[$i][1] == ''){
                     unset($list_campos[$i]);
                 }
             }

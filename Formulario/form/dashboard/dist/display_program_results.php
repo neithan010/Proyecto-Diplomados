@@ -49,9 +49,9 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                                 <tr>
                                     <td class ="text-center"><input type='radio' name="programa_seleccionado"></td>
                                     <td class = ""> <?php echo $programa['DIPLOMADO'];?></td>
-                                    <td class ="text-center"> <?php echo $programa['Codigo Diploma'];?></td>
-                                    <td class ="text-center"> <?php echo $programa['Tipo Programa'];?></td>
-                                    <td class ="text-center"> <?php echo $programa['Area Conocimiento'];?></td>
+                                    <td class ="text-center"> <?php echo $programa['Codigo_Diploma'];?></td>
+                                    <td class ="text-center"> <?php echo $programa['Tipo_Programa'];?></td>
+                                    <td class ="text-center"> <?php echo $programa['Area_Conocimiento'];?></td>
                                     <td class ="text-center"> <?php echo $programa['Modalidad'];?></td>
                                     <td class ="text-center"> <?php echo $programa['Horario'];?></td>
                                     <td class ="text-center"> <?php echo $programa['Nivel'];?></td>
@@ -72,7 +72,8 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                         </div>
                     </form>
                     <script>
-                        <?php  
+                        <?php 
+                            echo "creando rimas";
                             if(!$create){
                                 echo $create;
                                 ?>
@@ -82,8 +83,6 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                                 <?php
                             }
                         ?>
-                        var table = document.getElementById('dataTableprogramas');
-                        
                         function select_program() {
                             var radioButtons = document.getElementsByName('programa_seleccionado');
                             var info = '';
@@ -93,30 +92,30 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                                     break;
                                 }
                             }
-                            var xhr = new XMLHttpRequest();
-                            xhr.open('POST', 'get_implode_result.php'); // Archivo PHP que realiza el implode
-                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                            xhr.onload = function() {
-                                if (xhr.status === 200) {
-                                    var result = xhr.responseText;
-                                    var programaSeleccionadoInput = document.getElementById('programaSeleccionado');
-                                    programaSeleccionadoInput.value = result; // Establecer el valor obtenido en el input
-                                    document.getElementById('frm_periodo').submit();
-                                }
-                            };
-                            xhr.send('info=' + info); // Enviar el valor al servidor
+
+                            var data = '<?php echo $programas_encontrados;?>';
+                            var value = data[info];
+
+                            var formulario = document.getElementById('frm_periodo');
+                            var programa_selected = document.getElementById('programaSeleccionado');
+
+                            programa_selected.value = value;
+                            formulario.submit();
                         }
                     </script>
                 </div>
             </div>
         </div>
         <script>
-            $( document ).ready(function() {
+            /*    $( document ).ready(function() {
                 $('#dataTableprogramas').DataTable({
                 language: {
                 url: '../../js/es-mx.json'
                 }
             });
-        });
+        });*/
         </script>
 </body>
+<?php 
+echo '<pre>'.print_r($programas_encontrados[1], true).'</pre>';
+?>

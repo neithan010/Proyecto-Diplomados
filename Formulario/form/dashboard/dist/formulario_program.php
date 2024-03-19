@@ -396,6 +396,7 @@ if(isset($_SESSION['can_load'])){
                 var horario_web = '<?php echo $array_data[18];?>';
                 var area = '<?php echo $array_data[19];?>';
                 var vacantes = '<?php echo $array_data[20];?>';
+                var ejecutivo_ventas_id = '<?php echo $array_data[21];?>';
 
                 var new_nom_diploma = "";
                 for(var i = 0; i<nom_diploma.length ; i++){
@@ -412,6 +413,16 @@ if(isset($_SESSION['can_load'])){
                 if(tipo_programa == "Diploma" || tipo_programa == "Diploma Postitulo" || tipo_programa == "Curso"){
                         var tipo_producto = document.getElementById(tipo_programa);
                         tipo_producto.setAttribute("selected","true");
+                } else if(tipo_programa == "Curso Conducente"){
+                    var tipo_producto = document.getElementById('Curso');
+                    tipo_producto.setAttribute('selected', 'true');
+
+                    var conducente = document.getElementById('curso_conducente');
+                    conducente.removeAttribute('hidden');
+                    conducente.removeAttribute('disable');
+
+                    var conducente_box = document.getElementById('curso_conducente_box');
+                    conducente_box.setAttribute('checked', 'true');
                 }
 
                 if(area_conocimiento == "Innovación y Emprendimiento" || area_conocimiento == "Finanzas e Inversiones" || area_conocimiento == "Marketing y Ventas" || area_conocimiento == "Estrategia y Gestión" ||
@@ -491,27 +502,34 @@ if(isset($_SESSION['can_load'])){
                     horario_val.setAttribute("selected", "true");
                 }
                 
+
                 var version_option = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9'];
 
                 var show_version = document.getElementById('hide-version')
                 show_version.removeAttribute("hidden");
                 show_version.removeAttribute("disable");
                 
-                var version = document.getElementById('version');
+                var version_select = document.getElementById('version');
                 
                 for (var i = 0; i < version_option.length; i++){
                     var opcion = document.createElement("option");
                     opcion.setAttribute("id", version_option[i]);
-                    opcion.setAttribute("name", "V");
                     opcion.value = version_option[i];
                     opcion.text = version_option[i];
-                    version.appendChild(opcion);
-                }
-                
-                if(version_option.include(version)){
+                    version_select.appendChild(opcion);
+                }   
+
+                console.log("hola");
+                if(version_option.includes(version)){
                     var this_version = document.getElementById(version);
                     this_version.setAttribute('selected', 'true');
                 }
+                
+                if(ejecutivo_ventas_id == 'covando' || ejecutivo_ventas_id == 'fgonzalez' ||
+                    ejecutivo_ventas_id == 'nhormazabal' || ejecutivo_ventas_id == 'cgalan' || ejecutivo_ventas_id == 'mcastro'){
+                        var ejecutivo_ventas_select = document.getElementById(ejecutivo_ventas_id);
+                        ejecutivo_ventas_select.setAttribute('selected', 'true');
+                    }
             </script>
             <?php
         }

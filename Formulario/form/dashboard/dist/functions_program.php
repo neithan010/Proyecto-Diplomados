@@ -194,6 +194,7 @@ function generate_conditions($list_campos_data){
         $my_conducent_program .= "d.tipo = 'Curso conducente'";
         array_pop($list_campos_data);
     }
+
     foreach ($list_campos_data as $item) {
         // Verifica si el valor es diferente de vacío antes de agregarlo a las condiciones
         if ($item[1] !== "") {
@@ -214,6 +215,29 @@ function generate_conditions($list_campos_data){
     return $conditions_str;
 }
 
+function get_this_date(){
+    $hoy = getdate();
+    $mon = $hoy['mon'];
+    if($hoy['mon'] <=9){
+        $mon = "0".$mon;
+    }
+    $day = $hoy['mday'];
+    if($day <=9){
+        $day = "0".$day;
+    }
+
+    $fecha_hoy = $hoy['year']. "-" .$mon. "-" .$day;
+    return $fecha_hoy;
+}
+
+function verify_date($fecha_de_inicio){
+    $fecha_hoy = get_this_date();
+    if($fecha_de_inicio < $fecha_hoy){
+        return true;
+    } else{
+        return false;
+    }
+}
 
 //Query con datos necesarios para editar un programa ya existente
 //toma condiciones ya creadas en funcion de mas arriba
@@ -388,70 +412,69 @@ function get_program($list_campos_data, $create){
         }
         else{
             $arr_programas[] =array(
-                "Nombre Diploma"                =>  $row['nom_diploma'],
-                "Tipo Programa"                 =>  $row['tipo_programa'],
-                "Area Conocimiento"             =>  $row['area_conocimiento'],
+                "Nombre_Diploma"                =>  $row['nom_diploma'],
+                "Tipo_Programa"                 =>  $row['tipo_programa'],
+                "Area_Conocimiento"             =>  $row['area_conocimiento'],
                 "Modalidad"                     =>  $row['modalidad_programa'],
                 "Periodo"                       =>  $row['Periodo'],
                 "Horario"                       =>  $row['jornada'],
                 "Nivel"                         =>  $row['nivel'],
                 "Realización"                   =>  $row['realizacion_en'],
-                "Fecha Inicio"                  =>  $row['fecha_inicio'],
+                "Fecha_Inicio"                  =>  $row['fecha_inicio'],
                 "Version"                       =>  $row['version'],
                 "Siglas"                        =>  $row['codcatedraab'],
-                "Codigo Diploma"                =>  $row['cod_diploma'],
-                "Area Negocios"                 =>  $row['area_negocios'],
+                "Codigo_Diploma"                =>  $row['cod_diploma'],
+                "Area_Negocios"                 =>  $row['area_negocios'],
 
                 "DIPLOMADO"                     =>  $row['DIPLOMADO'],
-                "Mail Envio"                    =>  $row['mail_envio'],
+                "Mail_Envio"                    =>  $row['mail_envio'],
                 "Habilitado"                    =>  $row['Habilitado'],
-                "Habilitado Web"                =>  $row['web_habilitado'],
+                "Habilitado_Web"                =>  $row['web_habilitado'],
                 "Marca"                         =>  $row['marca'],
-                "Horario Web"                   =>  $row['horario_web'],
+                "Horario_Web"                   =>  $row['horario_web'],
                 "Area"                          =>  $row['area'],
                 "Vacantes"                      =>  $row['vacantes'],
 
-                "Id Diploma"                    =>  $row['ID_DIPLOMA'],
-                "Codigo Interno"                =>  $row['Cod_interno'],
+                "Id_Diploma"                    =>  $row['ID_DIPLOMA'],
+                "Codigo_Interno"                =>  $row['Cod_interno'],
                 "ORDEN"                         =>  $row['orden'],
-                "Nombre Web"                    =>  $row['nombre_web'],
-                "ID D.A"                        =>  $row['id_DA'],
+                "Nombre_Web"                    =>  $row['nombre_web'],
+                "ID_D_A"                        =>  $row['id_DA'],
                 "Director"                      =>  $row['Director'],
-                "Email Director"                =>  $row['emailDirector'],
+                "Email_Director"                =>  $row['emailDirector'],
                 "Token"                         =>  $row['token'],
-                "Nombre Coordinador Docente"    =>  $row['nombre_cordinador_docente'],
-                "ID Coordinador Docente"        =>  $row['usr_cordinador_docente'],
-                "Email Coordinador Docente"     =>  $row['email_cordinador_docente'],
-                "Telefono Coordinador Docente"  =>  $row['telefono_cordinador_docente'],
-                "Valor Programa"                =>  $row['valor_diplomado'],
-                "Tipo Moneda"                   =>  $row['moneda'],
-                "Fecha Termino"                 =>  $row['fecha_termino'],
+                "Nombre_Coordinador_Docente"    =>  $row['nombre_cordinador_docente'],
+                "ID_Coordinador_Docente"        =>  $row['usr_cordinador_docente'],
+                "Email_Coordinador_Docente"     =>  $row['email_cordinador_docente'],
+                "Telefono_Coordinador_Docente"  =>  $row['telefono_cordinador_docente'],
+                "Valor_Programa"                =>  $row['valor_diplomado'],
+                "Tipo_Moneda"                   =>  $row['moneda'],
+                "Fecha_Termino"                 =>  $row['fecha_termino'],
                 "Horas"                         =>  $row['horas'],
-                "Horas Online"                  =>  $row['horas_online'],
-                "Horas Pedagogicas"             =>  $row['hrs_pedagogicas'],
-                "Hora Inicio"                   =>  $row['hora_inicio'],
-                "Hora Termino"                  =>  $row['hora_termino'],
+                "Horas_Online"                  =>  $row['horas_online'],
+                "Horas_Pedagogicas"             =>  $row['hrs_pedagogicas'],
+                "Hora_Inicio"                   =>  $row['hora_inicio'],
+                "Hora_Termino"                  =>  $row['hora_termino'],
                 "Meta"                          =>  $row['meta'],
-                "Valor Meta"                    =>  $row['valor_meta'],
+                "Valor_Meta"                    =>  $row['valor_meta'],
                 "Dias"                          =>  $row['dias'],
-                "ID Ejecutivo Admision"         =>  $row['usr_cordinador_ej'],
-                "Nombre Ejecutivo Admision"     =>  $row['nom_ejecutivo_admision'],
-                "Telefono Ejecutivo Admision"   =>  $row['telefono_ejecutivo_admision'],
-                "Link PDF"                      =>  $row['lnk_pdf'],
-                "Codigo Sala"                   =>  $row['cod_sala'],
+                "ID_Ejecutivo_Admision"         =>  $row['usr_cordinador_ej'],
+                "Nombre_Ejecutivo_Admision"     =>  $row['nom_ejecutivo_admision'],
+                "Telefono_Ejecutivo_Admision"   =>  $row['telefono_ejecutivo_admision'],
+                "Link_PDF"                      =>  $row['lnk_pdf'],
+                "Codigo_Sala"                   =>  $row['cod_sala'],
                 "Secretaria"                    =>  $row['secretaria'],
-                "Sala Cafe"                     =>  $row['sala_cafe'],
-                "In Coffee"                     =>  $row['in_coffe'],
-                "Uso PC's"                      =>  $row['uso_pcs'],
+                "Sala_Cafe"                     =>  $row['sala_cafe'],
+                "In_Coffee"                     =>  $row['in_coffe'],
+                "Uso_PC_s"                      =>  $row['uso_pcs'],
                 "Nivelacion"                    =>  $row['nivelacion'],
                 "Introducción"                  =>  $row['intro_DA'],
                 "Cierre"                        =>  $row['cierre'],
                 "Encuesta"                      =>  $row['encuesta'],
-                "Codigo AUGE"                   =>  $row['cod_AUGE'],
-                "ID Coordinador Comercial"      =>  $row['usr_coordinador_comercial'],
-                "ID Consultor Corporativo"      =>  $row['usr_consultor_corp'],
+                "Codigo_AUGE"                   =>  $row['cod_AUGE'],
+                "ID_Coordinador_Comercial"      =>  $row['usr_coordinador_comercial'],
+                "ID_Consultor_Corporativo"      =>  $row['usr_consultor_corp'],
                 "ID_ORDEN"                      =>  $row['ID_ORDEN'],
-                "Cuenta Contable"               =>  $row['cuenta_contable'],
                 "Reglamento"                    =>  $row['reglamento']
             );
         }
