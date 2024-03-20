@@ -8,6 +8,8 @@
         if(isset($_POST['programaSeleccionado'])){
             $data = $_POST['programaSeleccionado'];
             echo $data;
+            $data =  explode('|', $data);
+            echo $data[42];
         }
     }
 ?>

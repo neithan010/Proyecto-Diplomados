@@ -70,39 +70,42 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
                                 Seleccionar
                             </button>
                         </div>
-                    </form>
-                    <script>
-                        <?php 
-                            echo "creando rimas";
-                            if(!$create){
-                                echo $create;
-                                ?>
-                                var frm_periodo = document.getElementById('frm_periodo');
-                                frm_periodo.removeAttribute('action');
-                                frm_periodo.setAttribute('action', 'edit_program_0.php');   
-                                <?php
-                            }
-                        ?>
-                        function select_program() {
-                            var radioButtons = document.getElementsByName('programa_seleccionado');
-                            var info = '';
-                            for (var i = 0; i < radioButtons.length; i++) {
-                                if (radioButtons[i].checked) {
-                                    info = i;
-                                    break;
+                        <script>
+                            <?php 
+                                if(!$create){
+                                    ?>
+                                    var frm_periodo = document.getElementById('frm_periodo');
+                                    frm_periodo.removeAttribute('action');
+                                    frm_periodo.setAttribute('action', 'edit_program_0.php');   
+                                    <?php
                                 }
+                            ?>
+
+                            function select_program() {
+                                var radioButtons = document.getElementsByName('programa_seleccionado');
+                                var info = '';
+                                for (var i = 0; i < radioButtons.length; i++) {
+                                    if (radioButtons[i].checked) {
+                                        info = i;
+                                        break;
+                                    }
+                                }
+
+                                var xhr = new XMLHttpRequest();
+                                xhr.open('POST', 'get_implode_result.php'); // Archivo PHP que realiza el implode
+                                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                                xhr.onload = function() {
+                                    if (xhr.status === 200) {
+                                        var result = xhr.responseText;
+                                        var programaSeleccionadoInput = document.getElementById('programaSeleccionado');
+                                        programaSeleccionadoInput.value = result; // Establecer el valor obtenido en el input
+                                        document.getElementById('frm_periodo').submit();
+                                    }
+                                };
+                                xhr.send('info=' + info); // Enviar el valor al servidor
                             }
-
-                            var data = '<?php echo $programas_encontrados;?>';
-                            var value = data[info];
-
-                            var formulario = document.getElementById('frm_periodo');
-                            var programa_selected = document.getElementById('programaSeleccionado');
-
-                            programa_selected.value = value;
-                            formulario.submit();
-                        }
-                    </script>
+                        </script>
+                    </form>
                 </div>
             </div>
         </div>
@@ -117,5 +120,4 @@ $_SESSION['programas_encontrados'] = $programas_encontrados[1];
         </script>
 </body>
 <?php 
-echo '<pre>'.print_r($programas_encontrados[1], true).'</pre>';
 ?>

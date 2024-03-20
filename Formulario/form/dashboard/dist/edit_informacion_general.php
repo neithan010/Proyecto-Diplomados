@@ -8,18 +8,7 @@
     </h4>
     <h5>
         <div id = "nombre_program_title" name = "nombre_program_title">
-            <?php 
-            $x = $data[0];
-            $y = $data[6];
-            echo '<pre>'.print_r($y, true).'</pre>';    
-            ?>     
-            <script> 
-                var x = '<?php echo $data;?>';
-                console.log(x);
-                //titulo
-                document.write(nom_diploma);
-                console.log(nom_diploma);
-            </script>
+            <?php echo $data[0]?>
         </div>
     </h5>
 </div>
@@ -37,7 +26,7 @@
                             type = "text" maxlength = "100" required/>
                             <script>
                                 //nombre_diploma
-                                document.getElementById('nombre_program').value = new_nom_diploma;
+                                document.getElementById('nombre_program').value = '<?php echo $data[13];?>';
                             </script>
                     </label>
                 </div>
@@ -50,7 +39,7 @@
                         <input name = "cod_interno" id = "cod_interno" type = "text" maxlength = "100" required/>
                         <script>
                             //Codigo Interno
-                            document.getElementById('cod_interno').value = cod_interno;
+                            document.getElementById('cod_interno').value = '<?php echo $data[22];?>';
                         </script>
                     </label>
                 </div>
@@ -81,6 +70,7 @@
                     </label>
                     <script> 
                         //Tipo Producto
+                        var tipo_programa = '<?php echo $data[1];?>';
                         if(tipo_programa == "Diploma" || tipo_programa == "Diploma Postitulo" || tipo_programa == "Curso"){
                             var tipo_producto = document.getElementById(tipo_programa);
                             tipo_producto.setAttribute("selected","true");
@@ -138,6 +128,7 @@
                 </label>
                 <script>
                     //area
+                    var area_conocimiento = '<?php echo $data[2];?>';
                     if(area_conocimiento == "Innovación y Emprendimiento" || area_conocimiento == "Finanzas e Inversiones" || area_conocimiento == "Marketing y Ventas" || area_conocimiento == "Estrategia y Gestión" ||
                         area_conocimiento == "Personas y Equipos" || area_conocimiento == "Operaciones y Logística" || area_conocimiento == "Dirección de Instituciones de Salud"){
                             var area_val = document.getElementById(area_conocimiento);
@@ -212,6 +203,7 @@
                 </label>
                 <script>
                     //modalidad
+                    var modalidad_programa = '<?php echo $data[3];?>';
                     if(modalidad_programa == "Presencial" || modalidad_programa == "B-Learning" || modalidad_programa == "E-Learning" || modalidad_programa == "Virtual" ||
                         modalidad_programa == "Mixto" || modalidad_programa == "Híbrido"){
                             var modalidad = document.getElementById(modalidad_programa);
@@ -254,6 +246,7 @@
                 </label>
                 <script>
                     //nivel
+                    var nivel = '<?php echo $data[6];?>';
                     if(nivel == 'Inicial' || nivel == 'Intermedio' || nivel == 'Avanzado' || nivel == 'Experto'){
                         var nivel_val = document.getElementById(nivel);
                         nivel_val.setAttribute("selected", "true");
@@ -261,8 +254,9 @@
                         var nivel_val = document.getElementById('otro_nivel');
                         nivel_val.value = nivel;
                         nivel_val.textContent = nivel;
-                        nivel.removeAttribute('disable');
-                        nivel.setAttribute('selected', 'true');
+                        
+                        var select_nivel = document.getElementById('nivel');
+                        select_nivel.setAttribute('placeholder', 'hola');
                     }
                 </script>
             </div>
@@ -296,6 +290,7 @@
                 </label>
                 <script>
                     //realización en:
+                    var realizacion_en = '<?php echo $data[7];?>';
                     if(realizacion_en == "FEN" || realizacion_en == "FUERA" || realizacion_en == "INTERNACIONAL" || realizacion_en == "Oriente"){
                         var realizacion = document.getElementById(realizacion_en);
                         realizacion.setAttribute("selected", "true");
@@ -329,7 +324,7 @@
                 <script>
                     //version
                     var version_option = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9'];
-
+                    var version = '<?php echo $data[9];?>';
                     if(version_option.includes(version)){
                         var this_version = document.getElementById(version);
                         this_version.setAttribute('selected', 'true');
@@ -370,7 +365,7 @@
                     </label>
                     <script>
                         //habilitado
-                        document.getElementById("habilitado_"+habilitado).setAttribute('selected', 'true');
+                        document.getElementById("habilitado_"+'<?php echo $data[15];?>').setAttribute('selected', 'true');
                     </script>
                 </div>
             </div>
@@ -387,7 +382,7 @@
                     </label>
                     <script>
                         //habilitado web
-                        document.getElementById("web_"+web_habilitado).setAttribute('selected', 'true');
+                        document.getElementById("web_"+'<?php echo $data[16];?>').setAttribute('selected', 'true');
                     </script>
                 </div>
             </div>
@@ -414,7 +409,7 @@
                     </label>
                     <script>
                         //valor diplomado
-                        document.getElementById('valor_diplomado').value = valor_diplomado;
+                        document.getElementById('valor_diplomado').value = '<?php echo $data[33];?>'
                     </script>
                 </div>
             </div>
@@ -432,6 +427,7 @@
                         </select>
                     </label>
                     <script>
+                        var moneda_d = '<?php echo $data[34];?>';
                         if(moneda_d == 'CLP' || moneda_d == 'USD' || moneda_d == 'UF'){
                             var m = document.getElementById(moneda_d);
                             m.setAttribute('selected', 'true');
@@ -454,7 +450,7 @@
                     </label>
                     <script>
                         //vacantes
-                        document.getElementById('vacantes').value = vacantes;
+                        document.getElementById('vacantes').value = <?php echo $data[20];?>
                     </script>
                 </div>
             </div>
@@ -470,7 +466,7 @@
                     </label>
                     <script>
                         //meta
-                        document.getElementById('meta').value = meta;
+                        document.getElementById('meta').value = <?php echo $data[41];?>
                     </script>
                 </div>
             </div>
@@ -483,7 +479,7 @@
                     </label>
                     <script>
                         //valor meta
-                        document.getElementById('valor_meta').value = meta;
+                        document.getElementById('valor_meta').value = '<?php echo $data[42];?>'
                     </script>
                 </div>  
             </div>
