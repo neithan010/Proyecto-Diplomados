@@ -28,7 +28,8 @@
                                                         text-overflow: ellipsis;"  
                                                         name = "nombre_program" id = "nombre_program" 
                                                         onmouseover = 'display_info_over("nombre_program")'
-                            type = "text" maxlength = "100" required/>
+                                                        onmouseout = 'deploy_msg_out("nombre_program")'
+                            type = "text" maxlength = "100"/>
                             <script>
                                 //nombre_diploma
                                 document.getElementById('nombre_program').value = '<?php echo $data[13];?>';
