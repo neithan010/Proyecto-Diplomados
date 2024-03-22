@@ -385,29 +385,29 @@ function get_program($list_campos_data, $create){
 
         if($create){
             $arr_programas[] =array(
-                "Nombre Diploma"            =>  $row['nom_diploma'],
-                "Tipo Programa"             =>  $row['tipo_programa'],
-                "Area Conocimiento"         =>  $row['area_conocimiento'],
+                "Nombre_Diploma"            =>  $row['nom_diploma'],
+                "Tipo_Programa"             =>  $row['tipo_programa'],
+                "Area_Conocimiento"         =>  $row['area_conocimiento'],
                 "Modalidad"                 =>  $row['modalidad_programa'],
                 "Periodo"                   =>  $row['Periodo'],
                 "Horario"                   =>  $row['jornada'],
                 "Nivel"                     =>  $row['nivel'],
                 "Realización"               =>  $row['realizacion_en'],
-                "Fecha Inicio"              =>  $row['fecha_inicio'],
+                "Fecha_Inicio"              =>  $row['fecha_inicio'],
                 "Version"                   =>  $row['version'],
                 "Siglas"                    =>  $row['codcatedraab'],
-                "Codigo Diploma"            =>  $row['cod_diploma'],
-                "Area Negocios"             =>  $row['area_negocios'],
+                "Codigo_Diploma"            =>  $row['cod_diploma'],
+                "Area_Negocios"             =>  $row['area_negocios'],
 
                 "DIPLOMADO"                 =>  $row['DIPLOMADO'],
-                "Mail Envio"                =>  $row['mail_envio'],
+                "Mail_Envio"                =>  $row['mail_envio'],
                 "Habilitado"                =>  $row['Habilitado'],
-                "Habilitado Web"            =>  $row['web_habilitado'],
+                "Habilitado_Web"            =>  $row['web_habilitado'],
                 "Marca"                     =>  $row['marca'],
-                "Horario Web"               =>  $row['horario_web'],
+                "Horario_Web"               =>  $row['horario_web'],
                 "Area"                      =>  $row['area'],
                 "Vacantes"                  =>  $row['vacantes'],
-                "Usr Coordinador Ejecutivo" =>  $row['usr_cordinador_ej']
+                "Usr_Coordinador_Ejecutivo" =>  $row['usr_cordinador_ej']
             );
         }
         else{

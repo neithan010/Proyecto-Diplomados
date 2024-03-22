@@ -45,6 +45,9 @@
                                     <option value= "2025S2" id ="2025S2">
                                         Segundo Semestre 2025
                                     </option>
+                                    <option  id = 'otro_periodo' disable = "disable" hidden>
+                                   
+                                    </option>
                                 </select> 
                             </label>
                         </div>
@@ -67,6 +70,9 @@
                                     </option>
                                     <option value = "TD" id="TD">
                                         TD
+                                    </option>
+                                    <option  id = 'otro_jornada' disable = "disable" hidden>
+                                   
                                     </option>
                                 </select>
                             </label>
@@ -110,6 +116,10 @@
                                 <br>
                                 <input required type = "time" id = "hora_inicio" name = "hora_inicio" required>
                             </label>
+                            <script>
+                                var hora_inicio = '<?php echo $data[39];?>';
+                                document.getElementById('hora_inicio').value = hora_inicio;
+                            </script>
                         </div>
                     </div>
                     <div class = "col">
@@ -119,6 +129,10 @@
                                 <br>
                                 <input required type = "time" id = "hora_final" name = "hora_final" required>
                             </label>
+                            <script>
+                                var hora_termino = '<?php echo $data[40];?>';
+                                document.getElementById('hora_final').value = hora_termino;
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -131,7 +145,7 @@
                             <label>
                                 Horas Totales
                                 <br>
-                                <input required id = "hora_inicio" name = "hora_inicio" pattern="[0-9]" placeholder = "Ingrese Horas Totales">
+                                <input required id = "hora_totales" name = "hora_totales" pattern="[0-9]" placeholder = "Ingrese Horas Totales">
                             </label>
                         </div>
                     </div>
@@ -139,7 +153,8 @@
                         <div id = "horas_online_t" name = "horas_online_t">
                             <label>
                                 Hora Totales Online
-                                <input requiered id = "hora_inicio" name = "hora_inicio" pattern="[0-9]" placeholder = "Ingrese Horas Totales Online">
+                                <br>
+                                <input requiered id = "hora_online" name = "hora_online" pattern="[0-9]" placeholder = "Ingrese Horas Totales Online">
                             </label>
                         </div>
                     </div>
@@ -147,7 +162,8 @@
                         <div id = "horas_pedagogicas_t" name = "horas_pedagogicas_t">
                             <label>
                                 Horas Pedagogicas
-                                <input required id = "hora_inicio" name = "hora_inicio" pattern="[0-9]" placeholder = "Ingrese Horas Pedagogicas ">
+                                <br>
+                                <input required id = "hora_pedagogicas" name = "hora_pedagogicas" pattern="[0-9]" placeholder = "Ingrese Horas Pedagogicas ">
                             </label>
                         </div>
                     </div>
@@ -160,7 +176,12 @@
                         <div id = "nombre_web_t" name = "nombre_web_t">
                             <label>
                                 Nombre Web Programa
-                                <input required style = "width: 300px;" name = "nombre_web" id = "nombre_web" type = "text" maxlength = "110" required/>
+                                <br>
+                                <input required style = "width: 300px;
+                                                        white-space: nowrap;
+                                                        overflow: hidden;
+                                                        text-overflow: ellipsis;" 
+                                                        name = "nombre_web" id = "nombre_web" type = "text" maxlength = "110" required/>
                             </label>
                         </div>
                     </div>
@@ -168,7 +189,12 @@
                         <div id = "horario_web_t" name = "horario_web_t">
                             <label>
                                 Horario Web Programa
-                                <input required style = "width: 300px;" name = "horario_web" id = "horario_web" type = "text" maxlength = "255" required/>
+                                <br>
+                                <input required style = "width: 300px;
+                                                        white-space: nowrap;
+                                                        overflow: hidden;
+                                                        text-overflow: ellipsis;"  
+                                                        name = "horario_web" id = "horario_web" type = "text" maxlength = "255" required/>
                             </label>
                         </div>
                     </div>
@@ -178,4 +204,122 @@
     </div>
     </body>
 <script>
+    //periodo
+    var periodo = '<?php echo $data[4];?>';
+    if(periodo == '2022S1' || periodo == '2022S2' || periodo == '2023S1' || periodo == '2023S2' || periodo =='2024S1' ||
+        periodo == '2024S2'){
+        var periodo_select = document.getElementById(periodo);
+        periodo_select.setAttribute("selected", "true");
+        var fecha_inicio = document.getElementById('fecha_de_inicio');
+        fecha_inicio.value = fecha_de_inicio;
+    } else{
+        var otro_periodo = document.getElementById('otro_periodo');
+        otro_periodo.removeAttribute('disable');
+        otro_periodo.setAttribute('selected', 'true');
+        otro_periodo.textContent = periodo;
+        otro_periodo.value = periodo;
+    }
+
+    //jornada horario
+    var horario = '<?php echo $data[5];?>';
+    if(horario == 'AM' || horario == 'PM' || horario == 'WK' || horario == 'TD'){
+        var horario_val = document.getElementById(horario);
+        horario_val.setAttribute("selected", "true");
+    } else{
+        var otro_jornada = document.getElementById('otro_jornada');
+        otro_jornada.removeAttribute('disable');
+        otro_jornada.setAttribute('selected', 'true');
+        otro_jornada.textContent = horario;
+        otro_jornada.value = horario;
+    }
+
+    //fecha de inicio 
+    var fecha_de_inicio = '<?php echo $data[8];?>';
+    document.getElementById('fecha_de_inicio').value = fecha_de_inicio;
+
+    //Restringimos fechas seleccionadas por semestre.
+    document.getElementById('periodo').addEventListener('change', function() {
+        var periodo = this.value;
+        var fechaInicio = document.getElementById('fecha_de_inicio');
+        var fechaActual = new Date();
+
+        if (periodo === '2022S1') {
+            fechaInicio.setAttribute('min', '2022-01-01');
+            fechaInicio.setAttribute('max', '2022-06-30');
+        } else if (periodo === '2022S2') {
+            fechaInicio.setAttribute('min', '2022-07-01');
+            fechaInicio.setAttribute('max', '2022-12-31');
+        } 
+
+        if (periodo === '2023S1') {
+            fechaInicio.setAttribute('min', '2023-01-01');
+            fechaInicio.setAttribute('max', '2023-06-30');
+        } else if (periodo === '2023S2') {
+            fechaInicio.setAttribute('min', '2023-07-01');
+            fechaInicio.setAttribute('max', '2023-12-31');
+        } 
+
+        if (periodo === '2024S1') {
+            fechaInicio.setAttribute('min', '2024-01-01');
+            fechaInicio.setAttribute('max', '2024-06-30');
+        } else if (periodo === '2024S2') {
+            fechaInicio.setAttribute('min', '2024-07-01');
+            fechaInicio.setAttribute('max', '2024-12-31');
+        }
+
+        if (periodo === '2025S1') {
+            fechaInicio.setAttribute('min', '2025-01-01');
+            fechaInicio.setAttribute('max', '2025-06-30');
+        } else if (periodo === '2025S2') {
+            fechaInicio.setAttribute('min', '2025-07-01');
+            fechaInicio.setAttribute('max', '2025-12-31');
+        } 
+
+        if (new Date(fechaInicio.value) < new Date(fechaInicio.min)) {
+            fechaInicio.value = fechaInicio.min;
+        } else if (new Date(fechaInicio.value) > new Date(fechaInicio.max)) {
+            fechaInicio.value = fechaInicio.max;
+        }
+    });
+
+    document.getElementById('fecha_de_inicio').addEventListener('change', function() {
+        var fechaSeleccionada = new Date(this.value);
+        var fechaMin = new Date(this.min);
+        var fechaMax = new Date(this.max);
+
+        if (fechaSeleccionada < fechaMin) {
+            this.value = this.min;
+        } else if (fechaSeleccionada > fechaMax) {
+            this.value = this.max;
+        }
+    });
+
+    //fecha de termino 
+    var fecha_de_termino = '<?php echo $data[35];?>';
+    document.getElementById('fecha_de_termino').value = fecha_de_termino;
+
+    //Restricción de fecha
+    //condición: fecha de incio <= fecha de termino
+
+    /*if(fecha_de_termino < fecha_de_inico){
+        document.getElementById('fecha_de_termino').value = fecha_de_inicio;
+    } else{
+        document.getElementById('fecha_de_termino').value = fecha_de_termino;
+    }*/
+
+    //horas totales, online y pedagogicas
+    var hora_totales = '<?php echo $data[36];?>';
+    var hora_online = '<?php echo $data[37];?>';
+    var hora_pedagogicas = '<?php echo $data[38];?>';
+
+    document.getElementById('hora_totales').value =  hora_totales;
+    document.getElementById('hora_online').value = hora_online;
+    document.getElementById('hora_pedagogicas').value = hora_pedagogicas;
+
+    //nombre web
+    var nombre_web = '<?php echo $data[24];?>';
+    document.getElementById('nombre_web').value = nombre_web;
+
+    var horario_web = '<?php echo $data[18];?>';
+    document.getElementById('horario_web').value = horario_web;
 </script>

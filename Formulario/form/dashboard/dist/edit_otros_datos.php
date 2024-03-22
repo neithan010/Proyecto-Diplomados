@@ -82,3 +82,48 @@
         </div>
     </div>
 </div>
+<script>
+    //codigo sala
+    var codigo_sala = '<?php echo $data[48];?>';
+    document.getElementById('cod_sala').value = codigo_sala;
+
+    //sala cafe
+    var sala_cafe = '<?php echo $data[50];?>';
+    document.getElementById('sala_cafe').value = sala_cafe;
+
+    //necesita pc
+    var pc = '<?php echo $data[52];?>';
+    if(pc == '1'){
+        document.getElementById('pc').setAttribute('checked', 'true');
+    }
+
+    //nivelacion
+    var nivelacion = '<?php echo $data[53];?>';
+    if(nivelacion == '1'){
+        document.getElementById('nivelacion').setAttribute('checked', 'true');
+    }
+
+    //introduccion
+    var introduccion = '<?php echo $data[54];?>';
+    if(introduccion == '1'){
+        document.getElementById('intro_DA').setAttribute('checked', 'true');
+    }
+
+    //cierre
+    var cierre = '<?php echo $data[55];?>';
+    if(cierre == '1'){
+        document.getElementById('cierre').setAttribute('checked', 'true');
+    }
+
+    //encuesta
+    var encuesta = '<?php echo $data[56];?>';
+    if(encuesta == '1'){
+        document.getElementById('encuesta').setAttribute('checked', 'true');
+    }
+
+    //reglamento
+    var reglamento = '<?php echo $data[57];?>';
+    if(reglamento == '1'){
+        document.getElementById('reglamento').setAttribute('checked', 'true');
+    }
+</script>

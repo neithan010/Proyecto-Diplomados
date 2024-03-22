@@ -9,7 +9,6 @@
             $data = $_POST['programaSeleccionado'];
             echo $data;
             $data =  explode('|', $data);
-            echo $data[42];
         }
     }
 ?>
@@ -66,13 +65,13 @@
                 <div id = "informacion_general">
                     <?php include('edit_informacion_general.php')?>
                 </div>
-                <div id = "fechas_horarios" hidden>
+                <div id = "fechas_horarios">
                     <?php include('edit_fechas_horarios.php')?>
                 </div>
-                <div id = "encargados" hidden>
+                <div id = "encargados">
                     <?php include('edit_encargados.php')?>
                 </div>
-                <div id = "otros_datos" hidden>
+                <div id = "otros_datos">
                     <?php include('edit_otros_datos.php')?>
                 </div>
             </div>

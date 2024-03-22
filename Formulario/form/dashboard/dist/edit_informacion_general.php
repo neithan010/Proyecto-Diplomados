@@ -22,7 +22,12 @@
                     <label>
                         Nombre Programa:
                         <br>
-                        <input style = "width: 300px;" name = "nombre_program" id = "nombre_program" 
+                        <input required style = "width: 300px;
+                                                        white-space: nowrap;
+                                                        overflow: hidden;
+                                                        text-overflow: ellipsis;"  
+                                                        name = "nombre_program" id = "nombre_program" 
+                                                        onmouseover = 'display_info_over("nombre_program")'
                             type = "text" maxlength = "100" required/>
                             <script>
                                 //nombre_diploma
@@ -161,6 +166,9 @@
                         } else if(area_conocimiento.includes('Operacion')){
                             var area_val = document.getElementById('Operaciones y Logística');
                             area_val.setAttribute('selected', 'true');
+                        } else if(area_conocimiento.includes('Operaciones y Logística ')){
+                            var area_val = document.getElementById('Operaciones y Logística');
+                            area_val.setAttribute('selected', 'true');
                         }
                         else{
                             var area_val = document.getElementById('otro_area');
@@ -170,6 +178,7 @@
                             area_val.removeAttribute("disable");
                         }
                     }
+                    console.log(area_conocimiento);
                 </script>
             </div>
             <div class="col">
@@ -486,3 +495,27 @@
         </div>
     </div>
 </div>
+<script>
+    //Se intenta desplegar burbuja para los inputs mas largos
+    /*
+    function display_info_over(id){
+        const input = document.getElementById(id);
+        const mensaje = input.getAttribute('data-mensaje');
+        const tooltip = document.createElement('div');
+        tooltip.textContent = mensaje;
+        tooltip.classList.add('tooltip');
+        document.body.appendChild(tooltip);
+        const rect = input.getBoundingClientRect();
+        tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px'; // Posiciona la burbuja arriba del input
+        tooltip.style.left = rect.left + 'px';
+    }
+
+    function deploy_msg_out(id){
+        const input = document.getElementById(id);
+        const tooltip = document.querySelector('.tooltip');
+        if (tooltip) {
+            tooltip.remove();
+        }
+    }
+    */
+</script>
