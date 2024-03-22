@@ -483,4 +483,46 @@ function get_program($list_campos_data, $create){
     $arr_f = array($num_buscar, $arr_programas);
     return $arr_f;
 }
+
+//funcion que contiene la query para encontrar el nombre de una secretaria
+//la encuentra segun su id y si esta vigente.
+function search_secretaria_byid(){
+    $sql_get_secretaria = ' SELECT 
+                            s.nombre,
+                            s.apellido_pat,
+                            s.apellido_mat
+                                FROM intranet.secretaria s
+                                    WHERE   s.idsecretaria = :id_secretaria AND
+                                            s.vigente = 1';
+
+    return $sql_get_secretaria;
+}
+
+//funcion que obtiene el nombre de la secretaria
+function get_secretaria($id_secretaria){
+    echo "in functino";
+    //obtenemos la query que nos debería dar solo una fila
+    $sql_get_secretaria = search_secretaria_byid();
+    $stmt_secretaria = $con->prepare($sql_get_secretaria);
+    $stmt_secretaria ->setFetchMode(PDO::FETCH_ASSOC);
+    $stmt_secretaria->bindParam(':id_secretaria', $id_secretaria);
+    $stmt_secretaria ->execute();  
+
+    //si efectivamente es una sola fila, quiere decir que no hay una id repetida(no deberia pasar)
+    if($stmt_secretaria ->rowCount() == 1){
+        //obtenemos la fila y sacamos los datos
+        $secretaria = array();
+
+        if($row = $stmt_secretaria->fetch()){
+            $secretaria[] =array(
+                "Nombre_Secretaria"  =>  $row['nombre']." ".$row['apellido_pat']." ".$row['apellido_mat']
+            );
+
+            return $secretaria['Nombre_Secretaria'];
+        }
+    } else{
+        //si hay más de una secretaria con el mismo id debe ocurrir un error dentro de la base de datos.
+        return '';
+    }
+}
 ?>

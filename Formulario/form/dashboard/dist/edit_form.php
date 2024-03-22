@@ -1,4 +1,5 @@
 <?php
+    include('functions_program.php');
 //posible  solucion:
 //dejar todo en un documento, generando funcion que al hacer click deje de esconder cierta información
 //la idea es que se tenga todo en un mismo archivo.
@@ -87,6 +88,7 @@
             include.removeChild(include.firstChild);
         }
     }
+
     function display_confirmation_window(){
         if(window.confirm('Esta seguro que quiere hacer los cambios?')){
             var button = document.getElementById('save_button_element');

@@ -26,6 +26,14 @@
                             <input id = 'telefono_cordinador_ejecutivo' name = 'telefono_cordinador_ejecutivo' type = 'tel' maxlength = '15'>
                         </label>
                     </label>
+                    <script>
+                        //coordinador ejecutivo
+                        var nombre_cordinador_ejecutivo = '<?php echo $data[45];?>';
+                        var telefono_cordinador_ejecutivo = '<?php echo $data[46];?>';
+
+                        document.getElementById('nombre_cordinador_ejecutivo').value = nombre_cordinador_ejecutivo;
+                        document.getElementById('telefono_cordinador_ejecutivo').value = telefono_cordinador_ejecutivo;
+                    </script>
                 </div>
             </div>
             <div class = "col">
@@ -43,7 +51,14 @@
                                 pattern=".+@unegocios.cl" maxlength="100" placeholder = 'example@unegocios.cl'>
                         </label>
                     </label>
-                    </label>
+                    <script>
+                        //director academico
+                        var nombre_director_academico = '<?php echo $data[26];?>';
+                        var email_director_academico = '<?php echo $data[27];?>';
+
+                        document.getElementById('nombre_director_academico').value = nombre_director_academico;
+                        document.getElementById('email_director_academico').value = email_director_academico;
+                    </script>   
                 </div>
             </div>
             <div class = "col">
@@ -65,6 +80,16 @@
                                 pattern=".+@unegocios.cl" maxlength="100" placeholder = 'example@unegocios.cl'>
                         </label>
                     </label>
+                    <script>
+                        //coordinador docente
+                        var nombre_cordinador_docente = '<?php echo $data[29];?>';
+                        var telefono_cordinador_docente = '<?php echo $data[32];?>';
+                        var email_cordinador_docente = '<?php echo $data[31];?>';
+
+                        document.getElementById('nombre_cordinador_docente').value = nombre_cordinador_docente;
+                        document.getElementById('telefono_cordinador_docente').value = telefono_cordinador_docente;
+                        document.getElementById('email_cordinador_docente').value = email_cordinador_docente;
+                    </script>
                 </div>
             </div>
         </div>
@@ -72,10 +97,22 @@
             <div class = "col">
                 <div id = "secretaria_t" name = "secretaria_t">
                     <label>
-                        secretaria
-                        <select>
-                        </select>
+                        Secretaria
+                        <br>
+                        <label>
+                            Nombre
+                            <input id = 'nombre_secretaria' name = 'nombre_secretaria' type = 'text' maxlength = '100'>
+                        </label>
                     </label>
+                    <?php echo "hola";?>
+                    <script>
+                        //no funciona bien aun
+                        var id = '<?php echo $data[49];?>';
+                        var nombre = get_secretaria(id);
+                        if(id != ''){
+                            document.getElementById('nombre_secretaria').value = id;
+                        }
+                    </script>
                 </div>
             </div>
             <div class = "col">
@@ -91,29 +128,6 @@
     </div>
 </div>
 <script>
-    //coordinador ejecutivo
-    var nombre_cordinador_ejecutivo = '<?php echo $data[45];?>';
-    var telefono_cordinador_ejecutivo = '<?php echo $data[46];?>';
-
-    document.getElementById('nombre_cordinador_ejecutivo').value = nombre_cordinador_ejecutivo;
-    document.getElementById('telefono_cordinador_ejecutivo').value = telefono_cordinador_ejecutivo;
-
-    //director academico
-    var nombre_director_academico = '<?php echo $data[26];?>';
-    var email_director_academico = '<?php echo $data[27];?>';
-
-    document.getElementById('nombre_director_academico').value = nombre_director_academico;
-    document.getElementById('email_director_academico').value = email_director_academico;
-
-    //coordinador docente
-    var nombre_cordinador_docente = '<?php echo $data[29];?>';
-    var telefono_cordinador_docente = '<?php echo $data[32];?>';
-    var email_cordinador_docente = '<?php echo $data[31];?>';
-
-    document.getElementById('nombre_cordinador_docente').value = nombre_cordinador_docente;
-    document.getElementById('telefono_cordinador_docente').value = telefono_cordinador_docente;
-    document.getElementById('email_cordinador_docente').value = email_cordinador_docente;
-
-    //secretaria es un id: buscar de donde sale ese id para traerlas al formulario
     //cordinador comercial: no hay desde los ultimos 2 años hasta la fecha
 </script>
+<?php echo $data[49];?>
