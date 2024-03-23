@@ -8,7 +8,10 @@
     </h4>
     <h5>
         <div id = "nombre_program_title" name = "nombre_program_title">
-            <?php echo $data[0]?>
+            <?php
+                //nom_diploma 
+                echo $data[0];
+            ?>
         </div>
     </h5>
 </div>
@@ -30,10 +33,26 @@
                                                         onmouseover = 'display_info_over("nombre_program")'
                                                         onmouseout = 'deploy_msg_out("nombre_program")'
                             type = "text" maxlength = "100"/>
+                            <?php 
+                                $nombre_programa = $data[0];
+                                $l = strlen($nombre_programa);
+                                $name = '';
+                                for($i = 0; $i < $l; $i++){
+                                    //si estamos en un espacio en blano y viene un - quiere decir que todo lo anterior
+                                    //es el nombre del programa y lo que viene es el código del diploma.
+                                    if($nombre_programa[$i] == ' ' && $nombre_programa[$i+1] == '-'){
+                                        break;
+                                    } else{
+                                        //en otro caso debemos copiar el nombre 
+                                        $name .= $nombre_programa[$i]; 
+                                    }
+                                } 
+                            ?>
                             <script>
-                                //nombre_diploma
-                                document.getElementById('nombre_program').value = '<?php echo $data[13];?>';
-                            </script>
+                              //nombre_diploma
+                                var nombre = '<?php echo $name;?>'; 
+                                document.getElementById('nombre_program').value = nombre;
+                            </script>   
                     </label>
                 </div>
             </div>

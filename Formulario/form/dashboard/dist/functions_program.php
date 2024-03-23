@@ -500,7 +500,8 @@ function search_secretaria_byid(){
 
 //funcion que obtiene el nombre de la secretaria
 function get_secretaria($id_secretaria){
-    echo "in functino";
+    include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
+
     //obtenemos la query que nos debería dar solo una fila
     $sql_get_secretaria = search_secretaria_byid();
     $stmt_secretaria = $con->prepare($sql_get_secretaria);
@@ -515,14 +516,81 @@ function get_secretaria($id_secretaria){
 
         if($row = $stmt_secretaria->fetch()){
             $secretaria[] =array(
-                "Nombre_Secretaria"  =>  $row['nombre']." ".$row['apellido_pat']." ".$row['apellido_mat']
+                "Nombre_Secretaria"  =>  $row['nombre'],
+                "Apellido_Paterno"   =>  $row['apellido_pat'],
+                "Apellido_Materno"   =>  $row['apellido_mat']
             );
 
-            return $secretaria['Nombre_Secretaria'];
+            return $secretaria;
         }
     } else{
         //si hay más de una secretaria con el mismo id debe ocurrir un error dentro de la base de datos.
         return '';
     }
+}
+
+function search_cord_comercial_byid(){
+    $sql_get_cord_comercial = ' SELECT 
+                            c.nombre,
+                            c.apellido,
+                            c.usr
+                                FROM intranet.usuarios_int c
+                                    WHERE   c.usr = :usr_cord_comercial';
+
+    return $sql_get_cord_comercial;
+}
+
+function get_cord_comercial($usr_cord_comercial){
+    include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
+
+    //obtenemos la query que nos debería dar solo una fila
+    $sql_get_cord_comercial = search_cord_comercial_byid();
+    $stmt_cord_comercial = $con->prepare($sql_get_cord_comercial);
+    $stmt_cord_comercial ->setFetchMode(PDO::FETCH_ASSOC);
+    $stmt_cord_comercial->bindParam(':usr_cord_comercial', $usr_cord_comercial);
+    $stmt_cord_comercial ->execute();  
+
+    //si efectivamente es una sola fila, quiere decir que no hay una id repetida(no deberia pasar)
+    if($stmt_cord_comercial ->rowCount() == 1){
+        //obtenemos la fila y sacamos los datos
+        $cord_comercial= array();
+        if($row = $stmt_cord_comercial->fetch()){
+            $cord_comercial[] =array(
+                "Nombre_Cord_Comercial"  =>  $row['nombre'],
+                "Apellido"               =>  $row['apellido'],
+                "Usuario"                =>  $row['usr']
+            );
+
+            return $cord_comercial;
+        }
+    } else{
+        //si hay más de un coordinador comercial con el mismo id debe ocurrir un error dentro de la base de datos.
+        return '';
+    }
+}
+
+function get_query_encargados($tipo){
+    
+    $sql_data = '';
+    //si es tipo 10 quiere decir es que es coordinador Ejecutivo
+    if($tipo == 10){
+        $sql_data = "";
+    } elseif($tipo == 20){
+
+    } elseif($tipo == 1){
+
+    } elseif($tipo == 2){
+
+    }
+    //si es tipo 0 quiere decir que es una secretaria, por lo cual
+    //las buscaremos  
+    elseif($tipo == 0)
+
+
+    return $sql_data;
+}
+
+function get_data_encargados($tipo){
+    $sql_dato_encargados = get_query_encargados($tipo);
 }
 ?>

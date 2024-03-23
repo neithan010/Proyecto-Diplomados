@@ -10,16 +10,18 @@
 <hr>    
 <br>
 <div id = "encargados-3" name = "encargados-3">
-    <div class = "container text-center">
+    <div class = "container">
         <div class = "row row-cols-3 row-cols-lg-3 g-lg-3">
             <div class = "col">
                 <div id = "coordinador_ejecutivo_t" name = "coordinador_ejecutivo_t">
                     <label>
-                        Coordinador Ejecutivo
-                        <br>
+                        <div class = 'text-center'>
+                            Coordinador Ejecutivo
+                        </div>
                         <label>
                             Nombre
                             <input id = 'nombre_cordinador_ejecutivo' name = 'nombre_cordinador_ejecutivo' type = 'text' maxlength = '100'>
+                            <input type = 'button' value = 'Buscador' onclick = 'display_search_encargados("coordinador ejecutivo")'>
                         </label>
                         <label>
                             Telefono
@@ -39,8 +41,9 @@
             <div class = "col">
                 <div id = "director_academico_t" name = "director_academico_t">
                     <label>
-                        Director Academico
-                        <br>
+                        <div class = 'text-center'>
+                            Director Academico
+                        </div>
                         <label>
                             Nombre
                             <input id = 'nombre_director_academico' name = 'nombre_director_academico' type = 'text' maxlength = '60'>
@@ -63,71 +66,130 @@
             </div>
             <div class = "col">
                 <div id = "coordinador_docente_t" name = "coordinador_docente_t">
-                <label>
+                <label> 
+                    <div class = 'text-center'>
                         Coordinador Docente
-                        <br>
-                        <label>
-                            Nombre
-                            <input id = 'nombre_cordinador_docente' name = 'nombre_cordinador_docente' type = 'text' maxlength = '100'>
-                        </label>
-                        <label>
-                            Telefono
-                            <input id = 'telefono_cordinador_docente' name = 'telefono_cordinador_docente' type = 'tel' maxlength = '15'>
-                        </label>
-                        <label>
-                            E-mail
-                            <input  id = 'email_cordinador_docente' name = 'email_cordinador_docente' type = 'email' 
-                                pattern=".+@unegocios.cl" maxlength="100" placeholder = 'example@unegocios.cl'>
-                        </label>
+                    </div>
+                    <label>
+                        Nombre
+                        <input id = 'nombre_cordinador_docente' name = 'nombre_cordinador_docente' type = 'text' maxlength = '100'>
                     </label>
-                    <script>
-                        //coordinador docente
-                        var nombre_cordinador_docente = '<?php echo $data[29];?>';
-                        var telefono_cordinador_docente = '<?php echo $data[32];?>';
-                        var email_cordinador_docente = '<?php echo $data[31];?>';
+                    <label>
+                        Telefono
+                        <input id = 'telefono_cordinador_docente' name = 'telefono_cordinador_docente' type = 'tel' maxlength = '15'>
+                    </label>
+                    <label>
+                        E-mail
+                        <input  id = 'email_cordinador_docente' name = 'email_cordinador_docente' type = 'email' 
+                            pattern=".+@unegocios.cl" maxlength="100" placeholder = 'example@unegocios.cl'>
+                    </label>
+                </label>
+                <script>
+                    //coordinador docente
+                    var nombre_cordinador_docente = '<?php echo $data[29];?>';
+                    var telefono_cordinador_docente = '<?php echo $data[32];?>';
+                    var email_cordinador_docente = '<?php echo $data[31];?>';
 
-                        document.getElementById('nombre_cordinador_docente').value = nombre_cordinador_docente;
-                        document.getElementById('telefono_cordinador_docente').value = telefono_cordinador_docente;
-                        document.getElementById('email_cordinador_docente').value = email_cordinador_docente;
-                    </script>
-                </div>
+                    document.getElementById('nombre_cordinador_docente').value = nombre_cordinador_docente;
+                    document.getElementById('telefono_cordinador_docente').value = telefono_cordinador_docente;
+                    document.getElementById('email_cordinador_docente').value = email_cordinador_docente;
+                </script>
             </div>
+        </div>
         </div>
         <div class = "row row-cols-2 row-cols-lg-2 g-lg-2">
             <div class = "col">
                 <div id = "secretaria_t" name = "secretaria_t">
                     <label>
-                        Secretaria
-                        <br>
+                        <div class = 'text-center'>
+                            Secretaria
+                        </div>
                         <label>
                             Nombre
                             <input id = 'nombre_secretaria' name = 'nombre_secretaria' type = 'text' maxlength = '100'>
                         </label>
                     </label>
-                    <?php echo "hola";?>
-                    <script>
-                        //no funciona bien aun
-                        var id = '<?php echo $data[49];?>';
-                        var nombre = get_secretaria(id);
-                        if(id != ''){
-                            document.getElementById('nombre_secretaria').value = id;
+                    <?php
+                        //secretaria
+                        $id = $data[49];
+                        $nombre_secretaria='';
+                        if($id != ''){
+                            $nombre = get_secretaria($id);
+                            $nombre_completo = $nombre[0]['Nombre_Secretaria']." ".$nombre[0]['Apellido_Paterno']." ".$nombre[0]['Apellido_Materno'];
                         }
+                    ?>
+                    <script>
+                        var nombre_secretaria = '<?php echo $nombre_secretaria?>';
+                        document.getElementById('nombre_secretaria').value = nombre_secretaria;
                     </script>
                 </div>
             </div>
             <div class = "col">
                 <div id = "coordinador_comercial_t" name = "coordinador_comercial_t">
                     <label>
-                        Coordinador Comercial
-                        <select>
-                        </select>
+                        <div class = 'text-center'>
+                            Coordinador Comercial
+                        </div>
+                        Nombre
+                        <input id = 'coordinador_comercial' name = 'coordinador_comercial' type = 'text' maxlength = '100'>
                     </label>
+                    <?php 
+                        $usr_cord_comercial = $data[58];
+                        $nombre_cord_comercial = '';
+                        if($usr_cord_comercial !=''){
+                            $nombre = get_cord_comercial($usr_cord_comercial);
+                            $nombre_cord_comercial = $nombre[0]['Nombre_Cord_Comercial'].' '.$nombre[0]['Apellido'];
+                        }
+                    ?>
+                    <script>
+                        var nombre_cord_comercial = '<?php echo $nombre_cord_comercial?>';
+                        document.getElementById('coordinador_comercial').value = nombre_cord_comercial;
+                    </script>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<br>
+<div style ="margin-left: 20px;" id = 'buscador_encargados' hidden>
+    <h5 id = 'title_buscador'>
+    </h5>
+    <hr>    
+    <br>
+    <div id = 'buscador'>
+        <div class = 'container'>
+            <div class = 'row '>
+                <div class = 'col'>
+                    <label>
+                        <div class = 'text-center'>
+                            Nombre
+                        </div>
+                    </label>
+                    <input id = 'buscar_name_encargado' name = 'buscar_name_encargado' type = 'text' maxlength = '100'>
+                    <input type = 'button' id = 'button_buscar_encargados'>
+
+</div>
 <script>
-    //cordinador comercial: no hay desde los ultimos 2 años hasta la fecha
+
+    function display_search_encargados(tipo){
+        var buscador_encargados = document.getElementById('buscador_encargados');
+
+        if(tipo == 'coordinador ejecutivo'){
+            if(buscador_encargados.hasAttribute('hidden')){
+                console.log('hola pe');
+                var title_buscador = document.getElementById('title_buscador');
+                var value_button = document.getElementById('button_buscar_encargados');
+                var input_name = document.getElementById('buscar_name_encargado');
+
+                buscador_encargados.removeAttribute('hidden');
+                title_buscador.textContent = 'Buscar Coordinador Ejecutivo';
+                value_button.value = 'Buscar Coord. Ejec.';
+                input_name.placeholder = 'Nombre Cord. Ejec.';
+            } else{
+                buscador_encargados.setAttribute('hidden', 'true');
+            }
+        }
+    }
+    /*function display_table_encargados(tipo){
+        var datos = get_data_encargados(tipo);*/
 </script>
-<?php echo $data[49];?>

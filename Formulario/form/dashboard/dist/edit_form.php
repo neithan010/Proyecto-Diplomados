@@ -63,16 +63,16 @@
             </div>
 
             <div id = "include">
-                <div id = "informacion_general">
+                <div id = "informacion_general" hidden>
                     <?php include('edit_informacion_general.php')?>
                 </div>
-                <div id = "fechas_horarios">
+                <div id = "fechas_horarios" hidden>
                     <?php include('edit_fechas_horarios.php')?>
                 </div>
                 <div id = "encargados">
                     <?php include('edit_encargados.php')?>
                 </div>
-                <div id = "otros_datos">
+                <div id = "otros_datos" hidden>
                     <?php include('edit_otros_datos.php')?>
                 </div>
             </div>
