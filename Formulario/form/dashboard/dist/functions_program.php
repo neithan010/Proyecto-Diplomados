@@ -573,8 +573,18 @@ function get_query_encargados($tipo){
     
     $sql_data = '';
     //si es tipo 10 quiere decir es que es coordinador Ejecutivo
-    if($tipo == 10){
-        $sql_data = "";
+    if($tipo == 'coordinador ejecutivo'){
+        $sql_data = "SELECT
+                        u.Nombre,
+                        u.Apellido,
+                        u.telefono,
+                        u.email
+                        FROM intranet.usuarios_int u
+                        WHERE   u.vigente = 1 AND
+                                u.tipo = 10 AND
+                                u.Nombre LIKE :nombre AND
+                                u.Apellido LIKE :apellido";
+
     } elseif($tipo == 20){
 
     } elseif($tipo == 1){
@@ -584,13 +594,41 @@ function get_query_encargados($tipo){
     }
     //si es tipo 0 quiere decir que es una secretaria, por lo cual
     //las buscaremos  
-    elseif($tipo == 0)
+    elseif($tipo == 0){}
+    else{}
 
 
     return $sql_data;
 }
 
-function get_data_encargados($tipo){
-    $sql_dato_encargados = get_query_encargados($tipo);
+function get_data_encargados($tipo, $nombre){
+    include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
+
+    list($name, $apellido) = explode(" ", $nombre);
+    $name = '%'.$name.'%';
+    $apellido = '%'.$apellido.'%';
+
+    $sql_encargados = get_query_encargados($tipo);
+    $stmt_encargados = $con->prepare($sql_encargados);
+    $stmt_encargados ->setFetchMode(PDO::FETCH_ASSOC);
+    $stmt_encargados->bindParam(':nombre', $name);
+    $stmt_encargados->bindParam(':apellido', $apellido);
+    $stmt_encargados ->execute();
+
+    $num_buscar =$stmt_encargados ->rowCount();
+
+    $arr_encargados = array();
+
+    while($row = $stmt_encargados->fetch()){
+        if($tipo == 'coordinador ejecutivo'){
+            $arr_encargados[] =array(
+                "Nombre"        =>  $row['Nombre'],
+                "Apellido"      =>  $row['Apellido'],
+                "Telefono"      => $row['telefono'],
+                "Email"         =>  $row['email']
+            );
+        }
+    }
+    return $arr_encargados;
 }
 ?>

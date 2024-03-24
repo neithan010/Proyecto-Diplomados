@@ -1,3 +1,4 @@
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel="style" type="text/css" href="C:\laragon\www\form\css\estilo_create_program.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -27,14 +28,21 @@
                             Telefono
                             <input id = 'telefono_cordinador_ejecutivo' name = 'telefono_cordinador_ejecutivo' type = 'tel' maxlength = '15'>
                         </label>
+                        <label>
+                            E-mail
+                            <input  id = 'email_cordinador_ejecutivo' name = 'email_cordinador_ejecutivo' type = 'email' 
+                            pattern=".+@unegocios\.cl|.+@hotmail\.com" maxlength="100" placeholder = 'example@unegocios.cl'>
+                        </label>
                     </label>
                     <script>
                         //coordinador ejecutivo
                         var nombre_cordinador_ejecutivo = '<?php echo $data[45];?>';
                         var telefono_cordinador_ejecutivo = '<?php echo $data[46];?>';
+                        var email_cordinador_ejecutivo = '<?php echo $data[14];?>';
 
                         document.getElementById('nombre_cordinador_ejecutivo').value = nombre_cordinador_ejecutivo;
                         document.getElementById('telefono_cordinador_ejecutivo').value = telefono_cordinador_ejecutivo;
+                        document.getElementById('email_cordinador_ejecutivo').value = email_cordinador_ejecutivo;
                     </script>
                 </div>
             </div>
@@ -51,7 +59,7 @@
                         <label>
                             E-mail
                             <input  id = 'email_director_academico' name = 'email_director_academico' type = 'email' 
-                                pattern=".+@unegocios.cl" maxlength="100" placeholder = 'example@unegocios.cl'>
+                            pattern=".+@unegocios\.cl|.+@hotmail\.com" maxlength="100" placeholder = 'example@unegocios.cl'>
                         </label>
                     </label>
                     <script>
@@ -81,7 +89,7 @@
                     <label>
                         E-mail
                         <input  id = 'email_cordinador_docente' name = 'email_cordinador_docente' type = 'email' 
-                            pattern=".+@unegocios.cl" maxlength="100" placeholder = 'example@unegocios.cl'>
+                        pattern=".+@unegocios\.cl|.+@hotmail\.com" maxlength="100" placeholder = 'example@unegocios.cl'>
                     </label>
                 </label>
                 <script>
@@ -165,31 +173,151 @@
                             Nombre
                         </div>
                     </label>
-                    <input id = 'buscar_name_encargado' name = 'buscar_name_encargado' type = 'text' maxlength = '100'>
-                    <input type = 'button' id = 'button_buscar_encargados'>
-
+                    <input id = 'buscar_name_encargado' name = 'buscar_name_encargado' type = 'text' maxlength = '100' required>
+                    <button id = 'button_buscar_encargados' onclick = 'showResultsEncargados("coordinador ejecutivo")'>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div id = 'table_results' hidden>
+        <div class="container-fluid">
+            <div class="table-responsive">
+                <div class="card-header">
+                    <i class="fas fa-table mr-1"></i>
+                    Resultados Encontrados
+                </div>
+                <br>
+                <form action = "create_program_0.php" name="frm_periodo" id="frm_periodo" method="POST">
+                    <input type="hidden" id="encargadoSeleccionado" name="encargadoSeleccionado" value="">
+                    <div class ="margin-left">
+                        <button value="Enviar" id = 'seleccionar_encargado'>
+                            Seleccionar
+                        </button>
+                    </div>
+                </form>
+                <div class="card-body">
+                    <table class="table table-bordered small" id="dataTableEncargados" width="100%" cellspacing="0">
+                        <thead>
+                            <tr class ="text-center">
+                                <th >SELECCIONAR</th>
+                                <th>NOMBRE</th>
+                                <th>APELLIDO</th>
+                                <th>TELEFONO</th>
+                                <th>EMAIL</th>
+                            </tr>
+                        </thead>
+                        <tbody id = 'tableBody'>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
-
+    //funcion que enseña el buscador por nombre de los encargados
     function display_search_encargados(tipo){
         var buscador_encargados = document.getElementById('buscador_encargados');
+        var input_name = document.getElementById('buscar_name_encargado');
 
         if(tipo == 'coordinador ejecutivo'){
+            var title_buscador = document.getElementById('title_buscador');
+            var value_button = document.getElementById('button_buscar_encargados');
             if(buscador_encargados.hasAttribute('hidden')){
-                console.log('hola pe');
-                var title_buscador = document.getElementById('title_buscador');
-                var value_button = document.getElementById('button_buscar_encargados');
-                var input_name = document.getElementById('buscar_name_encargado');
-
+                
                 buscador_encargados.removeAttribute('hidden');
                 title_buscador.textContent = 'Buscar Coordinador Ejecutivo';
-                value_button.value = 'Buscar Coord. Ejec.';
-                input_name.placeholder = 'Nombre Cord. Ejec.';
+                value_button.textContent = 'Buscar Coord. Ejec.';
+                input_name.placeholder = 'Ej: Arturo Cordero';
+
             } else{
+                var tabla_encargados = document.getElementById('tableBody');
+                
                 buscador_encargados.setAttribute('hidden', 'true');
+                title_buscador.textContent = '';
+                value_button.value = '';
+                input_name.placeholder = '';
+                input_name.value = '';
+                tabla_encargados.innerHTML = '';
             }
         }
     }
-    /*function display_table_encargados(tipo){
-        var datos = get_data_encargados(tipo);*/
+
+    function showResultsEncargados(tipo) {
+        var inputName = document.getElementById('buscar_name_encargado');
+        var tableResults = document.getElementById('table_results');
+
+        if (tipo === 'coordinador ejecutivo' && inputName.value !== '') {
+            // Realizar una solicitud AJAX para enviar el valor de inputName.value al servidor
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+
+                    // La respuesta del servidor (en este caso, un json con los datos encontrados)
+                    var data_encargados = JSON.parse(this.responseText);
+                    var tabla_encargados = document.getElementById('tableBody');
+                    tabla_encargados.innerHTML = '';
+                    //aqui es donde se agregan todos los datos en la tabla
+                    data_encargados.forEach(function(encargado) {
+
+                        // Crear una nueva fila para la tabla
+                        var newRow = tabla_encargados.insertRow(-1);
+                        newRow.classList.add('text-center');
+
+                        // Crear celdas en la fila y asignar los valores de los encargados
+                        var cellSeleccionar = newRow.insertCell(0);
+                        var cellNombre = newRow.insertCell(1);
+                        var cellApellido = newRow.insertCell(2);
+                        var cellTelefono = newRow.insertCell(3);
+                        var cellEmail = newRow.insertCell(4);
+
+                        // Agregar los datos de los encargados a las celdas
+                        cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
+                        cellNombre.innerHTML = encargado.Nombre;
+                        cellApellido.innerHTML = encargado.Apellido;
+                        cellTelefono.innerHTML = encargado.Telefono;
+                        cellEmail.innerHTML = encargado.Email;
+                    });
+
+                    if(tableResults.hasAttribute('hidden')){
+                        tableResults.removeAttribute('hidden');
+                    }
+
+                    var select_encargado = document.getElementById('seleccionar_encargado');
+                    select_encargado.setAttribute('onclick', 'select_encargado("coordinador ejecutivo")');
+                }
+            };
+            xhttp.open('GET', 'procesar_encargados.php?input_value=' + tipo+','+inputName.value, true);
+            xhttp.send();
+        }
+    }
+
+
+    function select_encargado(tipo) {
+        var radioButtons = document.getElementsByName('programa_seleccionado');
+        var table = document.getElementById('dataTableEncargados');
+        var info = '';
+        for (var i = 0; i < radioButtons.length; i++) {
+            if (radioButtons[i].checked) {
+                info = i;
+                break;
+            }
+        }
+
+        if(tipo == 'coordinador ejecutivo'){
+            var nombre_completo = table.rows[info+1].cells[1].innerHTML+' '+table.rows[info+1].cells[2].innerHTML;
+            var telefono = table.rows[info+1].cells[3].innerHTML;
+            var email = table.rows[info+1].cells[4].innerHTML;
+
+            var nombre_cord_ejecutivo = document.getElementById('nombre_cordinador_ejecutivo');
+            var telefono_cord_ejecutivo = document.getElementById('telefono_cordinador_ejecutivo');
+            var email_cord_ejecutivo = document.getElementById('email_cordinador_ejecutivo');
+
+            nombre_cord_ejecutivo.value = nombre_completo;
+            telefono_cord_ejecutivo.value = telefono;
+            email_cord_ejecutivo.value = email;
+        }
+    }
 </script>
