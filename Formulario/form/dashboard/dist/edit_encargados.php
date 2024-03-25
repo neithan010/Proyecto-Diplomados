@@ -32,7 +32,7 @@
                         <label>
                             E-mail
                             <input  id = 'email_cordinador_ejecutivo' name = 'email_cordinador_ejecutivo' type = 'email' 
-                            pattern=".+@unegocios\.cl|.+@hotmail\.com" maxlength="100" placeholder = 'example@unegocios.cl'>
+                            pattern=".+@unegocios\.cl|.+@hotmail\.com |.+@fen.uchile.cl" maxlength="100" placeholder = 'example@unegocios.cl'>
                         </label>
                     </label>
                     <script>
@@ -56,21 +56,24 @@
                         <label>
                             Nombre
                             <input id = 'nombre_director_academico' name = 'nombre_director_academico' type = 'text' maxlength = '60'>
+                            <input id = 'id_director_academico' name = 'id_director_academico' type = 'text' maxlength = '60' hidden>
                             <input type = 'button' value = 'Buscador' onclick = 'display_search_encargados("director academico")'>
                         </label>
                         <label>
                             E-mail
                             <input  id = 'email_director_academico' name = 'email_director_academico' type = 'email' 
-                            pattern=".+@unegocios\.cl|.+@hotmail\.com" maxlength="100" placeholder = 'example@unegocios.cl'>
+                            pattern=".+@unegocios\.cl|.+@hotmail\.com |.+@fen.uchile.cl" maxlength="100" placeholder = 'example@unegocios.cl'>
                         </label>
                     </label>
                     <script>
                         //director academico
                         var nombre_director_academico = '<?php echo $data[26];?>';
+                        var id_director_academico = '<?php echo $data[25];?>';
                         var email_director_academico = '<?php echo $data[27];?>';
 
                         document.getElementById('nombre_director_academico').value = nombre_director_academico;
                         document.getElementById('email_director_academico').value = email_director_academico;
+                        document.getElementById('id_director_academico').value =id_director_academico;
                     </script>   
                 </div>
             </div>
@@ -93,7 +96,7 @@
                     <label>
                         E-mail
                         <input  id = 'email_cordinador_docente' name = 'email_cordinador_docente' type = 'email' 
-                        pattern=".+@unegocios\.cl|.+@hotmail\.com" maxlength="100" placeholder = 'example@unegocios.cl'>
+                        pattern=".+@unegocios\.cl|.+@hotmail\.com |.+@fen.uchile.cl" maxlength="100" placeholder = 'example@unegocios.cl'>
                     </label>
                 </label>
                 <script>
@@ -212,7 +215,6 @@
                                 <th>SELECCIONAR</th>
                                 <th id = 'id_secretaria_column' hidden>ID</th>
                                 <th>NOMBRE</th>
-                                <th>APELLIDO</th>
                                 <th id = 'telefono_column'>TELEFONO</th>
                                 <th id = 'email_column'>EMAIL</th>
                             </tr>
@@ -336,7 +338,6 @@
                             var cellSeleccionar = newRow.insertCell(0);
                             var cellID = newRow.insertCell(1);
                             var cellNombre = newRow.insertCell(2);
-                            var cellApellido = newRow.insertCell(3);
 
                             // Agregar los datos de los encargados a las celdas
                             cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
@@ -344,7 +345,31 @@
                             cellNombre.innerHTML = encargado.Nombre;
                             cellApellido.innerHTML = encargado.Apellido;
                         });
-                    } else{
+                    } else if(tipo == 'director academico'){
+                        var id_secretaria_column =document.getElementById('id_secretaria_column');
+                        var telefono_column = document.getElementById('telefono_column');
+
+                        id_secretaria_column.removeAttribute('hidden');
+                        telefono_column.setAttribute('hidden', 'true');
+
+                        data_encargados.forEach(function(encargado){
+                            var newRow = tabla_encargados.insertRow(-1);
+                            newRow.classList.add('text-center');
+                            // Crear celdas en la fila y asignar los valores de los encargados
+                            var cellSeleccionar = newRow.insertCell(0);
+                            var cellID = newRow.insertCell(1);
+                            var cellNombre = newRow.insertCell(2);
+                            var cellEmail = newRow.insertCell(3);
+
+                            // Agregar los datos de los encargados a las celdas
+                            cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
+                            cellID.innerHTML = encargado.ID;
+                            cellNombre.innerHTML = encargado.Nombre;
+                            cellEmail.innerHTML = encargado.Email;
+                        });
+                    } 
+                    
+                    else{
                         var id_secretaria_column =document.getElementById('id_secretaria_column');
                         var telefono_column = document.getElementById('telefono_column');
                         var email_column = document.getElementById('email_column');
@@ -360,12 +385,11 @@
                             // Crear celdas en la fila y asignar los valores de los encargados
                             var cellSeleccionar = newRow.insertCell(0);
                             var cellNombre = newRow.insertCell(1);
-                            var cellApellido = newRow.insertCell(2);
-                            var cellTelefono = newRow.insertCell(3);
-                            var cellEmail = newRow.insertCell(4);
+                            var cellTelefono = newRow.insertCell(2);
+                            var cellEmail = newRow.insertCell(3);
 
-                            if(tipo == 'coordinador docente' || tipo == 'coordinador ejecutivo' || tipo == 'coordinador comercial'){
-                                var cellusr = newRow.insertCell(5);
+                            if(tipo == 'coordinador docente'){
+                                var cellusr = newRow.insertCell(4);
                                 cellusr.setAttribute('hidden', 'true');
 
                                 cellusr.innerHTML = encargado.Usr;
@@ -374,7 +398,6 @@
                             // Agregar los datos de los encargados a las celdas
                             cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
                             cellNombre.innerHTML = encargado.Nombre;
-                            cellApellido.innerHTML = encargado.Apellido;
                             cellTelefono.innerHTML = encargado.Telefono;
                             cellEmail.innerHTML = encargado.Email;
                         });
@@ -440,22 +463,25 @@
             console.log(usr);
         } else if(tipo == 'director academico'){
             //obtenemos nombre, telefono y email del coordinador ejecutivo
-            var nombre_completo = table.rows[info+1].cells[1].innerHTML+' '+table.rows[info+1].cells[2].innerHTML;
-            var email = table.rows[info+1].cells[4].innerHTML;
+            var nombre_completo = table.rows[info+1].cells[2].innerHTML;
+            var email = table.rows[info+1].cells[3].innerHTML;
+            var id = table.rows[info+1].cells[1].innerHTML;
 
             var nombre_director_academico = document.getElementById('nombre_director_academico');
             var email_director_academico = document.getElementById('email_director_academico');
+            var id_director_academico =document.getElementById('id_director_academico');
 
             nombre_director_academico.value = nombre_completo;
             email_director_academico.value = email;
+            id_director_academico = id;
 
         } else if(tipo == 'coordinador docente'){
 
             //obtenemos nombre, telefono y email del coordinador ejecutivo
-            var nombre_completo = table.rows[info+1].cells[1].innerHTML+' '+table.rows[info+1].cells[2].innerHTML;
-            var telefono = table.rows[info+1].cells[3].innerHTML;
-            var email = table.rows[info+1].cells[4].innerHTML;
-            var usr = table.rows[info+1].cells[5].innerHTML;
+            var nombre_completo = table.rows[info+1].cells[1].innerHTML;
+            var telefono = table.rows[info+1].cells[2].innerHTML;
+            var email = table.rows[info+1].cells[3].innerHTML;
+            var usr = table.rows[info+1].cells[4].innerHTML;
 
             //obtenemos los input's donde van el nombre, telefono y email del coordinador ejecutivo.
             var nombre_cord_docente = document.getElementById('nombre_cordinador_docente');

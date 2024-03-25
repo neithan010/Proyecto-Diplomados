@@ -412,33 +412,33 @@ function get_program($list_campos_data, $create){
         }
         else{
             $arr_programas[] =array(
-                "Nombre_Diploma"                =>  $row['nom_diploma'],
-                "Tipo_Programa"                 =>  $row['tipo_programa'],
-                "Area_Conocimiento"             =>  $row['area_conocimiento'],
-                "Modalidad"                     =>  $row['modalidad_programa'],
-                "Periodo"                       =>  $row['Periodo'],
-                "Horario"                       =>  $row['jornada'],
-                "Nivel"                         =>  $row['nivel'],
-                "Realización"                   =>  $row['realizacion_en'],
-                "Fecha_Inicio"                  =>  $row['fecha_inicio'],
-                "Version"                       =>  $row['version'],
-                "Siglas"                        =>  $row['codcatedraab'],
-                "Codigo_Diploma"                =>  $row['cod_diploma'],
-                "Area_Negocios"                 =>  $row['area_negocios'],
+    /*ok*/             "Nombre_Diploma"                =>  $row['nom_diploma'],
+    /*ok*/            "Tipo_Programa"                 =>  $row['tipo_programa'],
+    /*ok*/             "Area_Conocimiento"             =>  $row['area_conocimiento'],
+    /*ok*/             "Modalidad"                     =>  $row['modalidad_programa'],
+    /*ok*/             "Periodo"                       =>  $row['Periodo'],
+    /*ok*/             "Horario"                       =>  $row['jornada'],
+    /*ok*/             "Nivel"                         =>  $row['nivel'],
+    /*ok*/             "Realización"                   =>  $row['realizacion_en'],
+    /*ok*/             "Fecha_Inicio"                  =>  $row['fecha_inicio'],
+    /*ok*/             "Version"                       =>  $row['version'],
+    /*ok*/             "Siglas"                        =>  $row['codcatedraab'],
+    /*ok*/             "Codigo_Diploma"                =>  $row['cod_diploma'],
+    /*ok*/             "Area_Negocios"                 =>  $row['area_negocios'],
 
-                "DIPLOMADO"                     =>  $row['DIPLOMADO'],
+    /*ok*/             "DIPLOMADO"                     =>  $row['DIPLOMADO'],
                 "Mail_Envio"                    =>  $row['mail_envio'],
-                "Habilitado"                    =>  $row['Habilitado'],
-                "Habilitado_Web"                =>  $row['web_habilitado'],
-                "Marca"                         =>  $row['marca'],
-                "Horario_Web"                   =>  $row['horario_web'],
-                "Area"                          =>  $row['area'],
-                "Vacantes"                      =>  $row['vacantes'],
+    /*ok*/             "Habilitado"                    =>  $row['Habilitado'],
+    /*ok*/             "Habilitado_Web"                =>  $row['web_habilitado'],
+    /*ok*/             "Marca"                         =>  $row['marca'],
+    /*ok*/             "Horario_Web"                   =>  $row['horario_web'],
+    /*ok*/             "Area"                          =>  $row['area'],
+    /*ok*/             "Vacantes"                      =>  $row['vacantes'],
 
-                "Id_Diploma"                    =>  $row['ID_DIPLOMA'],
-                "Codigo_Interno"                =>  $row['Cod_interno'],
-                "ORDEN"                         =>  $row['orden'],
-                "Nombre_Web"                    =>  $row['nombre_web'],
+    /*ok*/             "Id_Diploma"                    =>  $row['ID_DIPLOMA'],
+    /*ok*/             "Codigo_Interno"                =>  $row['Cod_interno'],
+    /*ok*/             "ORDEN"                         =>  $row['orden'],
+    /*ok*/             "Nombre_Web"                    =>  $row['nombre_web'],
                 "ID_D_A"                        =>  $row['id_DA'],
                 "Director"                      =>  $row['Director'],
                 "Email_Director"                =>  $row['emailDirector'],
@@ -447,35 +447,35 @@ function get_program($list_campos_data, $create){
                 "ID_Coordinador_Docente"        =>  $row['usr_cordinador_docente'],
                 "Email_Coordinador_Docente"     =>  $row['email_cordinador_docente'],
                 "Telefono_Coordinador_Docente"  =>  $row['telefono_cordinador_docente'],
-                "Valor_Programa"                =>  $row['valor_diplomado'],
-                "Tipo_Moneda"                   =>  $row['moneda'],
-                "Fecha_Termino"                 =>  $row['fecha_termino'],
-                "Horas"                         =>  $row['horas'],
-                "Horas_Online"                  =>  $row['horas_online'],
-                "Horas_Pedagogicas"             =>  $row['hrs_pedagogicas'],
-                "Hora_Inicio"                   =>  $row['hora_inicio'],
-                "Hora_Termino"                  =>  $row['hora_termino'],
-                "Meta"                          =>  $row['meta'],
-                "Valor_Meta"                    =>  $row['valor_meta'],
-                "Dias"                          =>  $row['dias'],
+    /*ok*/             "Valor_Programa"                =>  $row['valor_diplomado'],
+    /*ok*/             "Tipo_Moneda"                   =>  $row['moneda'],
+    /*ok*/             "Fecha_Termino"                 =>  $row['fecha_termino'],
+    /*ok*/             "Horas"                         =>  $row['horas'],
+    /*ok*/             "Horas_Online"                  =>  $row['horas_online'],
+    /*ok*/             "Horas_Pedagogicas"             =>  $row['hrs_pedagogicas'],
+    /*ok*/             "Hora_Inicio"                   =>  $row['hora_inicio'],
+    /*ok*/             "Hora_Termino"                  =>  $row['hora_termino'],
+    /*ok*/             "Meta"                          =>  $row['meta'],
+    /*ok*/             "Valor_Meta"                    =>  $row['valor_meta'],
+    /*ok*/             "Dias"                          =>  $row['dias'],
                 "ID_Ejecutivo_Admision"         =>  $row['usr_cordinador_ej'],
                 "Nombre_Ejecutivo_Admision"     =>  $row['nom_ejecutivo_admision'],
                 "Telefono_Ejecutivo_Admision"   =>  $row['telefono_ejecutivo_admision'],
-                "Link_PDF"                      =>  $row['lnk_pdf'],
-                "Codigo_Sala"                   =>  $row['cod_sala'],
-                "Secretaria"                    =>  $row['secretaria'],
-                "Sala_Cafe"                     =>  $row['sala_cafe'],
-                "In_Coffee"                     =>  $row['in_coffe'],
-                "Uso_PC_s"                      =>  $row['uso_pcs'],
-                "Nivelacion"                    =>  $row['nivelacion'],
-                "Introducción"                  =>  $row['intro_DA'],
-                "Cierre"                        =>  $row['cierre'],
-                "Encuesta"                      =>  $row['encuesta'],
-                "Codigo_AUGE"                   =>  $row['cod_AUGE'],
+    /*ok*/              "Link_PDF"                      =>  $row['lnk_pdf'],
+    /*ok*/              "Codigo_Sala"                   =>  $row['cod_sala'],
+    /*ok*/              "Secretaria"                    =>  $row['secretaria'],
+    /*ok*/              "Sala_Cafe"                     =>  $row['sala_cafe'],
+    /*ok*/              "In_Coffee"                     =>  $row['in_coffe'],
+    /*ok*/              "Uso_PC_s"                      =>  $row['uso_pcs'],
+    /*ok*/              "Nivelacion"                    =>  $row['nivelacion'],
+    /*ok*/              "Introducción"                  =>  $row['intro_DA'],
+    /*ok*/              "Cierre"                        =>  $row['cierre'],
+    /*ok*/              "Encuesta"                      =>  $row['encuesta'],
+    /*ok*/              "Codigo_AUGE"                   =>  $row['cod_AUGE'],
                 "ID_Coordinador_Comercial"      =>  $row['usr_coordinador_comercial'],
-                "ID_Consultor_Corporativo"      =>  $row['usr_consultor_corp'],
-                "ID_ORDEN"                      =>  $row['ID_ORDEN'],
-                "Reglamento"                    =>  $row['reglamento']
+    /*ok*/              "ID_Consultor_Corporativo"      =>  $row['usr_consultor_corp'],
+    /*ok*/             "ID_ORDEN"                      =>  $row['ID_ORDEN'],
+    /*ok*/             "Reglamento"                    =>  $row['reglamento']
             );
         }
     }
@@ -583,18 +583,23 @@ function get_cord_comercial($usr_cord_comercial){
 }
 
 function get_query_encargados($tipo){
-    
-    $sql_data = "SELECT
-                        u.Nombre,
-                        u.Apellido,
-                        u.telefono,
-                        u.email,
-                        u.usr
-                        FROM intranet.usuarios_int u
-                        WHERE   u.vigente = 1 AND
-                                u.tipo = :tipo AND
-                                (u.Nombre LIKE :nombre AND
-                                u.Apellido LIKE :apellido)";
+    $sql_data = "";
+    if($tipo == 'coordinador docente'){
+        $sql_data = "SELECT *
+                        FROM intranet.cordinadores_docentes cd
+                        WHERE   cd.nombre_cordinador_curso LIKE :nombre";
+    } else if($tipo == "coordinador ejecutivo"){
+    } else if($tipo == "director academico"){
+        $sql_data = "SELECT da.id_DA,
+                            da.emailDirector,
+                            da.nombre
+                        FROM intranet.directores_academicos da
+                        WHERE da.nombre LIKE :nombre";
+    } else if($tipo == 'coordinador comercial'){
+
+    } else{
+
+    }
 
     return $sql_data;
 }
@@ -602,46 +607,41 @@ function get_query_encargados($tipo){
 function get_data_encargados($tipo, $nombre){
     include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
 
-    list($name, $apellido) = explode(" ", $nombre);
-    $name = '%'.$name.'%';
-    $apellido = '%'.$apellido.'%';
-    $id = 0;
-    
+    $nombre = str_replace(' ', "%", $nombre);
+    $nombre = '%'.$nombre.'%';
     if($tipo == 'secretaria'){
         $sql_secretaria = search_secretaria_byname();
         return get_data_secretaria($sql_secretaria, $name, $apellido);
     }
+    
     $sql_encargados = get_query_encargados($tipo);
     $stmt_encargados = $con->prepare($sql_encargados);
     $stmt_encargados ->setFetchMode(PDO::FETCH_ASSOC);
-    $stmt_encargados->bindParam(':nombre', $name);
-    $stmt_encargados->bindParam(':apellido', $apellido);
-
-    if($tipo == 'coordinador ejecutivo'){
-        $id = 10;
-    } elseif($tipo == 'coordinador docente'){
-        $id = 20;
-    } elseif( $tipo == 'director academico'){
-        $id = 40;
-    } elseif($tipo == 'coordinador comercial'){
-        $id = 22;
-    }
-
-    $stmt_encargados->bindParam(':tipo', $id);
+    $stmt_encargados->bindParam(':nombre', $nombre);
     $stmt_encargados ->execute();
-
-    $num_buscar =$stmt_encargados ->rowCount();
 
     $arr_encargados = array();
 
     while($row = $stmt_encargados->fetch()){
-        if($tipo == 'coordinador ejecutivo' || $tipo == 'coordinador docente' || $tipo == 'director academico' || $tipo == 'coordinador comercial'){
+        if($tipo == 'coordinador ejecutivo' || $tipo == 'coordinador comercial'){
             $arr_encargados[] =array(
                 "Nombre"        =>  $row['Nombre'],
-                "Apellido"      =>  $row['Apellido'],
                 "Telefono"      => $row['telefono'],
                 "Email"         =>  $row['email'],
                 "Usr"           => $row["usr"]
+            );
+        } else if($tipo == 'coordinador docente'){
+            $arr_encargados[] =array(
+            "Nombre"            => $row["nombre_cordinador_curso"],
+            "Usr"           => $row["usr_cordinador_curso"],
+            "Email"         => $row["email_cordinador_curso"],
+            "Telefono"      => $row["telefono_cordinador_curso"]
+            );
+        } else if($tipo == 'director academico'){
+            $arr_encargados[] =array(
+                "ID"    => $row["id_DA"],
+                "Nombre"=> $row["nombre"],
+                "Email" => $row["emailDirector"]
             );
         }
     }
@@ -657,7 +657,7 @@ function get_data_secretaria($sql,$nombre, $apellido){
     $stmt_secretaria->bindParam(':apellido', $apellido);
     $stmt_secretaria ->execute();
 
-    $num_buscar =$stmt_secretaria ->rowCount();
+
 
     $arr_secretaria = array();
 

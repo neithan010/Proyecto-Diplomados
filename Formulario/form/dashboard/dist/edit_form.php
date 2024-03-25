@@ -37,7 +37,7 @@
                     </a>
                 </div>
                 <div class="col">
-                    <a id ="encargados" href = "#Encargados" onclick = "change_content('encargados')" style="text-decoration: none; text-emphasis-position: 5px; padding: 3px;">
+                    <a id ="encargados" href = "#Encargados" onclick = "change_content('encargados_data')" style="text-decoration: none; text-emphasis-position: 5px; padding: 3px;">
                         <strong>
                             Encargados
                         </strong>
@@ -56,12 +56,21 @@
     </div>  
     <form id = "form_edit_program" name = "form_edit_program" method = "post">
         <div id = "contenido" name = "contenido">
-            <div id = "save_button" style ="margin-left: 900px; margin-bottom: 15px;">
+            <div id = "save_button" style ="margin-left: 1300px; margin-bottom: 15px;">
                 <button id = "save_button_element" type = "button" formaction="update_data.php" onclick="display_confirmation_window()">
                     Guardar Cambios
                 </button>
             </div>
+            <input type = 'text' id = 'programa_base' name = 'programa_base' hidden>
+            <?php 
+                 $programa_base =  implode('|', $data);
+            ?>
+            <script>
+                var programa_base = '<?php echo $programa_base;?>';
+                document.getElementById('programa_base').value = programa_base;
 
+            </script>
+            
             <div id = "include">
                 <div id = "informacion_general">
                     <?php include('edit_informacion_general.php')?>
@@ -69,7 +78,7 @@
                 <div id = "fechas_horarios" hidden>
                     <?php include('edit_fechas_horarios.php')?>
                 </div>
-                <div id = "encargados" hidden>
+                <div id = "encargados_data" hidden>
                     <?php include('edit_encargados.php')?>
                 </div>
                 <div id = "otros_datos" hidden>
@@ -86,17 +95,22 @@
         
         if(section == 'informacion_general'){
             document.getElementById('fechas_horarios').setAttribute('hidden', 'true');
-            document.getElementById('encargados').setAttribute('hidden', 'true');
+            document.getElementById('encargados_data').setAttribute('hidden', 'true');
             document.getElementById('otros_datos').setAttribute('hidden', 'true');
 
         } else if(section == 'fechas_horarios'){
             document.getElementById('informacion_general').setAttribute('hidden', 'true');
-            document.getElementById('encargados').setAttribute('hidden', 'true');
+            document.getElementById('encargados_data').setAttribute('hidden', 'true');
             document.getElementById('otros_datos').setAttribute('hidden', 'true');
 
         } else if(section == 'otros_datos'){
             document.getElementById('informacion_general').setAttribute('hidden', 'true');
-            document.getElementById('encargados').setAttribute('hidden', 'true');
+            document.getElementById('encargados_data').setAttribute('hidden', 'true');
+            document.getElementById('fechas_horarios').setAttribute('hidden', 'true');
+
+        } else if(section == 'encargados_data'){
+            document.getElementById('informacion_general').setAttribute('hidden', 'true');
+            document.getElementById('otros_datos').setAttribute('hidden', 'true');
             document.getElementById('fechas_horarios').setAttribute('hidden', 'true');
 
         }
@@ -106,6 +120,9 @@
         if(window.confirm('Esta seguro que quiere hacer los cambios?')){
             var button = document.getElementById('save_button_element');
             button.setAttribute('type', 'submit');
+            
+            var form_edit =document.getElementById('form_edit_program');
+            form_edit.setAttribute('action', 'get_edited_program.php');
         }
     }
 </script>
