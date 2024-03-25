@@ -498,6 +498,19 @@ function search_secretaria_byid(){
     return $sql_get_secretaria;
 }
 
+function search_secretaria_byname(){
+    $sql_get_secretaria = 'SELECT
+                                s.idsecretaria,
+                                s.nombre,
+                                s.apellido_pat
+                                FROM intranet.secretaria s
+                                WHERE   s.nombre LIKE :nombre AND
+                                        s.apellido_pat LIKE :apellido AND
+                                        s.vigente = 1';
+
+    return $sql_get_secretaria;
+}
+
 //funcion que obtiene el nombre de la secretaria
 function get_secretaria($id_secretaria){
     include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
@@ -571,32 +584,17 @@ function get_cord_comercial($usr_cord_comercial){
 
 function get_query_encargados($tipo){
     
-    $sql_data = '';
-    //si es tipo 10 quiere decir es que es coordinador Ejecutivo
-    if($tipo == 'coordinador ejecutivo'){
-        $sql_data = "SELECT
+    $sql_data = "SELECT
                         u.Nombre,
                         u.Apellido,
                         u.telefono,
-                        u.email
+                        u.email,
+                        u.usr
                         FROM intranet.usuarios_int u
                         WHERE   u.vigente = 1 AND
-                                u.tipo = 10 AND
-                                u.Nombre LIKE :nombre AND
-                                u.Apellido LIKE :apellido";
-
-    } elseif($tipo == 20){
-
-    } elseif($tipo == 1){
-
-    } elseif($tipo == 2){
-
-    }
-    //si es tipo 0 quiere decir que es una secretaria, por lo cual
-    //las buscaremos  
-    elseif($tipo == 0){}
-    else{}
-
+                                u.tipo = :tipo AND
+                                (u.Nombre LIKE :nombre AND
+                                u.Apellido LIKE :apellido)";
 
     return $sql_data;
 }
@@ -607,12 +605,29 @@ function get_data_encargados($tipo, $nombre){
     list($name, $apellido) = explode(" ", $nombre);
     $name = '%'.$name.'%';
     $apellido = '%'.$apellido.'%';
-
+    $id = 0;
+    
+    if($tipo == 'secretaria'){
+        $sql_secretaria = search_secretaria_byname();
+        return get_data_secretaria($sql_secretaria, $name, $apellido);
+    }
     $sql_encargados = get_query_encargados($tipo);
     $stmt_encargados = $con->prepare($sql_encargados);
     $stmt_encargados ->setFetchMode(PDO::FETCH_ASSOC);
     $stmt_encargados->bindParam(':nombre', $name);
     $stmt_encargados->bindParam(':apellido', $apellido);
+
+    if($tipo == 'coordinador ejecutivo'){
+        $id = 10;
+    } elseif($tipo == 'coordinador docente'){
+        $id = 20;
+    } elseif( $tipo == 'director academico'){
+        $id = 40;
+    } elseif($tipo == 'coordinador comercial'){
+        $id = 22;
+    }
+
+    $stmt_encargados->bindParam(':tipo', $id);
     $stmt_encargados ->execute();
 
     $num_buscar =$stmt_encargados ->rowCount();
@@ -620,15 +635,39 @@ function get_data_encargados($tipo, $nombre){
     $arr_encargados = array();
 
     while($row = $stmt_encargados->fetch()){
-        if($tipo == 'coordinador ejecutivo'){
+        if($tipo == 'coordinador ejecutivo' || $tipo == 'coordinador docente' || $tipo == 'director academico' || $tipo == 'coordinador comercial'){
             $arr_encargados[] =array(
                 "Nombre"        =>  $row['Nombre'],
                 "Apellido"      =>  $row['Apellido'],
                 "Telefono"      => $row['telefono'],
-                "Email"         =>  $row['email']
+                "Email"         =>  $row['email'],
+                "Usr"           => $row["usr"]
             );
         }
     }
     return $arr_encargados;
+}
+
+function get_data_secretaria($sql,$nombre, $apellido){
+    include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
+
+    $stmt_secretaria = $con->prepare($sql);
+    $stmt_secretaria ->setFetchMode(PDO::FETCH_ASSOC);
+    $stmt_secretaria->bindParam(':nombre', $nombre);
+    $stmt_secretaria->bindParam(':apellido', $apellido);
+    $stmt_secretaria ->execute();
+
+    $num_buscar =$stmt_secretaria ->rowCount();
+
+    $arr_secretaria = array();
+
+    while($row = $stmt_secretaria->fetch()){
+        $arr_secretaria[] =array(
+            "ID"            =>  $row["idsecretaria"],
+            "Nombre"        => $row["nombre"],
+            "Apellido"      => $row["apellido_pat"]
+        );
+    }
+    return $arr_secretaria;
 }
 ?>

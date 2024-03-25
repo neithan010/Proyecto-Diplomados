@@ -369,7 +369,7 @@ if(isset($_SESSION['can_load'])){
         if($getted_program){
             //obtenemos la data de un programa ya existente
             $data = $_POST['programaSeleccionado'];
-            $array_data = explode(", ", $data);
+            $array_data = explode("|", $data);
             echo '<pre>'.print_r($array_data, true).'</pre>';
             ?>
             <script>

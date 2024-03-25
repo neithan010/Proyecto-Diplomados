@@ -22,6 +22,7 @@
                         <label>
                             Nombre
                             <input id = 'nombre_cordinador_ejecutivo' name = 'nombre_cordinador_ejecutivo' type = 'text' maxlength = '100'>
+                            <input id = 'usr_cordinador_ejecutivo' name = 'usr_cordinador_ejecutivo' type = 'text' maxlength = '100' hidden>
                             <input type = 'button' value = 'Buscador' onclick = 'display_search_encargados("coordinador ejecutivo")'>
                         </label>
                         <label>
@@ -55,6 +56,7 @@
                         <label>
                             Nombre
                             <input id = 'nombre_director_academico' name = 'nombre_director_academico' type = 'text' maxlength = '60'>
+                            <input type = 'button' value = 'Buscador' onclick = 'display_search_encargados("director academico")'>
                         </label>
                         <label>
                             E-mail
@@ -81,6 +83,8 @@
                     <label>
                         Nombre
                         <input id = 'nombre_cordinador_docente' name = 'nombre_cordinador_docente' type = 'text' maxlength = '100'>
+                        <input id = 'usr_cordinador_docente' name = 'usr_cordinador_docente' type = 'text' maxlength = '100' hidden>
+                        <input type = 'button' value = 'Buscador' onclick = 'display_search_encargados("coordinador docente")'>
                     </label>
                     <label>
                         Telefono
@@ -115,6 +119,8 @@
                         <label>
                             Nombre
                             <input id = 'nombre_secretaria' name = 'nombre_secretaria' type = 'text' maxlength = '100'>
+                            <input id = 'id_secretaria' name = 'id_secretaria' type = 'text' maxlength = '100' hidden>
+                            <input type = 'button' value = 'Buscador' onclick = 'display_search_encargados("secretaria")'>
                         </label>
                     </label>
                     <?php
@@ -139,7 +145,9 @@
                             Coordinador Comercial
                         </div>
                         Nombre
-                        <input id = 'coordinador_comercial' name = 'coordinador_comercial' type = 'text' maxlength = '100'>
+                        <input id = 'nombre_coordinador_comercial' name = 'nombre_coordinador_comercial' type = 'text' maxlength = '100'>
+                        <input id = 'usr_coordinador_comercial' name = 'usr_coordinador_comercial' type = 'text' maxlength = '100' hidden>
+                        <input type = 'button' value = 'Buscador' onclick = 'display_search_encargados("coordinador comercial")'>
                     </label>
                     <?php 
                         $usr_cord_comercial = $data[58];
@@ -174,7 +182,7 @@
                         </div>
                     </label>
                     <input id = 'buscar_name_encargado' name = 'buscar_name_encargado' type = 'text' maxlength = '100' required>
-                    <button id = 'button_buscar_encargados' onclick = 'showResultsEncargados("coordinador ejecutivo")'>
+                    <button id = 'button_buscar_encargados'>
                     </button>
                 </div>
             </div>
@@ -201,11 +209,12 @@
                     <table class="table table-bordered small" id="dataTableEncargados" width="100%" cellspacing="0">
                         <thead>
                             <tr class ="text-center">
-                                <th >SELECCIONAR</th>
+                                <th>SELECCIONAR</th>
+                                <th id = 'id_secretaria_column' hidden>ID</th>
                                 <th>NOMBRE</th>
                                 <th>APELLIDO</th>
-                                <th>TELEFONO</th>
-                                <th>EMAIL</th>
+                                <th id = 'telefono_column'>TELEFONO</th>
+                                <th id = 'email_column'>EMAIL</th>
                             </tr>
                         </thead>
                         <tbody id = 'tableBody'>
@@ -217,88 +226,190 @@
     </div>
 </div>
 <script>
-    //funcion que enseña el buscador por nombre de los encargados
-    function display_search_encargados(tipo){
+
+    function hide_search_content(){
         var buscador_encargados = document.getElementById('buscador_encargados');
         var input_name = document.getElementById('buscar_name_encargado');
+        var title_buscador = document.getElementById('title_buscador');
+        var value_button = document.getElementById('button_buscar_encargados');
+        var tabla_encargados = document.getElementById('tableBody');
+        var contenido_completo = document.getElementById('table_results');
 
-        if(tipo == 'coordinador ejecutivo'){
-            var title_buscador = document.getElementById('title_buscador');
-            var value_button = document.getElementById('button_buscar_encargados');
-            if(buscador_encargados.hasAttribute('hidden')){
-                
-                buscador_encargados.removeAttribute('hidden');
+        buscador_encargados.setAttribute('hidden', 'true');
+        contenido_completo.setAttribute('hidden', 'true');
+        title_buscador.textContent = '';
+        value_button.value = '';
+        input_name.placeholder = '';
+        input_name.value = '';
+        tabla_encargados.innerHTML = '';
+    }
+    //funcion que enseña el buscador por nombre de los encargados, si ya se esta enseñando el buscador y/o los resultados, entonces los esconde.
+    //esta funcion se aplica cada vez que se haga click en un boton que diga Buscador, normalmente ubicados al lado del nombre de cada encargado.
+    function display_search_encargados(tipo){
+
+        //obtenemos el buscador de encargados, el input del nombre, el titulo para el buscador, el boton para buscar y
+        //la tabla con los resultados encontrados.
+        var buscador_encargados = document.getElementById('buscador_encargados');
+        var value_button = document.getElementById('button_buscar_encargados');
+        var input_name = document.getElementById('buscar_name_encargado');
+
+        value_button.setAttribute('onclick','showResultsEncargados("' + tipo + '")');
+        //si ya estamos viendo el buscador y/o la tabla entonces escondemos el contenido y limpiamos el buscador y la tabla
+        if(!buscador_encargados.hasAttribute('hidden')){
+            hide_search_content();
+        }
+        //si no estamos viendo nada, quiere decir que queremos enseñar el buscador de un encargado en especifico
+        else{
+            //enseñamos el buscador
+            buscador_encargados.removeAttribute('hidden');
+
+            //discrimianos para ver que tipo de encargado es el que queremos buscar
+            //si es coordinador ejecutivo, se asignan nombres al:
+            //titulo del buscador, al nombre del boton y a un placeholder como guia
+            if(tipo == 'coordinador ejecutivo'){
                 title_buscador.textContent = 'Buscar Coordinador Ejecutivo';
                 value_button.textContent = 'Buscar Coord. Ejec.';
-                input_name.placeholder = 'Ej: Arturo Cordero';
-
-            } else{
-                var tabla_encargados = document.getElementById('tableBody');
-                
-                buscador_encargados.setAttribute('hidden', 'true');
-                title_buscador.textContent = '';
-                value_button.value = '';
-                input_name.placeholder = '';
-                input_name.value = '';
-                tabla_encargados.innerHTML = '';
+                input_name.placeholder = 'Ej: Nombre Apellido';
+            } 
+            //si es directorr academico repetimos el proceso
+            else if(tipo == 'director academico'){
+                title_buscador.textContent = 'Buscar Director Academico';
+                value_button.textContent = 'Buscar Dir. Acad.';
+                input_name.placeholder = 'Ej: Nombre Apellido';
+            }
+            //si es coordinador docente
+            else if(tipo == 'coordinador docente'){
+                title_buscador.textContent = 'Buscar Coordinador Docente';
+                value_button.textContent = 'Buscar Cord. Doc.';
+                input_name.placeholder = 'Ej: Nombre Apellido';
+            } else if(tipo == 'secretaria'){
+                title_buscador.textContent = 'Buscar Secretaria';
+                value_button.textContent = 'Buscar Secretaria';
+                input_name.placeholder = 'Ej: Nombre Apellido';
+            } else if(tipo == 'coordinador comercial'){
+                title_buscador.textContent = 'Buscar Coordinador Comercial';
+                value_button.textContent = 'Buscar Cord. Comerc.';
+                input_name.placeholder = 'Ej: Nombre Apellido';
             }
         }
     }
 
+    //esta función se encarga de llamar a los resultados según el nombre apellido que se haya ingresado
+    //dicha funcion se aplica al presionar el boton que diga Buscar X, donde X son los distintos tipos de encargados
+    //este boton es el que está en el buscador.
     function showResultsEncargados(tipo) {
+
+        //obtenemos el input o nombre apellido a buscar y el id de la tabla donde se enseñarán los resultados.
         var inputName = document.getElementById('buscar_name_encargado');
         var tableResults = document.getElementById('table_results');
+        
+        //si el input no es vacio entonces empezamos a buscar los datos
+        if(inputName.value !== ''){
 
-        if (tipo === 'coordinador ejecutivo' && inputName.value !== '') {
             // Realizar una solicitud AJAX para enviar el valor de inputName.value al servidor
             var xhttp = new XMLHttpRequest();
+            //dejamos en espera la función, hasta que se obtengan los datos
             xhttp.onreadystatechange = function() {
                 if (this.readyState === 4 && this.status === 200) {
 
                     // La respuesta del servidor (en este caso, un json con los datos encontrados)
+                    //data_encargados va a recibir un archivo tipo json desde otro lado
                     var data_encargados = JSON.parse(this.responseText);
+                    console.log(this.responseText);
+                    //obtenemos la tabla y limpiamo s cualquier dato que ya haya sido buscado anteriormente
                     var tabla_encargados = document.getElementById('tableBody');
                     tabla_encargados.innerHTML = '';
-                    //aqui es donde se agregan todos los datos en la tabla
-                    data_encargados.forEach(function(encargado) {
 
-                        // Crear una nueva fila para la tabla
-                        var newRow = tabla_encargados.insertRow(-1);
-                        newRow.classList.add('text-center');
+                    if(tipo == 'secretaria'){
+                        var id_secretaria_column =document.getElementById('id_secretaria_column');
+                        var telefono_column = document.getElementById('telefono_column');
+                        var email_column = document.getElementById('email_column');
 
-                        // Crear celdas en la fila y asignar los valores de los encargados
-                        var cellSeleccionar = newRow.insertCell(0);
-                        var cellNombre = newRow.insertCell(1);
-                        var cellApellido = newRow.insertCell(2);
-                        var cellTelefono = newRow.insertCell(3);
-                        var cellEmail = newRow.insertCell(4);
+                        id_secretaria_column.removeAttribute('hidden');
+                        telefono_column.setAttribute('hidden', 'true');
+                        email_column.setAttribute('hidden', 'true');
+                        
+                        data_encargados.forEach(function(encargado){
+                            var newRow = tabla_encargados.insertRow(-1);
+                            newRow.classList.add('text-center');
+                            // Crear celdas en la fila y asignar los valores de los encargados
+                            var cellSeleccionar = newRow.insertCell(0);
+                            var cellID = newRow.insertCell(1);
+                            var cellNombre = newRow.insertCell(2);
+                            var cellApellido = newRow.insertCell(3);
 
-                        // Agregar los datos de los encargados a las celdas
-                        cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
-                        cellNombre.innerHTML = encargado.Nombre;
-                        cellApellido.innerHTML = encargado.Apellido;
-                        cellTelefono.innerHTML = encargado.Telefono;
-                        cellEmail.innerHTML = encargado.Email;
-                    });
+                            // Agregar los datos de los encargados a las celdas
+                            cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
+                            cellID.innerHTML = encargado.ID;
+                            cellNombre.innerHTML = encargado.Nombre;
+                            cellApellido.innerHTML = encargado.Apellido;
+                        });
+                    } else{
+                        var id_secretaria_column =document.getElementById('id_secretaria_column');
+                        var telefono_column = document.getElementById('telefono_column');
+                        var email_column = document.getElementById('email_column');
 
+                        id_secretaria_column.setAttribute('hidden', 'true');
+                        telefono_column.removeAttribute('hidden');
+                        email_column.removeAttribute('hidden');
+
+                        data_encargados.forEach(function(encargado) {
+                            var newRow = tabla_encargados.insertRow(-1);
+                            newRow.classList.add('text-center');
+
+                            // Crear celdas en la fila y asignar los valores de los encargados
+                            var cellSeleccionar = newRow.insertCell(0);
+                            var cellNombre = newRow.insertCell(1);
+                            var cellApellido = newRow.insertCell(2);
+                            var cellTelefono = newRow.insertCell(3);
+                            var cellEmail = newRow.insertCell(4);
+
+                            if(tipo == 'coordinador docente' || tipo == 'coordinador ejecutivo' || tipo == 'coordinador comercial'){
+                                var cellusr = newRow.insertCell(5);
+                                cellusr.setAttribute('hidden', 'true');
+
+                                cellusr.innerHTML = encargado.Usr;
+                            }
+
+                            // Agregar los datos de los encargados a las celdas
+                            cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
+                            cellNombre.innerHTML = encargado.Nombre;
+                            cellApellido.innerHTML = encargado.Apellido;
+                            cellTelefono.innerHTML = encargado.Telefono;
+                            cellEmail.innerHTML = encargado.Email;
+                        });
+                    }
+
+                    //si la tabla esta escondida entonces la enseñamos
                     if(tableResults.hasAttribute('hidden')){
                         tableResults.removeAttribute('hidden');
                     }
 
+                    //hay un boton seleccionar asociado a la tabla, el cual tendra la función select_encargado(tipo_encargado)
                     var select_encargado = document.getElementById('seleccionar_encargado');
-                    select_encargado.setAttribute('onclick', 'select_encargado("coordinador ejecutivo")');
+                    select_encargado.setAttribute('onclick', 'select_encargado("' + tipo + '")');
                 }
             };
+            //mientras data_encargados no reciba nada abrimos la solicitud AJAX y le enviamos "tipo, nombre a buscar" al archivo
+            //procesar_encargados.php y se envía
+            //la sección anterior no se ejecutará hasta que en el archivo procesar_encargados.php se haga un "echo"
             xhttp.open('GET', 'procesar_encargados.php?input_value=' + tipo+','+inputName.value, true);
             xhttp.send();
         }
     }
 
-
+    //esta función es la encargada de luego de seleccionar una fila de la tabla(es decir los resultados encontrados)
+    //se cambie los datos existentes por los nuevos seleccionados, dependiendo del encargado es que datos se cambiarán.
     function select_encargado(tipo) {
+
+        //obtenemos todos los botones radiales de cada fila en la tabla, como tambien el id de la tabla
         var radioButtons = document.getElementsByName('programa_seleccionado');
         var table = document.getElementById('dataTableEncargados');
+        var buscador_encargados = document.getElementById('buscador_encargados');
+        //id donde tenemos la fila seleccionada
         var info = '';
+
+        //hacemos un for para encontrar el id o fila que se haya seleccionado.
         for (var i = 0; i < radioButtons.length; i++) {
             if (radioButtons[i].checked) {
                 info = i;
@@ -306,18 +417,86 @@
             }
         }
 
+        //segun el tipo de encargado es que dato vamos a buscar y agregar en nuestros datos a editar
         if(tipo == 'coordinador ejecutivo'){
+
+            //obtenemos nombre, telefono y email del coordinador ejecutivo
             var nombre_completo = table.rows[info+1].cells[1].innerHTML+' '+table.rows[info+1].cells[2].innerHTML;
             var telefono = table.rows[info+1].cells[3].innerHTML;
             var email = table.rows[info+1].cells[4].innerHTML;
+            var usr = table.rows[info+1].cells[5].innerHTML;
 
+            //obtenemos los input's donde van el nombre, telefono y email del coordinador ejecutivo.
             var nombre_cord_ejecutivo = document.getElementById('nombre_cordinador_ejecutivo');
             var telefono_cord_ejecutivo = document.getElementById('telefono_cordinador_ejecutivo');
             var email_cord_ejecutivo = document.getElementById('email_cordinador_ejecutivo');
+            var usr_cordinador_ejecutivo =document.getElementById('usr_cordinador_ejecutivo');
 
+            //les asignamos los nuevos valores seleccionados o mejor dicho el personal que tendrá dicho cargo.
             nombre_cord_ejecutivo.value = nombre_completo;
             telefono_cord_ejecutivo.value = telefono;
             email_cord_ejecutivo.value = email;
+            usr_cordinador_ejecutivo.value = usr;
+            console.log(usr);
+        } else if(tipo == 'director academico'){
+            //obtenemos nombre, telefono y email del coordinador ejecutivo
+            var nombre_completo = table.rows[info+1].cells[1].innerHTML+' '+table.rows[info+1].cells[2].innerHTML;
+            var email = table.rows[info+1].cells[4].innerHTML;
+
+            var nombre_director_academico = document.getElementById('nombre_director_academico');
+            var email_director_academico = document.getElementById('email_director_academico');
+
+            nombre_director_academico.value = nombre_completo;
+            email_director_academico.value = email;
+
+        } else if(tipo == 'coordinador docente'){
+
+            //obtenemos nombre, telefono y email del coordinador ejecutivo
+            var nombre_completo = table.rows[info+1].cells[1].innerHTML+' '+table.rows[info+1].cells[2].innerHTML;
+            var telefono = table.rows[info+1].cells[3].innerHTML;
+            var email = table.rows[info+1].cells[4].innerHTML;
+            var usr = table.rows[info+1].cells[5].innerHTML;
+
+            //obtenemos los input's donde van el nombre, telefono y email del coordinador ejecutivo.
+            var nombre_cord_docente = document.getElementById('nombre_cordinador_docente');
+            var telefono_cord_docente = document.getElementById('telefono_cordinador_docente');
+            var email_cord_docente = document.getElementById('email_cordinador_docente');
+            var usr_cordinador_docente =document.getElementById('usr_cordinador_docente');
+
+            //les asignamos los nuevos valores seleccionados o mejor dicho el personal que tendrá dicho cargo.
+            nombre_cord_docente.value = nombre_completo;
+            telefono_cord_docente.value = telefono;
+            email_cord_docente.value = email;
+            usr_cordinador_docente.value = usr;
+
+            console.log(usr);
+        } else if(tipo == 'secretaria'){
+            var nombre_completo = table.rows[info+1].cells[2].innerHTML+' '+table.rows[info+1].cells[3].innerHTML;
+            var id = table.rows[info+1].cells[1].innerHTML;
+            
+            var nombre_secretaria = document.getElementById('nombre_secretaria');
+            var id_secretaria =document.getElementById('id_secretaria');
+            
+            nombre_secretaria.value = nombre_completo;
+            id_secretaria.value = id;
+        } else if(tipo == 'coordinador comercial'){
+            //obtenemos nombre, telefono y email del coordinador ejecutivo
+            var nombre_completo = table.rows[info+1].cells[1].innerHTML+' '+table.rows[info+1].cells[2].innerHTML;
+            var usr = table.rows[info+1].cells[5].innerHTML;
+            console.log(nombre_completo);
+            console.log(usr);
+            //obtenemos los input's donde van el nombre, telefono y email del coordinador ejecutivo.
+            var nombre_cord_comercial = document.getElementById('nombre_coordinador_comercial');
+            var usr_cordinador_comercial =document.getElementById('usr_coordinador_comercial');
+
+            //les asignamos los nuevos valores seleccionados o mejor dicho el personal que tendrá dicho cargo.
+            nombre_cord_comercial.value = nombre_completo;
+            usr_cordinador_comercial.value = usr;
+        }
+
+        //si ya estamos viendo el buscador y/o la tabla entonces escondemos el contenido y limpiamos el buscador y la tabla
+        if(!buscador_encargados.hasAttribute('hidden')){
+            hide_search_content();
         }
     }
 </script>

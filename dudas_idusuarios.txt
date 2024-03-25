@@ -1,0 +1,7 @@
+ID's:	
+
+10 : Coordinador Ejecutivo
+X  : Director Academico
+20 : Coordinador Operaciones/Docente
+-  : Secretarias tienen su propia tabla
+X  : Coordinador Comercial
