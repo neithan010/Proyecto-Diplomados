@@ -63,13 +63,13 @@
             </div>
 
             <div id = "include">
-                <div id = "informacion_general" hidden>
+                <div id = "informacion_general">
                     <?php include('edit_informacion_general.php')?>
                 </div>
                 <div id = "fechas_horarios" hidden>
                     <?php include('edit_fechas_horarios.php')?>
                 </div>
-                <div id = "encargados">
+                <div id = "encargados" hidden>
                     <?php include('edit_encargados.php')?>
                 </div>
                 <div id = "otros_datos" hidden>
@@ -83,9 +83,22 @@
     
     function change_content(section){
         document.getElementById(section).removeAttribute('hidden');
-        var include = document.getElementById('include');
-        while(include.firstChild){
-            include.removeChild(include.firstChild);
+        
+        if(section == 'informacion_general'){
+            document.getElementById('fechas_horarios').setAttribute('hidden', 'true');
+            document.getElementById('encargados').setAttribute('hidden', 'true');
+            document.getElementById('otros_datos').setAttribute('hidden', 'true');
+
+        } else if(section == 'fechas_horarios'){
+            document.getElementById('informacion_general').setAttribute('hidden', 'true');
+            document.getElementById('encargados').setAttribute('hidden', 'true');
+            document.getElementById('otros_datos').setAttribute('hidden', 'true');
+
+        } else if(section == 'otros_datos'){
+            document.getElementById('informacion_general').setAttribute('hidden', 'true');
+            document.getElementById('encargados').setAttribute('hidden', 'true');
+            document.getElementById('fechas_horarios').setAttribute('hidden', 'true');
+
         }
     }
 
