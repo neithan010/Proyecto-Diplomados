@@ -178,7 +178,7 @@
         <div class = 'container'>
             <div class = 'row '>
                 <div class = 'col'>
-                        <div class = 'text-center'>
+                        <div>
                             Nombre
                         </div>
                     <input id = 'buscar_name_encargado' name = 'buscar_name_encargado' type = 'text' maxlength = '100'>
@@ -304,7 +304,7 @@
         
         //si el input no es vacio entonces empezamos a buscar los datos
         if(inputName.value !== ''){
-
+            console.log('no vacio');
             // Realizar una solicitud AJAX para enviar el valor de inputName.value al servidor
             var xhttp = new XMLHttpRequest();
             //dejamos en espera la función, hasta que se obtengan los datos
@@ -314,6 +314,7 @@
                     // La respuesta del servidor (en este caso, un json con los datos encontrados)
                     //data_encargados va a recibir un archivo tipo json desde otro lado
                     var data_encargados = JSON.parse(this.responseText);
+                    console.log(data_encargados);
                     //obtenemos la tabla y limpiamo s cualquier dato que ya haya sido buscado anteriormente
                     var tabla_encargados = document.getElementById('tableBody');
                     tabla_encargados.innerHTML = '';

@@ -61,11 +61,8 @@
                 </button>
             </div>
             <input type = 'text' id = 'programa_base' name = 'programa_base' hidden>
-            <?php 
-                 $programa_base =  implode('|', $data);
-            ?>
             <script>
-                var programa_base = '<?php echo $programa_base;?>';
+                var programa_base = '<?php echo implode('|', $data);;?>';
                 document.getElementById('programa_base').value = programa_base;
 
             </script>

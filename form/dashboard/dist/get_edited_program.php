@@ -26,13 +26,19 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['jornada'] = $Horario;
     
-    /*
+    
     //Nos aseguramos de que la version si se cambio $Version mantenga el valor que se desea mantener o actualizar
     $Version = $programa_base[9];
     if(isset($_POST['version']) && $Version != $_POST['version']){
         $Version = $_POST['version'];
     }
     $new_data_update['version'] = $Version;
+
+    $Modalidad = $programa_base[3];
+    if(isset($_POST['modalidad']) && $Modalidad != $_POST['modalidad']){
+        $Modalidad = $_POST['modalidad'];
+    }
+    $new_data_update['modalidad_programa'] = $Modalidad;
 
     //Nos aseguramos de que el nombre y el tipo si se cambio $Nombre_Programa y $Tipo_Programa
     // mantenga el valor que se desea mantener o actualizar
@@ -58,7 +64,6 @@ if(isset($_POST["programa_base"])){
         $Nombre_Programa = $_POST['nombre_program'];
         $Siglas = generate_siglas($Nombre_Programa, $conectores);
         $Codigo_Programa = generate_cod_diploma($Siglas, $Periodo, $Horario, $Version);
-        $DIPLOMADO = generate_DIPLOMADO($Nombre_Programa, $$Tipo_Programa);
 
         if(isset($_POST['tipo'])){
             $tipo = $_POST['tipo'];
@@ -67,15 +72,29 @@ if(isset($_POST["programa_base"])){
                 $Tipo_Programa = $tipo;
             }
         }
-    }
+        $DIPLOMADO = generate_DIPLOMADO($Nombre_Programa, $Tipo_Programa);
 
+    }
+    $conducente = false;
+
+    if($Tipo_Programa == 'Curso'){
+        if(isset($_POST['curso_conducente_box'])){
+            if($_POST['curso_conducente_box'] == 'Conducente'){
+                $conducente = true;
+            }
+        }
+    }
+    $Tipo = generate_tipo_programa($Tipo_Programa,$Modalidad, $conducente);
+    
     //Asignamos a los datos nuevos lo que queremos actualizar
     $new_data_update['DIPLOMADO'] = $DIPLOMADO;
     $new_data_update['tipo_programa'] = $Tipo_Programa;
+    $new_data_update['tipo'] = $Tipo;
     $new_data_update['codcatedraab'] = $Siglas;
     $new_data_update['cod_diploma'] = $Codigo_Programa;
     $new_data_update['nom_diploma'] = generate_nom_diploma($Nombre_Programa, $Codigo_Programa);
 
+    
     $Area_Conocimiento = $programa_base[2];
     $Area = generate_area($Area_Conocimiento);
     if(isset($_POST['area']) && $Area_Conocimiento != $_POST['area']){
@@ -85,33 +104,32 @@ if(isset($_POST["programa_base"])){
     $new_data_update['area_conocimiento'] = $Area_Conocimiento;
     $new_data_update['area'] = $Area;
 
-    $Modalidad = $programa_base[3];
-    if(isset($_POST['modalidad']) && $Modalidad != $_POST['modalidad']){
-        $Modalidad = $_POST['modalidad'];
-    }
-    $new_data_update['modalidad_programa'] = $Modalidad;
-
+    
     $Nivel = $programa_base[6];
     if(isset($_POST['nivel']) && $Nivel != $_POST['nivel']){
-        $Modalidad = $_POST['nivel'];
+        $Nivel = $_POST['nivel'];
     }
     $new_data_update['nivel'] = $Nivel;
 
+    
     $Realizacion = $programa_base[7];
     if(isset($_POST['realizacion_en']) && $Realizacion != $_POST['realizacion_en']){
-        $Modalidad = $_POST['realizacion_en'];
+        $Realizacion = $_POST['realizacion_en'];
     }
     $new_data_update['realizacion_en'] = $Realizacion;
 
+    
     $Fecha_Inicio = $programa_base[8];
     if(isset($_POST['fecha_de_inicio']) && $Fecha_Inicio != $_POST['fecha_de_inicio']){
-        $Modalidad = $_POST['fecha_de_inicio'];
+        $Fecha_Inicio = $_POST['fecha_de_inicio'];
     }
     $new_data_update['fecha_inicio'] = $Fecha_Inicio;
 
+    
     $Area_Negocios = $programa_base[12];
     $new_data_update['area_negocios'] = $Area_Negocios;
 
+    
     $Habilitado = $programa_base[15];
     if(isset($_POST['habilitado']) && $Habilitado != $_POST['habilitado']){
         $Habilitado = $_POST['habilitado'];
@@ -124,30 +142,35 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['web_habilitado'] = $Habilitado_web;
     
+    
     $Horario_Web = $programa_base[18];
     if(isset($_POST['horario_web']) && $Horario_Web != $_POST['horario_web']){
         $Horario_Web = $_POST['horario_web'];
     }
     $new_data_update['horario_web'] = $Horario_Web;
 
+    
     $Vacantes = $programa_base[20];
     if(isset($_POST['vacantes']) && $Vacantes != $_POST['vacantes']){
         $Vacantes = $_POST['vacantes'];
     }
     $new_data_update['vacantes'] = $Vacantes;
 
+    
     $Nombre_Web = $programa_base[24];
     if(isset($_POST['nombre_web']) && $Nombre_Web != $_POST['nombre_web']){
         $Nombre_Web = $_POST['nombre_web'];
     }
     $new_data_update['nombre_web'] = $Nombre_Web;
 
+    /*
     $ID_DA = $programa_base[25];
     if(isset($_POST['id_director_academico']) && $ID_DA != $_POST['id_director_academico']){
         $ID_DA = $_POST['id_director_academico'];
     }
     $new_data_update['id_DA'] = $ID_DA;
 
+    
     $Director = $programa_base[26];
     if(isset($_POST['nombre_director_academico']) && $Director != $_POST['nombre_director_academico']){
         $Director = $_POST['nombre_director_academico'];
@@ -159,7 +182,8 @@ if(isset($_POST["programa_base"])){
         $Email_Director = $_POST['email_director_academico'];
     }
     $new_data_update['emailDirector'] = $Email_Director;
-
+    
+    
     $Token  = $programa_base[28];
     $new_data_update['token'] = $Token;
 
@@ -187,6 +211,8 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['telefono_cordinador_curso'] = $Telefono_Coordinador_Docente;
 
+    */
+    
     $Valor_Programa = $programa_base[33];
     if(isset($_POST['valor_diplomado']) && $Valor_Programa != $_POST['valor_diplomado']){
         $Valor_Programa = $_POST['valor_diplomado'];
@@ -199,6 +225,7 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['moneda'] = $Tipo_Moneda;
 
+    
     $Fecha_Termino = $programa_base[35];
     if(isset($_POST['fecha_de_termino']) && $Fecha_Termino != $_POST['fecha_de_termino']){
         $Fecha_Termino = $_POST['fecha_de_termino'];
@@ -211,6 +238,7 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['horas'] = $Horas;
 
+    
     $Horas_Online = $programa_base[37];
     if(isset($_POST['hora_online']) && $Horas_Online != $_POST['hora_online']){
         $Horas_Online = $_POST['hora_online'];
@@ -218,8 +246,8 @@ if(isset($_POST["programa_base"])){
     $new_data_update['horas_onlne'] = $Horas_Online;
 
     $Horas_Pedagogicas = $programa_base[38];
-    if(isset($_POST['hora_pedagogica']) && $Horas_Pedagogicas != $_POST['hora_pedagogica']){
-        $Horas_Pedagogicas = $_POST['hora_pedagogica'];
+    if(isset($_POST['hora_pedagogicas']) && $Horas_Pedagogicas != $_POST['hora_pedagogicas']){
+        $Horas_Pedagogicas = $_POST['hora_pedagogicas'];
     }
     $new_data_update['hrs_pedagogicas'] = $Horas_Pedagogicas;
 
@@ -235,6 +263,7 @@ if(isset($_POST["programa_base"])){
     } 
     $new_data_update['hora_termino'] = $Hora_Termino;
 
+    
     $Meta = $programa_base[41];
     if(isset($_POST['meta']) && $Meta != $_POST['meta']){
         $Meta = $_POST['meta'];
@@ -245,10 +274,12 @@ if(isset($_POST["programa_base"])){
     if(isset($_POST['valor_meta']) && $Valor_Meta != $_POST['valor_meta']){
         $Valor_Meta = $_POST['valor_meta'];
     }
+    $new_data_update['valor_meta'] = $Valor_Meta;
 
     $Dias = $programa_base[43];
     $new_data_update['dias'] =  $Dias;
 
+    /*
     $ID_Ejecutivo_Admision = $programa_base[44];
     if(isset(   $_POST['usr_cordinador_ejecutivo']) && 
                 $ID_Ejecutivo_Admision != $_POST['usr_cordinador_ejecutivo']){
@@ -275,7 +306,9 @@ if(isset($_POST["programa_base"])){
             $ID_Ejecutivo_Admision = $_POST['email_cordinador_ejecutivo'];
     }
     $new_data_update['mail_envio'] = $Mail_Envio;
+    */
 
+    
     $Link_PDF = $programa_base[47];
     $new_data_update['lnk_pdf'] = $Link_PDF;
 
@@ -285,11 +318,14 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['cod_sala'] = $Codigo_Sala;
 
+    /*
     $Secretaria = $programa_base[49];
     if(isset($_POST['id_secretaria']) && $_POST['id_secretaria'] != $Secretaria){
         $Secretaria = $_POST['id_secretaria'];
     }
     $new_data_update['secretaria'] = $Secretaria;
+    */
+
 
     $Sala_Cafe = $programa_base[50];
     if(isset($_POST['sala_cafe']) && $_POST['sala_cafe'] != $Sala_Cafe){
@@ -300,6 +336,7 @@ if(isset($_POST["programa_base"])){
     $In_Coffee = $programa_base[51];
     $new_data_update['in_coffe'] = $In_Coffee;
 
+    
     $Uso_pcs = $programa_base[52];
     if(isset($_POST['pc']) && $_POST['pc'] != $Uso_pcs){
         $Uso_pcs = $_POST['pc'];
@@ -311,10 +348,10 @@ if(isset($_POST["programa_base"])){
         $Nivelacion = $_POST['nivelacion'];
     }
     $new_data_update['nivelacion'] = $Nivelacion;
-
+    
     $Introduccion = $programa_base[54];
-    if(isset($_POST['intro_DA']) && $_POST['intro_DA']){
-        $introduccion = $_POST['intro_DA'];
+    if(isset($_POST['intro_DA']) && $_POST['intro_DA'] != $Introduccion){
+        $Introduccion = $_POST['intro_DA'];
     }
     $new_data_update['intro_DA'] = $Introduccion;
 
@@ -324,6 +361,7 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['cierre'] = $Cierre;
     
+    //****
     $Encuesta = $programa_base[56];
     if(isset($_POST['encuesta']) && $_POST['encuesta'] != $Encuesta){
         $Encuesta = $_POST['encuesta'];
@@ -336,15 +374,17 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['reglamento'] = $Reglamento;
 
+    /*
     $Usr_Coordinador_Comercial = $programa_base[58];
     if(isset($_POST['usr_coordinador_comercial']) && $Usr_Coordinador_Comercial != $_POST['usr_coordinador_comercial']){
         $Usr_Coordinador_Comercial = $_POST['usr_coordinador_comercial'];
     }
     $new_data_update['usr_coordinador_comercial'] = $Usr_Coordinador_Comercial;
+    */
 
     $Usr_Consultor_Corporativo = $programa_base[59];
     $new_data_update['usr_consultor_corp'] = $Usr_Consultor_Corporativo;
-
+    
     $Marca = $programa_base[17];
     $new_data_update['marca'] = $Marca;
 
@@ -352,6 +392,9 @@ if(isset($_POST["programa_base"])){
     $new_data_update['ID_DIPLOMA'] = $Id_Programa;
 
     $Codigo_Interno = $programa_base[22];
+    if(isset($_POST['cod_interno']) && $Codigo_Interno != $_POST['cod_interno']){
+        $Codigo_Interno = $_POST['cod_interno'];
+    }
     $new_data_update['Cod_interno'] = $Codigo_Interno;
 
     $ORDEN = $programa_base[23];
@@ -362,6 +405,7 @@ if(isset($_POST["programa_base"])){
 
     $ID_ORDEN = $programa_base[60];
     $new_data_update['ID_ORDEN'] = $ID_ORDEN;
-*/
-    echo implode('|', $new_data_update);
+
+    $update_data_JSON = json_encode($new_data_update);
+    update_data($update_data_JSON);
 }

@@ -96,6 +96,8 @@
                         if(tipo_programa == "Diploma" || tipo_programa == "Diploma Postitulo" || tipo_programa == "Curso"){
                             var tipo_producto = document.getElementById(tipo_programa);
                             tipo_producto.setAttribute("selected","true");
+                            
+
                         } else if(tipo_programa == "Curso Conducente"){
                             var tipo_producto = document.getElementById('Curso');
                             tipo_producto.setAttribute('selected', 'true');
@@ -113,6 +115,17 @@
                             otro.setAttribute('selected', 'true');
                             otro.removeAttribute('disable');
                         }
+
+                        //agregamos la opcion de curso conducente como un checkbox
+                        document.getElementById('tipo_producto').addEventListener('change', function(){
+                            var tipo_producto = this.value;
+                            var curso_conducente = document.getElementById('curso_conducente');
+
+                            if(tipo_producto == "Curso"){
+                                curso_conducente.removeAttribute('disable');
+                                curso_conducente.removeAttribute('hidden');
+                            }
+                        });
                     </script>
                 </div>
             </div>
@@ -490,7 +503,7 @@
                     <label>
                         Meta
                         <br>
-                        <input id = "meta" name = "meta" pattern="[0-9]{1,}" placeholder = "Ingrese valor meta">
+                        <input type = 'number' id = "meta" name = "meta" pattern="[0-9]{1,}" placeholder = "Ingrese valor meta">
                     </label>
                     <script>
                         //meta
@@ -506,7 +519,7 @@
                     <label>
                         Valor Meta
                         <br>
-                        <input id = "valor_meta" name = "valor_meta" pattern="[0-9]{1,}\.[0-9]{1,}" placeholder = "Ingrese número decimal">
+                        <input type = 'number' id = "valor_meta" name = "valor_meta" pattern="[0-9]{1,}" placeholder = "Ingrese número decimal">
                     </label>
                     <script>
                         //valor meta

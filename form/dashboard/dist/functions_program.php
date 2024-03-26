@@ -304,7 +304,8 @@ function search_edit_query($conditions){
     d.ID_ORDEN,                     
     d.area_negocios,                           
     d.reglamento,                   
-    d.nivel                         
+    d.nivel,
+    d.tipo                         
     "
     #Escogemos los atributos con los que buscamos
     #Obtenemos otros atributos
@@ -475,7 +476,8 @@ function get_program($list_campos_data, $create){
     /*ok*/            "ID_Coordinador_Comercial"      =>  $row['usr_coordinador_comercial'],
     /*ok*/              "ID_Consultor_Corporativo"      =>  $row['usr_consultor_corp'],
     /*ok*/             "ID_ORDEN"                      =>  $row['ID_ORDEN'],
-    /*ok*/             "Reglamento"                    =>  $row['reglamento']
+    /*ok*/             "Reglamento"                    =>  $row['reglamento'],
+                    'Tipo'=> $row['tipo']
             );
         }
     }
@@ -669,5 +671,140 @@ function get_data_encargados($tipo, $nombre){
         }
     }
     return $arr_encargados;
+}
+
+function get_sql_update(){
+    $sql_update= "UPDATE intranet.diplomados
+                    SET     Cod_interno                         = :Codigo_Interno,                  
+                            cod_diploma                         = :Codigo_Programa,                  
+                            version                             = :Version,                      
+                            orden                               = :ORDEN,                       
+                            codcatedraab                        = :Siglas,                 
+                            jornada                             = :Horario,                      
+                            DIPLOMADO                           = :DIPLOMADO,                    
+                            nom_diploma                         = :Nom_Diploma,                
+                            nombre_web                          = :Nombre_Web,                                          
+                            mail_envio                          = '',                 
+                            Habilitado                          = :Habilitado,                  
+                            web_habilitado                      = :Habilitado_web,              
+                            marca                               = :Marca,                        
+                            id_DA                               = '',                        
+                            Director                            = '',                  
+                            emailDirector                       = '',                
+                            token                               = '',                        
+                            nombre_cordinador_curso             = '',    
+                            usr_cordinador_curso                = '',       
+                            email_cordinador_curso              = '',     
+                            telefono_cordinador_curso           = '',  
+                            valor_diplomado                     = :Valor_Programa,              
+                            moneda                              = :Tipo_Moneda,                       
+                            Periodo                             = :Periodo,                      
+                            fecha_inicio                        = :Fecha_Inicio,                
+                            fecha_termino                       = :Fecha_Termino,               
+                            horas                               = :Horas,                        
+                            horas_online                        = :Horas_Online,                 
+                            hrs_pedagogicas                     = :Horas_Pedagogicas,              
+                            hora_inicio                         = :Hora_Inicio,                  
+                            hora_termino                        = :Hora_Termino,                 
+                            vacantes                            = :Vacantes,                     
+                            meta                                = :Meta,                                
+                            valor_meta                          = :Valor_Meta,                   
+                            dias                                = :Dias,                         
+                            horario_web                         = :Horario_Web,                   
+                            area                                = :Area,                          
+                            area_conocimiento                   = :Area_Conocimiento,             
+                            usr_cordinador_ad                   = '',                 
+                            nom_cordinadora_admision            = '',     
+                            telefono_cordinadora_admision       = '',  
+                            lnk_pdf                             = :Link_PDF,                      
+                            cod_sala                            = :Codigo_Sala,                           
+                            secretaria                          = '',                   
+                            sala_cafe                           = :Sala_Cafe,                    
+                            in_coffe                            = :In_Coffee,                     
+                            uso_pcs                             = :Uso_pcs,                      
+                            nivelacion                          = :Nivelacion,                   
+                            intro_DA                            = :Introduccion,                     
+                            cierre                              = :Cierre,                       
+                            encuesta                            = :Encuesta,                     
+                            cod_AUGE                            = :Codigo_AUGE,                     
+                            realizacion_en                      = :Realizacion,               
+                            usr_coordinador_comercial           = '',    
+                            usr_consultor_corp                  = :Usr_Consultor_Corporativo,           
+                            tipo_programa                       = :Tipo_Programa,                
+                            modalidad_programa                  = :Modalidad,           
+                            ID_ORDEN                            = :ID_ORDEN,                     
+                            area_negocios                       = :Area_Negocios,                           
+                            reglamento                          = :Reglamento,                   
+                            nivel                               = :Nivel,
+                            tipo                                = :Tipo
+                    WHERE ID_DIPLOMA = :Id_Programa;";
+
+    return $sql_update;
+}
+
+function update_data($update_data_JSON){
+    echo $update_data_JSON;
+    
+    $programa = json_decode($update_data_JSON, true);
+    echo count($programa);
+    include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
+    $sql_update_data = get_sql_update();
+
+    $stmt_encargados = $con->prepare($sql_update_data);
+    $stmt_encargados ->setFetchMode(PDO::FETCH_ASSOC);
+
+    //asignamos los valores a actualizar
+    $stmt_encargados->bindParam(':Codigo_Interno', $programa['Cod_interno']);
+    $stmt_encargados->bindParam(':Codigo_Programa', $programa['cod_diploma']);
+    $stmt_encargados->bindParam(':Version', $programa['version']);
+    $stmt_encargados->bindParam(':ORDEN', $programa['orden']);
+    $stmt_encargados->bindParam(':Siglas',$programa['codcatedraab']);
+    $stmt_encargados->bindParam(':Horario',$programa['jornada']);
+    $stmt_encargados->bindParam(':DIPLOMADO',$programa['DIPLOMADO']);
+    $stmt_encargados->bindParam(':Nom_Diploma',$programa['nom_diploma']);
+    $stmt_encargados->bindParam(':Nombre_We',$programa['nombre_web']);
+    $stmt_encargados->bindParam(':Habilitado',$programa['habilitado']);
+    $stmt_encargados->bindParam(':Habilitado_web',$programa['web_habilitado']);
+    $stmt_encargados->bindParam(':Marca',$programa['marca']);
+    $stmt_encargados->bindParam(':Valor_Programa',$programa['valor_diplomado']);
+    $stmt_encargados->bindParam(':Tipo_Moneda',$programa['moneda']);
+    $stmt_encargados->bindParam(':Periodo',$programa['Periodo']);
+    $stmt_encargados->bindParam(':Fecha_Inicio',$programa['fecha_inicio']);
+    $stmt_encargados->bindParam(':Fecha_Termino',$programa['fecha_termino']);
+    $stmt_encargados->bindParam(':Horas',$programa['horas']);
+    $stmt_encargados->bindParam('Horas_Online',$programa['horas_online']);
+    $stmt_encargados->bindParam(':Horas_Pedagogicas',$programa['hrs_pedagogicas']);
+    $stmt_encargados->bindParam(':Hora_Inicio',$programa['hora_inicio']);
+    $stmt_encargados->bindParam('Hora_Termino',$programa['hora_termino']);
+    $stmt_encargados->bindParam(':Vacantes',$programa['vacantes']);
+    $stmt_encargados->bindParam(':Meta',$programa['meta']);
+    $stmt_encargados->bindParam(':Valor_meta',$programa['valor_meta']);
+    $stmt_encargados->bindParam(':Dias',$programa['dias']);
+    $stmt_encargados->bindParam(':Horario_Web',$programa['horario_web']);
+    $stmt_encargados->bindParam(':Area',$programa['area']);
+    $stmt_encargados->bindParam(':Area_Conocimiento',$programa['area_conocimiento']);
+    $stmt_encargados->bindParam(':Link_PDF',$programa['lnk_PDF']);
+    $stmt_encargados->bindParam(':Codigo_Sala',$programa['cod_sala']);
+    $stmt_encargados->bindParam(':Sala_Cafe',$programa['sala_cafe']);
+    $stmt_encargados->bindParam(':In_Coffee',$programa['in_coffe']);
+    $stmt_encargados->bindParam(':Uso_pcs',$programa['uso_pcs']);
+    $stmt_encargados->bindParam(':Nivelacion',$programa['nivelacion']);
+    $stmt_encargados->bindParam(':Introduccion',$programa['intro_DA']);
+    $stmt_encargados->bindParam(':Cierre',$programa['cierre']);
+    $stmt_encargados->bindParam(':Encuesta',$programa['encuesta']);
+    $stmt_encargados->bindParam(':Codigo_AUGE',$programa['cod_AUGE']);
+    $stmt_encargados->bindParam(':Realizacion',$programa['realizacion_en']);
+    $stmt_encargados->bindParam(':Usr_Consultor_Corporativo',$programa['usr_consultor_corp']);
+    $stmt_encargados->bindParam(':Tipo_Programa',$programa['tipo_programa']);
+    $stmt_encargados->bindParam(':Modalidad',$programa['modalidad_programa']);
+    $stmt_encargados->bindParam(':ID_ORDEN',$programa['ID_ORDEN']);
+    $stmt_encargados->bindParam(':Area_Negocios',$programa['area_negocios']);
+    $stmt_encargados->bindParam(':Reglamento',$programa['reglamento']);
+    $stmt_encargados->bindParam(':Nivel',$programa['nivel']);
+    $stmt_encargados->bindParam(':Tipo',$programa['tipo']);
+    $stmt_encargados->bindParam(':Id_Programa',$programa['ID_DIPLOMA']);
+
+    $stmt_encargados ->execute();
+    echo "Programa Actualizado";
 }
 ?>
