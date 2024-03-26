@@ -67,7 +67,7 @@
 
             </script>
             
-            <div id = "include">
+            <div id = "show_info">
                 <div id = "informacion_general">
                     <?php include('edit_informacion_general.php')?>
                 </div>

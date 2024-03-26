@@ -201,7 +201,7 @@
             </div>
         </div>
     </div>
-    </body>
+</body>
 <script>
     //periodo
     var periodo = '<?php echo $data[4];?>';
