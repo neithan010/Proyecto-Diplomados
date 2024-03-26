@@ -2,8 +2,11 @@
 session_start();
 include("functions_program.php");
 $conectores = ["de", "los", "la", "en", "y", "a", "el", "del", "las", "un", "una", "con", "por", "para"];
+
 //si recibimos un programa base lo obtenemos y le hacemos explode para obtener su array
 if(isset($_POST["programa_base"])){
+
+    //data con todos los datos obtenidos de la base sin modificar
     $programa_base = $_POST["programa_base"];
     $programa_base = explode('|', $programa_base);
 
@@ -23,6 +26,7 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['jornada'] = $Horario;
     
+    /*
     //Nos aseguramos de que la version si se cambio $Version mantenga el valor que se desea mantener o actualizar
     $Version = $programa_base[9];
     if(isset($_POST['version']) && $Version != $_POST['version']){
@@ -53,7 +57,7 @@ if(isset($_POST["programa_base"])){
     if(isset($_POST['nombre_program']) && $name != $_POST['nombre_program']){
         $Nombre_Programa = $_POST['nombre_program'];
         $Siglas = generate_siglas($Nombre_Programa, $conectores);
-        $Codigo_Programa = generate_cod_diploma($siglas, $Periodo, $Horario, $Version);
+        $Codigo_Programa = generate_cod_diploma($Siglas, $Periodo, $Horario, $Version);
         $DIPLOMADO = generate_DIPLOMADO($Nombre_Programa, $$Tipo_Programa);
 
         if(isset($_POST['tipo'])){
@@ -139,14 +143,49 @@ if(isset($_POST["programa_base"])){
     $new_data_update['nombre_web'] = $Nombre_Web;
 
     $ID_DA = $programa_base[25];
+    if(isset($_POST['id_director_academico']) && $ID_DA != $_POST['id_director_academico']){
+        $ID_DA = $_POST['id_director_academico'];
+    }
+    $new_data_update['id_DA'] = $ID_DA;
+
     $Director = $programa_base[26];
+    if(isset($_POST['nombre_director_academico']) && $Director != $_POST['nombre_director_academico']){
+        $Director = $_POST['nombre_director_academico'];
+    }
+    $new_data_update['Director'] = $Director;
+
     $Email_Director = $programa_base[27];
+    if(isset($_POST['email_director_academico']) && $Email_Director != $_POST['email_director_academico']){
+        $Email_Director = $_POST['email_director_academico'];
+    }
+    $new_data_update['emailDirector'] = $Email_Director;
+
     $Token  = $programa_base[28];
+    $new_data_update['token'] = $Token;
 
     $Nombre_Coordinador_Docente = $programa_base[29];
+    if(isset($_POST['nombre_cordinador_docente']) && $Nombre_Coordinador_Docente != $_POST['nombre_cordinador_docente']){
+        $Nombre_Coordinador_Docente = $_POST[''];
+    }
+    $new_data_update['nombre_cordinador_curso'] = $Nombre_Coordinador_Docente;
+
     $ID_Coordinador_Docente = $programa_base[30];
-    $Email_Coordinador_Docente =    $programa_base[31];
+    if(isset($_POST['usr_cordinador_docente']) && $ID_Coordinador_Docente != $_POST['usr_cordinador_docente']){
+        $ID_Coordinador_Docente = $_POST['usr_cordinador_docente'];
+    }
+    $new_data_update['usr_cordinador_curso'] = $ID_Coordinador_Docente;
+
+    $Email_Coordinador_Docente = $programa_base[31];
+    if(isset($_POST['email_cordinador_docente']) && $Email_Coordinador_Docente != $_POST['email_cordinador_docente']){
+        $Email_Coordinador_Docente = $_POST['email_cordinador_docente'];
+    }
+    $new_data_update['email_cordinador_curso'] = $Email_Coordinador_Docente;
+
     $Telefono_Coordinador_Docente = $programa_base[32];
+    if(isset($_POST['telefono_cordinador_docente']) && $Telefono_Coordinador_Docente != $_POST['telefono_cordinador_docente']){
+        $Telefono_Coordinador_Docente = $_POST['telefono_cordinador_docente'];
+    }
+    $new_data_update['telefono_cordinador_curso'] = $Telefono_Coordinador_Docente;
 
     $Valor_Programa = $programa_base[33];
     if(isset($_POST['valor_diplomado']) && $Valor_Programa != $_POST['valor_diplomado']){
@@ -211,9 +250,31 @@ if(isset($_POST["programa_base"])){
     $new_data_update['dias'] =  $Dias;
 
     $ID_Ejecutivo_Admision = $programa_base[44];
+    if(isset(   $_POST['usr_cordinador_ejecutivo']) && 
+                $ID_Ejecutivo_Admision != $_POST['usr_cordinador_ejecutivo']){
+        $ID_Ejecutivo_Admision = $_POST['usr_cordinador_ejecutivo'];
+    }
+    $new_data_update['usr_cordinador_ad'] = $ID_Ejecutivo_Admision;
+
     $Nombre_Ejecutivo_Admision = $programa_base[45];
+    if(isset( $_POST['nombre_cordinador_ejecutivo']) &&
+        $ID_Ejecutivo_Admision != $_POST['nombre_cordinador_ejecutivo']){
+            $ID_Ejecutivo_Admision = $_POST['nombre_cordinador_ejecutivo'];
+    }
+    $new_data_update['nom_cordinadora_admision'] = $Nombre_Ejecutivo_Admision;
+
     $Telefono_ejecutivo_admision = $programa_base[46];
+    if(isset( $_POST['telefono_cordinador_ejecutivo']) && $Telefono_ejecutivo_admision != $_POST['telefono_cordinador_ejecutivo']){
+        $ID_Ejecutivo_Admision = $_POST['telefono_cordinador_ejecutivo'];
+    }
+    $new_data_update['telefono_cordinadora_admision'] = $Telefono_ejecutivo_admision;
+
     $Mail_Envio = $programa_base[14];
+    if(isset( $_POST['email_cordinador_ejecutivo']) &&
+        $ID_Ejecutivo_Admision != $_POST['email_cordinador_ejecutivo']){
+            $ID_Ejecutivo_Admision = $_POST['email_cordinador_ejecutivo'];
+    }
+    $new_data_update['mail_envio'] = $Mail_Envio;
 
     $Link_PDF = $programa_base[47];
     $new_data_update['lnk_pdf'] = $Link_PDF;
@@ -275,12 +336,11 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['reglamento'] = $Reglamento;
 
-    /*$Usr_Coordinador_Comercial = $programa_base[58];
+    $Usr_Coordinador_Comercial = $programa_base[58];
     if(isset($_POST['usr_coordinador_comercial']) && $Usr_Coordinador_Comercial != $_POST['usr_coordinador_comercial']){
         $Usr_Coordinador_Comercial = $_POST['usr_coordinador_comercial'];
     }
     $new_data_update['usr_coordinador_comercial'] = $Usr_Coordinador_Comercial;
-*/
 
     $Usr_Consultor_Corporativo = $programa_base[59];
     $new_data_update['usr_consultor_corp'] = $Usr_Consultor_Corporativo;
@@ -302,4 +362,6 @@ if(isset($_POST["programa_base"])){
 
     $ID_ORDEN = $programa_base[60];
     $new_data_update['ID_ORDEN'] = $ID_ORDEN;
+*/
+    echo implode('|', $new_data_update);
 }

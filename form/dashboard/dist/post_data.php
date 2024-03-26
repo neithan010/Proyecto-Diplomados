@@ -18,6 +18,7 @@
         $realizacion_en = $_POST['realizacion_en'];
         $fecha_de_inicio = $_POST['fecha_de_inicio'];
         $usr_cordinador_ej = $_POST['ejecutivo_ventas_id'];
+        
         $version = $_POST['version'];
         $conducente = false;
 
@@ -28,6 +29,7 @@
                 }
             }
         }
+
         //se debe revisar la version
         //si se esta tomando un programa ya existente, se deben comparar los periodos
         //si es el mismo periodo, entonces se mantiene la version escogido
@@ -45,7 +47,7 @@
         $siglas = generate_siglas($DIPLOMADO, $conectores);
 
         $cod_diploma_first = generate_cod_diploma($siglas, $periodo, $jornada, $version);
-        $version = aprobe_version($version, $periodo, $DIPLOMADO, $cod_diploma_first);
+        $version = aprobe_version($version, $periodo, $DIPLOMADO);
 
         $new_cod_diploma = generate_cod_diploma($siglas, $periodo, $jornada, $version);
         $nom_diploma = generate_nom_diploma($name_program, $new_cod_diploma);
@@ -79,17 +81,6 @@
         <script>
             var parrafo = document.createElement("p");
             parrafo.body.appendChild("Programa Cargado correctamente");
-            document.getElementById("resultado_post_program").appendChild(parrafo);
-        </script>
-        <?php
-    }
-
-    else{
-        #no se cargo correctamente el programa en la base de datos
-        ?>
-        <script>
-            var parrafo = document.createElement("p");
-            parrafo.body.appendChild("El programa no se ha cargado correctamente, intente de nuevo.");
             document.getElementById("resultado_post_program").appendChild(parrafo);
         </script>
         <?php

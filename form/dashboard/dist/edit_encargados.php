@@ -2,7 +2,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel="style" type="text/css" href="C:\laragon\www\form\css\estilo_create_program.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="C:\laragon\www\form\css\estilo_create_program.css">
 <div class="encargados_title" style ="margin-left: 20px;">
         <h4>
             Encargados
@@ -162,7 +161,7 @@
                     ?>
                     <script>
                         var nombre_cord_comercial = '<?php echo $nombre_cord_comercial?>';
-                        document.getElementById('coordinador_comercial').value = nombre_cord_comercial;
+                        document.getElementById('nombre_coordinador_comercial').value = nombre_cord_comercial;
                     </script>
                 </div>
             </div>
@@ -179,12 +178,10 @@
         <div class = 'container'>
             <div class = 'row '>
                 <div class = 'col'>
-                    <label>
                         <div class = 'text-center'>
                             Nombre
                         </div>
-                    </label>
-                    <input id = 'buscar_name_encargado' name = 'buscar_name_encargado' type = 'text' maxlength = '100' required>
+                    <input id = 'buscar_name_encargado' name = 'buscar_name_encargado' type = 'text' maxlength = '100'>
                     <button id = 'button_buscar_encargados'>
                     </button>
                 </div>
@@ -317,7 +314,6 @@
                     // La respuesta del servidor (en este caso, un json con los datos encontrados)
                     //data_encargados va a recibir un archivo tipo json desde otro lado
                     var data_encargados = JSON.parse(this.responseText);
-                    console.log(this.responseText);
                     //obtenemos la tabla y limpiamo s cualquier dato que ya haya sido buscado anteriormente
                     var tabla_encargados = document.getElementById('tableBody');
                     tabla_encargados.innerHTML = '';
@@ -342,8 +338,7 @@
                             // Agregar los datos de los encargados a las celdas
                             cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
                             cellID.innerHTML = encargado.ID;
-                            cellNombre.innerHTML = encargado.Nombre;
-                            cellApellido.innerHTML = encargado.Apellido;
+                            cellNombre.innerHTML = encargado.Nombre+' '+encargado.Apellido;
                         });
                     } else if(tipo == 'director academico'){
                         var id_secretaria_column =document.getElementById('id_secretaria_column');
@@ -367,7 +362,29 @@
                             cellNombre.innerHTML = encargado.Nombre;
                             cellEmail.innerHTML = encargado.Email;
                         });
-                    } 
+                    } else if(tipo == 'coordinador comercial'){
+                        var telefono_column = document.getElementById('telefono_column');
+                        var email_column =document.getElementById('email_column');
+
+                        telefono_column.setAttribute('hidden', 'true');
+                        email_column.setAttribute('hidden', 'true');
+
+                        data_encargados.forEach(function(encargado){
+                            var newRow = tabla_encargados.insertRow(-1);
+                            newRow.classList.add('text-center');
+                            // Crear celdas en la fila y asignar los valores de los encargados
+                            var cellSeleccionar = newRow.insertCell(0);
+                            var cellNombre = newRow.insertCell(1);
+                            var cellusr = newRow.insertCell(2);
+
+                            cellusr.setAttribute('hidden', 'true');
+                            cellusr.innerHTML = encargado.Usr;
+
+                            // Agregar los datos de los encargados a las celdas
+                            cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
+                            cellNombre.innerHTML = encargado.Nombre;
+                        });
+                    }
                     
                     else{
                         var id_secretaria_column =document.getElementById('id_secretaria_column');
@@ -388,7 +405,7 @@
                             var cellTelefono = newRow.insertCell(2);
                             var cellEmail = newRow.insertCell(3);
 
-                            if(tipo == 'coordinador docente'){
+                            if(tipo == 'coordinador docente' || tipo == 'coordinador ejecutivo'){
                                 var cellusr = newRow.insertCell(4);
                                 cellusr.setAttribute('hidden', 'true');
 
@@ -444,10 +461,10 @@
         if(tipo == 'coordinador ejecutivo'){
 
             //obtenemos nombre, telefono y email del coordinador ejecutivo
-            var nombre_completo = table.rows[info+1].cells[1].innerHTML+' '+table.rows[info+1].cells[2].innerHTML;
-            var telefono = table.rows[info+1].cells[3].innerHTML;
-            var email = table.rows[info+1].cells[4].innerHTML;
-            var usr = table.rows[info+1].cells[5].innerHTML;
+            var nombre_completo = table.rows[info+1].cells[1].innerHTML;
+            var telefono = table.rows[info+1].cells[2].innerHTML;
+            var email = table.rows[info+1].cells[3].innerHTML;
+            var usr = table.rows[info+1].cells[4].innerHTML;
 
             //obtenemos los input's donde van el nombre, telefono y email del coordinador ejecutivo.
             var nombre_cord_ejecutivo = document.getElementById('nombre_cordinador_ejecutivo');
@@ -460,7 +477,7 @@
             telefono_cord_ejecutivo.value = telefono;
             email_cord_ejecutivo.value = email;
             usr_cordinador_ejecutivo.value = usr;
-            console.log(usr);
+
         } else if(tipo == 'director academico'){
             //obtenemos nombre, telefono y email del coordinador ejecutivo
             var nombre_completo = table.rows[info+1].cells[2].innerHTML;
@@ -495,9 +512,8 @@
             email_cord_docente.value = email;
             usr_cordinador_docente.value = usr;
 
-            console.log(usr);
         } else if(tipo == 'secretaria'){
-            var nombre_completo = table.rows[info+1].cells[2].innerHTML+' '+table.rows[info+1].cells[3].innerHTML;
+            var nombre_completo = table.rows[info+1].cells[2].innerHTML;
             var id = table.rows[info+1].cells[1].innerHTML;
             
             var nombre_secretaria = document.getElementById('nombre_secretaria');
@@ -505,19 +521,19 @@
             
             nombre_secretaria.value = nombre_completo;
             id_secretaria.value = id;
+
         } else if(tipo == 'coordinador comercial'){
             //obtenemos nombre, telefono y email del coordinador ejecutivo
-            var nombre_completo = table.rows[info+1].cells[1].innerHTML+' '+table.rows[info+1].cells[2].innerHTML;
-            var usr = table.rows[info+1].cells[5].innerHTML;
-            console.log(nombre_completo);
-            console.log(usr);
+            var nombre_completo = table.rows[info+1].cells[1].innerHTML;
+            var usr = table.rows[info+1].cells[2].innerHTML;
+
             //obtenemos los input's donde van el nombre, telefono y email del coordinador ejecutivo.
-            var nombre_cord_comercial = document.getElementById('nombre_coordinador_comercial');
             var usr_cordinador_comercial =document.getElementById('usr_coordinador_comercial');
+            var nombre_coordinador_comercial =document.getElementById('nombre_coordinador_comercial');
 
             //les asignamos los nuevos valores seleccionados o mejor dicho el personal que tendrá dicho cargo.
-            nombre_cord_comercial.value = nombre_completo;
             usr_cordinador_comercial.value = usr;
+            nombre_coordinador_comercial.value =nombre_completo;
         }
 
         //si ya estamos viendo el buscador y/o la tabla entonces escondemos el contenido y limpiamos el buscador y la tabla

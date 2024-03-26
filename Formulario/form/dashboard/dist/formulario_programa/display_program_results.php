@@ -1,2 +1,0 @@
-<?php
-#Enseñamos los resultados

@@ -1,7 +1,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel="style" type="text/css" href="C:\laragon\www\form\css\estilo_create_program.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="C:\laragon\www\form\css\estilo_create_program.css">
 <body>
     <div class="title" style ="margin-left: 20px;">
         <h4>
@@ -83,7 +82,7 @@
                             <label>
                                 Fecha de Inicio
                                 <br>
-                                <input name = "fecha_de_inicio" type = "date" id = "fecha_de_inicio" required>
+                                <input name = "fecha_de_inicio" type = "date" id = "fecha_de_inicio">
                             </label>
                         </div>
                     </div>
@@ -92,7 +91,7 @@
                             <label>
                                 Fecha de Termino    
                                 <br>
-                                <input name = "fecha_de_termino" type = "date" id = "fecha_de_termino" required>
+                                <input name = "fecha_de_termino" type = "date" id = "fecha_de_termino">
                             </label>
                         </div>
                     </div>
@@ -114,7 +113,7 @@
                             <label>
                                 Hora Inicio
                                 <br>
-                                <input required type = "time" id = "hora_inicio" name = "hora_inicio" required>
+                                <input type = "time" id = "hora_inicio" name = "hora_inicio">
                             </label>
                             <script>
                                 var hora_inicio = '<?php echo $data[39];?>';
@@ -127,7 +126,7 @@
                             <label>
                                 Hora Final
                                 <br>
-                                <input required type = "time" id = "hora_final" name = "hora_final" required>
+                                <input type = "time" id = "hora_final" name = "hora_final">
                             </label>
                             <script>
                                 var hora_termino = '<?php echo $data[40];?>';
@@ -145,7 +144,7 @@
                             <label>
                                 Horas Totales
                                 <br>
-                                <input required id = "hora_totales" name = "hora_totales" pattern="[0-9]" placeholder = "Ingrese Horas Totales">
+                                <input id = "hora_totales" name = "hora_totales" placeholder = "Ingrese Horas Totales">
                             </label>
                         </div>
                     </div>
@@ -154,7 +153,7 @@
                             <label>
                                 Hora Totales Online
                                 <br>
-                                <input requiered id = "hora_online" name = "hora_online" pattern="[0-9]" placeholder = "Ingrese Horas Totales Online">
+                                <input id = "hora_online" name = "hora_online" placeholder = "Ingrese Horas Totales Online">
                             </label>
                         </div>
                     </div>
@@ -163,7 +162,7 @@
                             <label>
                                 Horas Pedagogicas
                                 <br>
-                                <input required id = "hora_pedagogicas" name = "hora_pedagogicas" pattern="[0-9]" placeholder = "Ingrese Horas Pedagogicas ">
+                                <input id = "hora_pedagogicas" name = "hora_pedagogicas" placeholder = "Ingrese Horas Pedagogicas ">
                             </label>
                         </div>
                     </div>
@@ -177,11 +176,11 @@
                             <label>
                                 Nombre Web Programa
                                 <br>
-                                <input required style = "width: 300px;
+                                <input style = "width: 300px;
                                                         white-space: nowrap;
                                                         overflow: hidden;
                                                         text-overflow: ellipsis;" 
-                                                        name = "nombre_web" id = "nombre_web" type = "text" maxlength = "110" required/>
+                                                        name = "nombre_web" id = "nombre_web" type = "text" maxlength = "110"/>
                             </label>
                         </div>
                     </div>
@@ -190,11 +189,11 @@
                             <label>
                                 Horario Web Programa
                                 <br>
-                                <input required style = "width: 300px;
+                                <input style = "width: 300px;
                                                         white-space: nowrap;
                                                         overflow: hidden;
                                                         text-overflow: ellipsis;"  
-                                                        name = "horario_web" id = "horario_web" type = "text" maxlength = "255" required/>
+                                                        name = "horario_web" id = "horario_web" type = "text" maxlength = "255"/>
                             </label>
                         </div>
                     </div>

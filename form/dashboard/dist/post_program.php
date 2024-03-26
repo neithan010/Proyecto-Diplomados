@@ -45,9 +45,9 @@ $sql_insert_program = "INSERT INTO intranet.diplomados
                         horario_web,
                         area,
                         vacantes,
-                        usr_cordinador_ej,
-                        nom_ejecutivo_admision,
-                        telefono_ejecutivo_admision)
+                        usr_cordinador_ad,
+                        nom_cordinadora_admision,
+                        telefono_cordinadora_admision)
         
                         VALUES (:DIPLOMADO, 
                                 :tipo_producto, 

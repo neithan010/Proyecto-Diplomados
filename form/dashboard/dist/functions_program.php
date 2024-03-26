@@ -258,13 +258,13 @@ function search_edit_query($conditions){
     d.web_habilitado,              
     d.marca,                        
     d.id_DA,                        
-    d.Director,                     
+    d.Director,                  
     d.emailDirector,                
     d.token,                        
-    d.nombre_cordinador_docente,    
-    d.usr_cordinador_docente,       
-    d.email_cordinador_docente,     
-    d.telefono_cordinador_docente,  
+    d.nombre_cordinador_curso,    
+    d.usr_cordinador_curso,       
+    d.email_cordinador_curso,     
+    d.telefono_cordinador_curso,  
     d.valor_diplomado,              
     d.moneda,                       
     d.Periodo,                      
@@ -282,9 +282,9 @@ function search_edit_query($conditions){
     d.horario_web,                   
     d.area,                          
     d.area_conocimiento,             
-    d.usr_cordinador_ej,                 
-    d.nom_ejecutivo_admision,     
-    d.telefono_ejecutivo_admision,  
+    d.usr_cordinador_ad,                 
+    d.nom_cordinadora_admision,     
+    d.telefono_cordinadora_admision,  
     d.lnk_pdf,                      
     d.cod_sala,                           
     d.secretaria,                   
@@ -344,7 +344,7 @@ function search_create_query($conditions){
     d.horario_web,
     d.area,
     d.vacantes,
-    d.usr_cordinador_ej
+    d.usr_cordinador_ad
     "
     #Escogemos los atributos con los que buscamos
     #Obtenemos otros atributos
@@ -407,7 +407,7 @@ function get_program($list_campos_data, $create){
                 "Horario_Web"               =>  $row['horario_web'],
                 "Area"                      =>  $row['area'],
                 "Vacantes"                  =>  $row['vacantes'],
-                "Usr_Coordinador_Ejecutivo" =>  $row['usr_cordinador_ej']
+                "Usr_Coordinador_Ejecutivo"  => $row["usr_cordinador_ad"]
             );
         }
         else{
@@ -427,7 +427,7 @@ function get_program($list_campos_data, $create){
     /*ok*/             "Area_Negocios"                 =>  $row['area_negocios'],
 
     /*ok*/             "DIPLOMADO"                     =>  $row['DIPLOMADO'],
-                "Mail_Envio"                    =>  $row['mail_envio'],
+    /*ok*/            "Mail_Envio"                    =>  $row['mail_envio'],
     /*ok*/             "Habilitado"                    =>  $row['Habilitado'],
     /*ok*/             "Habilitado_Web"                =>  $row['web_habilitado'],
     /*ok*/             "Marca"                         =>  $row['marca'],
@@ -439,14 +439,14 @@ function get_program($list_campos_data, $create){
     /*ok*/             "Codigo_Interno"                =>  $row['Cod_interno'],
     /*ok*/             "ORDEN"                         =>  $row['orden'],
     /*ok*/             "Nombre_Web"                    =>  $row['nombre_web'],
-                "ID_D_A"                        =>  $row['id_DA'],
-                "Director"                      =>  $row['Director'],
-                "Email_Director"                =>  $row['emailDirector'],
-                "Token"                         =>  $row['token'],
-                "Nombre_Coordinador_Docente"    =>  $row['nombre_cordinador_docente'],
-                "ID_Coordinador_Docente"        =>  $row['usr_cordinador_docente'],
-                "Email_Coordinador_Docente"     =>  $row['email_cordinador_docente'],
-                "Telefono_Coordinador_Docente"  =>  $row['telefono_cordinador_docente'],
+    /*ok*/            "ID_D_A"                        =>  $row['id_DA'],
+    /*ok*/            "Director"                      =>  $row['Director'],
+    /*ok*/            "Email_Director"                =>  $row['emailDirector'],
+    /*--*/            "Token"                         =>  $row['token'],
+    /*ok*/            "Nombre_Coordinador_Docente"    =>  $row['nombre_cordinador_curso'],
+    /*ok*/            "ID_Coordinador_Docente"        =>  $row['usr_cordinador_curso'],
+    /*ok*/            "Email_Coordinador_Docente"     =>  $row['email_cordinador_curso'],
+    /*ok*/            "Telefono_Coordinador_Docente"  =>  $row['telefono_cordinador_curso'],
     /*ok*/             "Valor_Programa"                =>  $row['valor_diplomado'],
     /*ok*/             "Tipo_Moneda"                   =>  $row['moneda'],
     /*ok*/             "Fecha_Termino"                 =>  $row['fecha_termino'],
@@ -458,9 +458,9 @@ function get_program($list_campos_data, $create){
     /*ok*/             "Meta"                          =>  $row['meta'],
     /*ok*/             "Valor_Meta"                    =>  $row['valor_meta'],
     /*ok*/             "Dias"                          =>  $row['dias'],
-                "ID_Ejecutivo_Admision"         =>  $row['usr_cordinador_ej'],
-                "Nombre_Ejecutivo_Admision"     =>  $row['nom_ejecutivo_admision'],
-                "Telefono_Ejecutivo_Admision"   =>  $row['telefono_ejecutivo_admision'],
+    /*ok*/            "ID_Ejecutivo_Admision"         =>  $row['usr_cordinador_ad'],
+    /*ok*/            "Nombre_Ejecutivo_Admision"     =>  $row['nom_cordinadora_admision'],
+    /*ok*/            "Telefono_Ejecutivo_Admision"   =>  $row['telefono_cordinadora_admision'],
     /*ok*/              "Link_PDF"                      =>  $row['lnk_pdf'],
     /*ok*/              "Codigo_Sala"                   =>  $row['cod_sala'],
     /*ok*/              "Secretaria"                    =>  $row['secretaria'],
@@ -472,7 +472,7 @@ function get_program($list_campos_data, $create){
     /*ok*/              "Cierre"                        =>  $row['cierre'],
     /*ok*/              "Encuesta"                      =>  $row['encuesta'],
     /*ok*/              "Codigo_AUGE"                   =>  $row['cod_AUGE'],
-                "ID_Coordinador_Comercial"      =>  $row['usr_coordinador_comercial'],
+    /*ok*/            "ID_Coordinador_Comercial"      =>  $row['usr_coordinador_comercial'],
     /*ok*/              "ID_Consultor_Corporativo"      =>  $row['usr_consultor_corp'],
     /*ok*/             "ID_ORDEN"                      =>  $row['ID_ORDEN'],
     /*ok*/             "Reglamento"                    =>  $row['reglamento']
@@ -494,19 +494,6 @@ function search_secretaria_byid(){
                                 FROM intranet.secretaria s
                                     WHERE   s.idsecretaria = :id_secretaria AND
                                             s.vigente = 1';
-
-    return $sql_get_secretaria;
-}
-
-function search_secretaria_byname(){
-    $sql_get_secretaria = 'SELECT
-                                s.idsecretaria,
-                                s.nombre,
-                                s.apellido_pat
-                                FROM intranet.secretaria s
-                                WHERE   s.nombre LIKE :nombre AND
-                                        s.apellido_pat LIKE :apellido AND
-                                        s.vigente = 1';
 
     return $sql_get_secretaria;
 }
@@ -588,17 +575,33 @@ function get_query_encargados($tipo){
         $sql_data = "SELECT *
                         FROM intranet.cordinadores_docentes cd
                         WHERE   cd.nombre_cordinador_curso LIKE :nombre";
+
     } else if($tipo == "coordinador ejecutivo"){
+        $sql_data = "SELECT *
+                        FROM intranet.ejecutivos_admision ea
+                        WHERE ea.ej_admision_nombre LIKE :nombre";
+
     } else if($tipo == "director academico"){
         $sql_data = "SELECT da.id_DA,
                             da.emailDirector,
                             da.nombre
                         FROM intranet.directores_academicos da
                         WHERE da.nombre LIKE :nombre";
+
     } else if($tipo == 'coordinador comercial'){
-
-    } else{
-
+        $sql_data = "SELECT cd.nombre_cordinador_curso ,
+                            cd.usr_cordinador_curso
+                        FROM intranet.cordinador_comercial cd
+                        WHERE   cd.nombre_cordinador_curso LIKE :nombre";
+    } else if($tipo == 'secretaria'){
+        $sql_data = 'SELECT
+                                s.idsecretaria,
+                                s.nombre,
+                                s.apellido_pat
+                                FROM intranet.secretaria s
+                                WHERE   s.nombre LIKE :nombre AND
+                                        s.apellido_pat LIKE :apellido AND
+                                        s.vigente = 1';
     }
 
     return $sql_data;
@@ -607,29 +610,35 @@ function get_query_encargados($tipo){
 function get_data_encargados($tipo, $nombre){
     include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
 
+    list($n, $apellido) = explode(" ", $nombre);
     $nombre = str_replace(' ', "%", $nombre);
     $nombre = '%'.$nombre.'%';
-    if($tipo == 'secretaria'){
-        $sql_secretaria = search_secretaria_byname();
-        return get_data_secretaria($sql_secretaria, $name, $apellido);
-    }
-    
+
+
     $sql_encargados = get_query_encargados($tipo);
     $stmt_encargados = $con->prepare($sql_encargados);
     $stmt_encargados ->setFetchMode(PDO::FETCH_ASSOC);
     $stmt_encargados->bindParam(':nombre', $nombre);
+    if($tipo == 'secretaria'){
+        $n = '%'.$n.'%';
+        $apellido = '%'.$apellido.'%';
+        
+        $stmt_encargados->bindParam(':nombre', $n);
+        $stmt_encargados->bindParam(':apellido', $apellido);
+    }
     $stmt_encargados ->execute();
 
     $arr_encargados = array();
 
     while($row = $stmt_encargados->fetch()){
-        if($tipo == 'coordinador ejecutivo' || $tipo == 'coordinador comercial'){
-            $arr_encargados[] =array(
-                "Nombre"        =>  $row['Nombre'],
-                "Telefono"      => $row['telefono'],
-                "Email"         =>  $row['email'],
-                "Usr"           => $row["usr"]
+        if($tipo == 'coordinador ejecutivo'){
+            $arr_encargados[] = array(
+                "Nombre"    =>  $row['ej_admision_nombre'],
+                "Usr"       =>  $row['ej_admision_usuario'],
+                "Email"     =>  $row['ej_admision_email'],
+                "Telefono"  =>  $row['ej_admision_telefono']
             );
+
         } else if($tipo == 'coordinador docente'){
             $arr_encargados[] =array(
             "Nombre"            => $row["nombre_cordinador_curso"],
@@ -637,37 +646,28 @@ function get_data_encargados($tipo, $nombre){
             "Email"         => $row["email_cordinador_curso"],
             "Telefono"      => $row["telefono_cordinador_curso"]
             );
+
         } else if($tipo == 'director academico'){
             $arr_encargados[] =array(
                 "ID"    => $row["id_DA"],
                 "Nombre"=> $row["nombre"],
                 "Email" => $row["emailDirector"]
             );
+            
+        } else if($tipo == 'coordinador comercial'){
+            $arr_encargados[] =array(
+                "Nombre"        => $row["nombre_cordinador_curso"],
+                "Usr"           => $row["usr_cordinador_curso"]
+                );
+
+        } else if($tipo == 'secretaria'){
+            $arr_encargados[] =array(
+                "ID"            =>  $row["idsecretaria"],
+                "Nombre"        => $row["nombre"],
+                "Apellido"      => $row["apellido_pat"]
+            );
         }
     }
     return $arr_encargados;
-}
-
-function get_data_secretaria($sql,$nombre, $apellido){
-    include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
-
-    $stmt_secretaria = $con->prepare($sql);
-    $stmt_secretaria ->setFetchMode(PDO::FETCH_ASSOC);
-    $stmt_secretaria->bindParam(':nombre', $nombre);
-    $stmt_secretaria->bindParam(':apellido', $apellido);
-    $stmt_secretaria ->execute();
-
-
-
-    $arr_secretaria = array();
-
-    while($row = $stmt_secretaria->fetch()){
-        $arr_secretaria[] =array(
-            "ID"            =>  $row["idsecretaria"],
-            "Nombre"        => $row["nombre"],
-            "Apellido"      => $row["apellido_pat"]
-        );
-    }
-    return $arr_secretaria;
 }
 ?>

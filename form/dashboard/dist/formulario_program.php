@@ -406,6 +406,7 @@ if(isset($_SESSION['can_load'])){
                         new_nom_diploma = new_nom_diploma + nom_diploma[i];
                     }
                 }
+
                 //pondremos los valores en los campos
                 var nombre_program = document.getElementById('nombre_program');
                 nombre_program.value = new_nom_diploma;

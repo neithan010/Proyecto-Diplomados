@@ -16,7 +16,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel="style" type="text/css" href="C:\laragon\www\form\css\estilo_create_program.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="C:\laragon\www\form\css\estilo_create_program.css">
 <div name = "formulario_edit_program" id = "formulario_edit_program" class = "">
     <div id = "barra_superior" name = "barra_superior">
         <hr>
@@ -56,7 +55,7 @@
     </div>  
     <form id = "form_edit_program" name = "form_edit_program" method = "post">
         <div id = "contenido" name = "contenido">
-            <div id = "save_button" style ="margin-left: 1300px; margin-bottom: 15px;">
+            <div id = "save_button" style ="margin-left: 20px; margin-bottom: 15px;">
                 <button id = "save_button_element" type = "button" formaction="update_data.php" onclick="display_confirmation_window()">
                     Guardar Cambios
                 </button>
@@ -120,9 +119,7 @@
         if(window.confirm('Esta seguro que quiere hacer los cambios?')){
             var button = document.getElementById('save_button_element');
             button.setAttribute('type', 'submit');
-            
-            var form_edit =document.getElementById('form_edit_program');
-            form_edit.setAttribute('action', 'get_edited_program.php');
+            button.setAttribute('formaction', 'get_edited_program.php');
         }
     }
 </script>

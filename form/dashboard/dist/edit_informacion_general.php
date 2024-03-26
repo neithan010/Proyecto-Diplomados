@@ -1,7 +1,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel="style" type="text/css" href="C:\laragon\www\form\css\estilo_create_program.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="C:\laragon\www\form\css\estilo_create_program.css">
 <div class="title" style = "margin-left: 20px;">
     <h4>
         Información General
@@ -25,13 +24,11 @@
                     <label>
                         Nombre Programa:
                         <br>
-                        <input required style = "width: 300px;
+                        <input style = "width: 300px;
                                                         white-space: nowrap;
                                                         overflow: hidden;
                                                         text-overflow: ellipsis;"  
                                                         name = "nombre_program" id = "nombre_program" 
-                                                        onmouseover = 'display_info_over("nombre_program")'
-                                                        onmouseout = 'deploy_msg_out("nombre_program")'
                             type = "text" maxlength = "100"/>
                             <?php 
                                 $nombre_programa = $data[0];
@@ -61,7 +58,7 @@
                     <label>
                         Código Interno:
                         <br>
-                        <input name = "cod_interno" id = "cod_interno" type = "text" maxlength = "100" required/>
+                        <input name = "cod_interno" id = "cod_interno" type = "text" maxlength = "100"/>
                         <script>
                             //Codigo Interno
                             document.getElementById('cod_interno').value = '<?php echo $data[22];?>';
@@ -74,7 +71,7 @@
                     <label>
                         Tipo Producto:
                         <br>
-                        <select name = "tipo" id ="tipo_producto" required>
+                        <select name = "tipo" id ="tipo_producto">
                             <option value = "" selected = "true" disable = "disable" hidden></option>
                             <option value= "Diploma" id="Diploma">
                                 DIPLOMA
@@ -123,7 +120,7 @@
                 <label>
                     Area
                     <br>
-                    <select name = "area" id = "area" required>
+                    <select name = "area" id = "area">
                         <option value = "" selected = "true" disable = "disable" hidden></option>
                         <option value= "Innovación y Emprendimiento" id = "Innovación y Emprendimiento">
                             Innovación y Emprendimiento
@@ -198,14 +195,13 @@
                             area_val.removeAttribute("disable");
                         }
                     }
-                    console.log(area_conocimiento);
                 </script>
             </div>
             <div class="col">
                 <label>
                     Modalidad
                     <br>
-                    <select name = "modalidad" id = "modalidad" required>
+                    <select name = "modalidad" id = "modalidad">
                         <option value = "" selected = "true" disable = "disable" hidden></option>
                         <option value = "Presencial" id = "Presencial">
                             Presencial
@@ -255,7 +251,7 @@
                 <label>
                     Nivel
                     <br>
-                    <select name = "nivel" id = "nivel" required>
+                    <select name = "nivel" id = "nivel">
                         <option value = "" selected = "true" disable = "disable" hidden></option>
                         <option value = "Inicial" id= "Inicial">
                             Inicial
@@ -296,7 +292,7 @@
                 <label>
                     ¿Donde se realizará?
                     <br>
-                    <select name = "realizacion_en" id = "realizacion_en" required>
+                    <select name = "realizacion_en" id = "realizacion_en">
                         <option value = "" selected = "true" disable = "disable" hidden></option>
                         <option value = "FEN" id="FEN">
                             FEN
@@ -336,7 +332,7 @@
                 <label>
                     Versión
                     <br>
-                    <select class="text-center" id = "version" name ="version" required>
+                    <select class="text-center" id = "version" name ="version">
                         <option value = "" selected = "true" disable = "disable" hidden></option>
                         <option value = "V1" id = "V1" name ="V1">V1</option>
                         <option value = "V2" id = "V2" name ="V2">V2</option>
@@ -362,7 +358,7 @@
                         otra_version.value = version;
                         otra_version.textContent = version;
                         otra_version.setAttribute('selected', 'true');
-                        otra_version.reomve('disable');
+                        otra_version.removeAttribute('disable');
                     }
                 </script>
             </div>
@@ -386,7 +382,7 @@
                     <label>
                         Habilitado
                         <br>
-                        <select id = "habilitado" name ="habilitado" class="text-center" required>
+                        <select id = "habilitado" name ="habilitado" class="text-center">
                             <option value = "" selected = "true" disable = "disable" hidden></option>
                             <option value = "0" id = "habilitado_0">Si</option>
                             <option value = "1" id = "habilitado_1">No</option>
@@ -403,7 +399,7 @@
                     <label>
                         Habilitado en la Web
                         <br>
-                        <select id = "web_habilitado" name = "web_habilitado" class="text-center" required>
+                        <select id = "web_habilitado" name = "web_habilitado" class="text-center">
                             <option value = "" selected = "true" disable = "disable" hidden></option>
                             <option value = "1" id = "web_1">Si</option>
                             <option value = "0" id = "web_0">No</option>
@@ -434,7 +430,7 @@
                 <div id = "valor_diplomado_t" name = "valor_diplomado_t">
                     <label>
                         Valor Diplomado
-                        <input id = "valor_diplomado" name = "valor_diplomado" pattern="[0-9]{1,}\.[0-9]{1,}" placeholder = "Ingrese número decimal" required>
+                        <input id = "valor_diplomado" name = "valor_diplomado" pattern="[0-9]{1,}\.[0-9]{1,}" placeholder = "Ingrese número decimal">
                     </label>
                     <script>
                         //valor diplomado
@@ -447,7 +443,7 @@
                     <label>
                         Tipo Moneda
                         <br>
-                        <select id = "moneda" name = "moneda" class = "text-center" required>
+                        <select id = "moneda" name = "moneda" class = "text-center">
                             <option value = "" selected = "true" disable = "disable" hidden></option>
                             <option id = 'CLP' name = "CLP" value = "CLP">CLP</option>
                             <option id = 'USD' name = "USD" value = "USD">USD</option>
@@ -475,11 +471,14 @@
                     <label>
                         Vacantes
                         <br>
-                        <input id = "vacantes" name = "vacantes" placeholder = "Ingrese número vacantes" required>
+                        <input id = "vacantes" name = "vacantes" placeholder = "Ingrese número vacantes">
                     </label>
                     <script>
-                        //vacantes
-                        document.getElementById('vacantes').value = <?php echo $data[20];?>
+                        //vacante
+                        var vacantes = '<?php echo $data[20];?>';
+                        if(vacantes != ''){
+                            document.getElementById('vacantes').value = vacantes;
+                        }
                     </script>
                 </div>
             </div>
@@ -491,11 +490,14 @@
                     <label>
                         Meta
                         <br>
-                        <input id = "meta" name = "meta" pattern="[0-9]{1,}" placeholder = "Ingrese valor meta" required>
+                        <input id = "meta" name = "meta" pattern="[0-9]{1,}" placeholder = "Ingrese valor meta">
                     </label>
                     <script>
                         //meta
-                        document.getElementById('meta').value = <?php echo $data[41];?>
+                        var meta = '<?php echo $data[41];?>';
+                        if(meta != ''){
+                            document.getElementById('meta').value = meta;
+                        }
                     </script>
                 </div>
             </div>
@@ -504,38 +506,17 @@
                     <label>
                         Valor Meta
                         <br>
-                        <input id = "valor_meta" name = "valor_meta" pattern="[0-9]{1,}\.[0-9]{1,}" placeholder = "Ingrese número decimal" required>
+                        <input id = "valor_meta" name = "valor_meta" pattern="[0-9]{1,}\.[0-9]{1,}" placeholder = "Ingrese número decimal">
                     </label>
                     <script>
                         //valor meta
-                        document.getElementById('valor_meta').value = '<?php echo $data[42];?>'
+                        var val_meta = '<?php echo $data[42];?>';
+                        if(val_meta != ''){
+                            document.getElementById('valor_meta').value = val_meta;
+                        }
                     </script>
                 </div>  
             </div>
         </div>
     </div>
 </div>
-<script>
-    //Se intenta desplegar burbuja para los inputs mas largos
-    /*
-    function display_info_over(id){
-        const input = document.getElementById(id);
-        const mensaje = input.getAttribute('data-mensaje');
-        const tooltip = document.createElement('div');
-        tooltip.textContent = mensaje;
-        tooltip.classList.add('tooltip');
-        document.body.appendChild(tooltip);
-        const rect = input.getBoundingClientRect();
-        tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px'; // Posiciona la burbuja arriba del input
-        tooltip.style.left = rect.left + 'px';
-    }
-
-    function deploy_msg_out(id){
-        const input = document.getElementById(id);
-        const tooltip = document.querySelector('.tooltip');
-        if (tooltip) {
-            tooltip.remove();
-        }
-    }
-    */
-</script>
