@@ -181,8 +181,11 @@
                     <div>
                         Nombre
                     </div>
-                    <input id = 'buscar_name_encargado' name = 'buscar_name_encargado' type = 'text' maxlength = '100'>
-                    <button id = 'button_buscar_encargados'>
+                    <form id="search">
+                        <input id = 'buscar_name_encargado' name = 'buscar_name_encargado' type = 'text' maxlength = '100'>
+                        <input id = 'tipo_encargado' name = 'tipo_encargado' type = 'text' hidden>
+                        <button type="button" id='button_buscar_encargados'>
+                    </form>
                     </button>
                 </div>
             </div>
@@ -197,14 +200,13 @@
                     Resultados Encontrados
                 </div>
                 <br>
-                <form action = "create_program_0.php" name="frm_periodo" id="frm_periodo" method="POST">
-                    <input type="hidden" id="encargadoSeleccionado" name="encargadoSeleccionado" value="">
-                    <div class ="margin-left">
-                        <button value="Enviar" id = 'seleccionar_encargado'>
+                <div class ="margin-left">
+                    <form>
+                        <button type="button" id = 'select_encargado'>
                             Seleccionar
                         </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
                 <div class="card-body">
                     <table class="table table-bordered small" id="dataTableEncargados" width="100%" cellspacing="0">
                         <thead>
@@ -242,6 +244,7 @@
         input_name.value = '';
         tabla_encargados.innerHTML = '';
     }
+
     //funcion que enseña el buscador por nombre de los encargados, si ya se esta enseñando el buscador y/o los resultados, entonces los esconde.
     //esta funcion se aplica cada vez que se haga click en un boton que diga Buscador, normalmente ubicados al lado del nombre de cada encargado.
     function display_search_encargados(tipo){
@@ -296,154 +299,148 @@
     //esta función se encarga de llamar a los resultados según el nombre apellido que se haya ingresado
     //dicha funcion se aplica al presionar el boton que diga Buscar X, donde X son los distintos tipos de encargados
     //este boton es el que está en el buscador.
-    function showResultsEncargados(tipo) {
-
-        //obtenemos el input o nombre apellido a buscar y el id de la tabla donde se enseñarán los resultados.
+    function showResultsEncargados(tipo){
         var inputName = document.getElementById('buscar_name_encargado');
-        var tableResults = document.getElementById('table_results');
-        
-        //si el input no es vacio entonces empezamos a buscar los datos
-        if(inputName.value != ''){
-            // Realizar una solicitud AJAX para enviar el valor de inputName.value al servidor
+
+        if(inputName.value != ''){  
             var xhttp = new XMLHttpRequest();
-            //dejamos en espera la función, hasta que se obtengan los datos
-            xhttp.onreadystatechange = function() {
-                console.log(this.readyState);
-                console.log(this.status);
-                if (this.readyState === 4 && this.status === 200) {
-                    // La respuesta del servidor (en este caso, un json con los datos encontrados)
-                    //data_encargados va a recibir un archivo tipo json desde otro lado
-                    var data_encargados = JSON.parse(this.responseText);
-                    console.log(data_encargados);
-                    console.log('ya busque a los encargados');
-                    //obtenemos la tabla y limpiamo s cualquier dato que ya haya sido buscado anteriormente
-                    var tabla_encargados = document.getElementById('tableBody');
-                    tabla_encargados.innerHTML = '';
-
-                    if(tipo == 'secretaria'){
-                        var id_secretaria_column =document.getElementById('id_secretaria_column');
-                        var telefono_column = document.getElementById('telefono_column');
-                        var email_column = document.getElementById('email_column');
-
-                        id_secretaria_column.removeAttribute('hidden');
-                        telefono_column.setAttribute('hidden', 'true');
-                        email_column.setAttribute('hidden', 'true');
-                        
-                        data_encargados.forEach(function(encargado){
-                            var newRow = tabla_encargados.insertRow(-1);
-                            newRow.classList.add('text-center');
-                            // Crear celdas en la fila y asignar los valores de los encargados
-                            var cellSeleccionar = newRow.insertCell(0);
-                            var cellID = newRow.insertCell(1);
-                            var cellNombre = newRow.insertCell(2);
-
-                            // Agregar los datos de los encargados a las celdas
-                            cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
-                            cellID.innerHTML = encargado.ID;
-                            cellNombre.innerHTML = encargado.Nombre+' '+encargado.Apellido;
-                        });
-                    } else if(tipo == 'director academico'){
-                        var id_secretaria_column =document.getElementById('id_secretaria_column');
-                        var telefono_column = document.getElementById('telefono_column');
-
-                        id_secretaria_column.removeAttribute('hidden');
-                        telefono_column.setAttribute('hidden', 'true');
-
-                        data_encargados.forEach(function(encargado){
-                            var newRow = tabla_encargados.insertRow(-1);
-                            newRow.classList.add('text-center');
-                            // Crear celdas en la fila y asignar los valores de los encargados
-                            var cellSeleccionar = newRow.insertCell(0);
-                            var cellID = newRow.insertCell(1);
-                            var cellNombre = newRow.insertCell(2);
-                            var cellEmail = newRow.insertCell(3);
-
-                            // Agregar los datos de los encargados a las celdas
-                            cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
-                            cellID.innerHTML = encargado.ID;
-                            cellNombre.innerHTML = encargado.Nombre;
-                            cellEmail.innerHTML = encargado.Email;
-                        });
-                    } else if(tipo == 'coordinador comercial'){
-                        var telefono_column = document.getElementById('telefono_column');
-                        var email_column =document.getElementById('email_column');
-
-                        telefono_column.setAttribute('hidden', 'true');
-                        email_column.setAttribute('hidden', 'true');
-
-                        data_encargados.forEach(function(encargado){
-                            var newRow = tabla_encargados.insertRow(-1);
-                            newRow.classList.add('text-center');
-                            // Crear celdas en la fila y asignar los valores de los encargados
-                            var cellSeleccionar = newRow.insertCell(0);
-                            var cellNombre = newRow.insertCell(1);
-                            var cellusr = newRow.insertCell(2);
-
-                            cellusr.setAttribute('hidden', 'true');
-                            cellusr.innerHTML = encargado.Usr;
-
-                            // Agregar los datos de los encargados a las celdas
-                            cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
-                            cellNombre.innerHTML = encargado.Nombre;
-                        });
-                    }
-                    
-                    else{
-                        var id_secretaria_column =document.getElementById('id_secretaria_column');
-                        var telefono_column = document.getElementById('telefono_column');
-                        var email_column = document.getElementById('email_column');
-
-                        id_secretaria_column.setAttribute('hidden', 'true');
-                        telefono_column.removeAttribute('hidden');
-                        email_column.removeAttribute('hidden');
-
-                        data_encargados.forEach(function(encargado) {
-                            var newRow = tabla_encargados.insertRow(-1);
-                            newRow.classList.add('text-center');
-
-                            // Crear celdas en la fila y asignar los valores de los encargados
-                            var cellSeleccionar = newRow.insertCell(0);
-                            var cellNombre = newRow.insertCell(1);
-                            var cellTelefono = newRow.insertCell(2);
-                            var cellEmail = newRow.insertCell(3);
-
-                            if(tipo == 'coordinador docente' || tipo == 'coordinador ejecutivo'){
-                                var cellusr = newRow.insertCell(4);
-                                cellusr.setAttribute('hidden', 'true');
-
-                                cellusr.innerHTML = encargado.Usr;
-                            }
-
-                            // Agregar los datos de los encargados a las celdas
-                            cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
-                            cellNombre.innerHTML = encargado.Nombre;
-                            cellTelefono.innerHTML = encargado.Telefono;
-                            cellEmail.innerHTML = encargado.Email;
-                        });
-                    }
-
-                    //si la tabla esta escondida entonces la enseñamos
-                    if(tableResults.hasAttribute('hidden')){
-                        tableResults.removeAttribute('hidden');
-                    }
-                    console.log('y estare aqui?');
-                    //hay un boton seleccionar asociado a la tabla, el cual tendra la función select_encargado(tipo_encargado)
-                    var select_encargado = document.getElementById('seleccionar_encargado');
-                    select_encargado.setAttribute('onclick', 'select_encargado("' + tipo + '")');
-                }
-            }
-            //mientras data_encargados no reciba nada abrimos la solicitud AJAX y le enviamos "tipo, nombre a buscar" al archivo
-            //procesar_encargados.php y se envía
-            //la sección anterior no se ejecutará hasta que en el archivo procesar_encargados.php se haga un "echo"
-            console.log('voy a envier el input para buscar encargados');
-            xhttp.open('GET', 'procesar_encargados.php?input_value=' + tipo+','+inputName.value, true);
+            xhttp.open('GET', 'procesar_encargados.php?input_value='+ tipo+','+inputName.value, true);
             xhttp.send();
+            
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    // Aquí puedes manejar la respuesta del servidor
+                    var respuesta = this.responseText;
+                    console.log(respuesta);
+
+                    respuesta = JSON.parse(respuesta);
+                    display_results_encargados(tipo, respuesta);
+                }
+            };
+        }
+    }
+    
+    function display_results_encargados(tipo, data_encargados) {
+        var select =document.getElementById('select_encargado');
+        select.setAttribute('onclick', 'change_input("' + tipo + '")');
+
+        var tableResults =document.getElementById('table_results');
+        var tabla_encargados = document.getElementById('tableBody');
+        tabla_encargados.innerHTML = '';
+
+        if(tipo == 'secretaria'){
+            var id_secretaria_column =document.getElementById('id_secretaria_column');
+            var telefono_column = document.getElementById('telefono_column');
+            var email_column = document.getElementById('email_column');
+
+            id_secretaria_column.removeAttribute('hidden');
+            telefono_column.setAttribute('hidden', 'true');
+            email_column.setAttribute('hidden', 'true');
+            
+            data_encargados.forEach(function(encargado){
+                var newRow = tabla_encargados.insertRow(-1);
+                newRow.classList.add('text-center');
+                // Crear celdas en la fila y asignar los valores de los encargados
+                var cellSeleccionar = newRow.insertCell(0);
+                var cellID = newRow.insertCell(1);
+                var cellNombre = newRow.insertCell(2);
+
+                // Agregar los datos de los encargados a las celdas
+                cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
+                cellID.innerHTML = encargado.ID;
+                cellNombre.innerHTML = encargado.Nombre+' '+encargado.Apellido;
+            });
+
+        } else if(tipo == 'director academico'){
+            var id_secretaria_column =document.getElementById('id_secretaria_column');
+            var telefono_column = document.getElementById('telefono_column');
+
+            id_secretaria_column.removeAttribute('hidden');
+            telefono_column.setAttribute('hidden', 'true');
+
+            data_encargados.forEach(function(encargado){
+                var newRow = tabla_encargados.insertRow(-1);
+                newRow.classList.add('text-center');
+                // Crear celdas en la fila y asignar los valores de los encargados
+                var cellSeleccionar = newRow.insertCell(0);
+                var cellID = newRow.insertCell(1);
+                var cellNombre = newRow.insertCell(2);
+                var cellEmail = newRow.insertCell(3);
+
+                // Agregar los datos de los encargados a las celdas
+                cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
+                cellID.innerHTML = encargado.ID;
+                cellNombre.innerHTML = encargado.Nombre;
+                cellEmail.innerHTML = encargado.Email;
+            });
+
+        } else if(tipo == 'coordinador comercial'){
+            var telefono_column = document.getElementById('telefono_column');
+            var email_column =document.getElementById('email_column');
+
+            telefono_column.setAttribute('hidden', 'true');
+            email_column.setAttribute('hidden', 'true');
+
+            data_encargados.forEach(function(encargado){
+                var newRow = tabla_encargados.insertRow(-1);
+                newRow.classList.add('text-center');
+                // Crear celdas en la fila y asignar los valores de los encargados
+                var cellSeleccionar = newRow.insertCell(0);
+                var cellNombre = newRow.insertCell(1);
+                var cellusr = newRow.insertCell(2);
+
+                cellusr.setAttribute('hidden', 'true');
+                cellusr.innerHTML = encargado.Usr;
+
+                // Agregar los datos de los encargados a las celdas
+                cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
+                cellNombre.innerHTML = encargado.Nombre;
+            });
+        }
+        else{
+            var id_secretaria_column =document.getElementById('id_secretaria_column');
+            var telefono_column = document.getElementById('telefono_column');
+            var email_column = document.getElementById('email_column');
+
+            id_secretaria_column.setAttribute('hidden', 'true');
+            telefono_column.removeAttribute('hidden');
+            email_column.removeAttribute('hidden');
+
+            data_encargados.forEach(function(encargado) {
+                var newRow = tabla_encargados.insertRow(-1);
+                newRow.classList.add('text-center');
+
+                // Crear celdas en la fila y asignar los valores de los encargados
+                var cellSeleccionar = newRow.insertCell(0);
+                var cellNombre = newRow.insertCell(1);
+                var cellTelefono = newRow.insertCell(2);
+                var cellEmail = newRow.insertCell(3);
+
+                if(tipo == 'coordinador docente' || tipo == 'coordinador ejecutivo'){
+                    var cellusr = newRow.insertCell(4);
+                    cellusr.setAttribute('hidden', 'true');
+
+                    cellusr.innerHTML = encargado.Usr;
+                }
+
+                // Agregar los datos de los encargados a las celdas
+                cellSeleccionar.innerHTML = '<input type="radio" name="programa_seleccionado">';
+                cellNombre.innerHTML = encargado.Nombre;
+                cellTelefono.innerHTML = encargado.Telefono;
+                cellEmail.innerHTML = encargado.Email;
+            });
+        }
+
+        //si la tabla esta escondida entonces la enseñamos
+        if(tableResults.hasAttribute('hidden')){
+            tableResults.removeAttribute('hidden');
         }
     }
 
+    
     //esta función es la encargada de luego de seleccionar una fila de la tabla(es decir los resultados encontrados)
     //se cambie los datos existentes por los nuevos seleccionados, dependiendo del encargado es que datos se cambiarán.
-    function select_encargado(tipo) {
+    function change_input(tipo){
 
         //obtenemos todos los botones radiales de cada fila en la tabla, como tambien el id de la tabla
         var radioButtons = document.getElementsByName('programa_seleccionado');
@@ -459,10 +456,10 @@
                 break;
             }
         }
-
+        console.log(info);
+        
         //segun el tipo de encargado es que dato vamos a buscar y agregar en nuestros datos a editar
         if(tipo == 'coordinador ejecutivo'){
-
             //obtenemos nombre, telefono y email del coordinador ejecutivo
             var nombre_completo = table.rows[info+1].cells[1].innerHTML;
             var telefono = table.rows[info+1].cells[2].innerHTML;
@@ -493,7 +490,7 @@
 
             nombre_director_academico.value = nombre_completo;
             email_director_academico.value = email;
-            id_director_academico = id;
+            id_director_academico.value = id;
 
         } else if(tipo == 'coordinador docente'){
 
@@ -538,7 +535,7 @@
             usr_cordinador_comercial.value = usr;
             nombre_coordinador_comercial.value =nombre_completo;
         }
-
+        
         //si ya estamos viendo el buscador y/o la tabla entonces escondemos el contenido y limpiamos el buscador y la tabla
         if(!buscador_encargados.hasAttribute('hidden')){
             hide_search_content();

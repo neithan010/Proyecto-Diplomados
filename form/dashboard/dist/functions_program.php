@@ -672,72 +672,6 @@ function get_data_encargados($tipo, $nombre){
 }
 
 function get_sql_update(){
-    /*
-    $sql_update= "UPDATE intranet.diplomados
-                    SET     Cod_interno                         = :Codigo_Interno,                  
-                            cod_diploma                         = :Codigo_Programa,                  
-                            version                             = :Version,                      
-                            orden                               = :ORDEN,                       
-                            codcatedraab                        = :Siglas,                 
-                            jornada                             = :Horario,                      
-                            DIPLOMADO                           = :DIPLOMADO,                    
-                            nom_diploma                         = :Nom_Diploma,                
-                            nombre_web                          = :Nombre_Web,                                          
-                            mail_envio                          = '',                 
-                            habilitado                          = :Habilitado,                  
-                            web_habilitado                      = :Habilitado_web,              
-                            marca                               = :Marca,                        
-                            id_DA                               = NULL,                        
-                            Director                            = NULL,                  
-                            emailDirector                       = NULL,                
-                            token                               = NULL,                        
-                            nombre_cordinador_curso             = NULL,    
-                            usr_cordinador_curso                = NULL,       
-                            email_cordinador_curso              = NULL,     
-                            telefono_cordinador_curso           = NULL,  
-                            valor_diplomado                     = :Valor_Programa,              
-                            moneda                              = :Tipo_Moneda,                       
-                            Periodo                             = :Periodo,                      
-                            fecha_inicio                        = :Fecha_Inicio,                
-                            fecha_termino                       = :Fecha_Termino,               
-                            horas                               = :Horas,                        
-                            horas_online                        = :Horas_Online,                 
-                            hrs_pedagogicas                     = :Horas_Pedagogicas,              
-                            hora_inicio                         = :Hora_Inicio,                  
-                            hora_termino                        = :Hora_Termino,                 
-                            vacantes                            = :Vacantes,                     
-                            meta                                = :Meta,                                
-                            valor_meta                          = :Valor_Meta,                   
-                            dias                                = :Dias,                         
-                            horario_web                         = :Horario_Web,                   
-                            area                                = :Area,                          
-                            area_conocimiento                   = :Area_Conocimiento,             
-                            usr_cordinador_ad                   = NULL,                 
-                            nom_cordinadora_admision            = NULL,     
-                            telefono_cordinadora_admision       = NULL,  
-                            lnk_pdf                             = :Link_PDF,                      
-                            cod_sala                            = :Codigo_Sala,                           
-                            secretaria                          = NULL,                   
-                            sala_cafe                           = :Sala_Cafe,                    
-                            in_coffe                            = :In_Coffee,                     
-                            uso_pcs                             = :Uso_pcs,                      
-                            nivelacion                          = :Nivelacion,                   
-                            intro_DA                            = :Introduccion,                     
-                            cierre                              = :Cierre,                       
-                            encuesta                            = :Encuesta,                     
-                            cod_AUGE                            = :Codigo_AUGE,                     
-                            realizacion_en                      = :Realizacion,               
-                            usr_coordinador_comercial           = NULL,    
-                            usr_consultor_corp                  = :Usr_Consultor_Corporativo,           
-                            tipo_programa                       = :Tipo_Programa,                
-                            modalidad_programa                  = :Modalidad,           
-                            ID_ORDEN                            = :ID_ORDEN,                     
-                            area_negocios                       = :Area_Negocios,                           
-                            reglamento                          = :Reglamento,                   
-                            nivel                               = :Nivel,
-                            tipo                                = :Tipo
-                    WHERE ID_DIPLOMA = :Id_Programa";
-*/
     $sql_update = "UPDATE intranet.diplomados
     SET 	Periodo = :Periodo,
             jornada = :Horario,
@@ -788,20 +722,21 @@ function get_sql_update(){
             cod_AUGE = :Codigo_AUGE,
             ID_ORDEN = :ID_ORDEN,
             
-            mail_envio = '',
-            id_DA = NULL,
-            emailDirector = NULL,
-            token = NULL,
-            nombre_cordinador_curso = NULL,
-            usr_cordinador_curso = NULL,
-            email_cordinador_curso = NULL ,
-            telefono_cordinador_curso = NULL,
+            mail_envio = :mail_envio,
+            id_DA = :id_DA,
+            emailDirector = :emailDirector,
+            Director = :Director,
+            token = :token,
+            nombre_cordinador_curso = :nombre_cordinador_curso,
+            usr_cordinador_curso = :usr_cordinador_curso,
+            email_cordinador_curso = :email_cordinador_curso ,
+            telefono_cordinador_curso = :telefono_cordinador_curso,
             
-            usr_cordinador_ad = NULL,
-            nom_cordinadora_admision = NULL,
-            telefono_cordinadora_admision = NULL,
-            secretaria = NULL,
-            usr_coordinador_comercial = NULL
+            usr_cordinador_ad = :usr_cordinador_ad,
+            nom_cordinadora_admision = :nom_cordinadora_admision,
+            telefono_cordinadora_admision = :telefono_cordinadora_admision,
+            secretaria = :secretaria,
+            usr_coordinador_comercial = :usr_coordinador_comercial
             
     
     WHERE ID_DIPLOMA = :Id_Programa	";
@@ -809,13 +744,13 @@ function get_sql_update(){
 }
 
 function update_data($update_data_JSON){
-    echo $update_data_JSON;
+    //echo $update_data_JSON;
     echo "\n";
     $programa = json_decode($update_data_JSON, true);
     include('C:\laragon\www\form\dashboard\cn\cn_PDO.php');
     $sql_update_data = get_sql_update();
 
-    echo $sql_update_data;
+    //echo $sql_update_data;
     
     try {
         $con->beginTransaction();
@@ -871,6 +806,20 @@ function update_data($update_data_JSON){
         $stmt_encargados->bindParam(':Codigo_AUGE',$programa['cod_AUGE']);
         $stmt_encargados->bindParam(':ID_ORDEN',$programa['ID_ORDEN']);
         $stmt_encargados->bindParam(':Id_Programa',$programa['ID_DIPLOMA']);
+        $stmt_encargados->bindParam(':mail_envio',$programa['mail_envio']);
+        $stmt_encargados->bindParam(':id_DA',$programa['id_DA']);
+        $stmt_encargados->bindParam(':emailDirector',$programa['emailDirector']);
+        $stmt_encargados->bindParam(':Director',$programa['Director']);
+        $stmt_encargados->bindParam(':token',$programa['token']);
+        $stmt_encargados->bindParam(':nombre_cordinador_curso',$programa['nombre_cordinador_curso']);
+        $stmt_encargados->bindParam(':usr_cordinador_curso',$programa['usr_cordinador_curso']);
+        $stmt_encargados->bindParam(':email_cordinador_curso',$programa['email_cordinador_curso']);
+        $stmt_encargados->bindParam(':telefono_cordinador_curso',$programa['telefono_cordinador_curso']);
+        $stmt_encargados->bindParam(':usr_cordinador_ad',$programa['usr_cordinador_ad']);
+        $stmt_encargados->bindParam(':nom_cordinadora_admision',$programa['nom_cordinadora_admision']);
+        $stmt_encargados->bindParam(':telefono_cordinadora_admision',$programa['telefono_cordinadora_admision']);
+        $stmt_encargados->bindParam(':secretaria',$programa['secretaria']);
+        $stmt_encargados->bindParam(':usr_coordinador_comercial',$programa['usr_coordinador_comercial']);
         //asignamos los valores a actualizar
         /*
         */
@@ -879,7 +828,5 @@ function update_data($update_data_JSON){
     } catch (\Throwable $th) {
         echo "Mensaje de Error: " . $th->getMessage();
     }
-
-    echo "Programa Actualizado";
 }
 ?>

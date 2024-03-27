@@ -58,7 +58,7 @@
                     <label>
                         Código Interno:
                         <br>
-                        <input name = "cod_interno" id = "cod_interno" type = "text" maxlength = "100"/>
+                        <input name = "cod_interno" id = "cod_interno" type = "text" maxlength = "10"/>
                         <script>
                             //Codigo Interno
                             document.getElementById('cod_interno').value = '<?php echo $data[22];?>';

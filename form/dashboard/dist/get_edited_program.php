@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once('C:/laragon/www/form/dashboard/dist/include/header.php');
 include("functions_program.php");
 $conectores = ["de", "los", "la", "en", "y", "a", "el", "del", "las", "un", "una", "con", "por", "para"];
 
@@ -15,12 +16,10 @@ if(isset($_POST["programa_base"])){
     //Nos aseguramos de que el periodo si se cambio $Periodo mantenga el valor que se desea mantener o actualizar
     $Periodo = $programa_base[4];
     if(isset($_POST['periodo']) && $Periodo != $_POST['periodo']){
-        if($_POST['periodo'] != ''){
-            $Periodo = $_POST['periodo'];
-        } else{
-
-        }
         $Periodo = $_POST['periodo'];
+    }
+    if($Periodo == ''){
+        $Periodo = NULL;
     }
     $new_data_update['Periodo'] = $Periodo;
 
@@ -28,6 +27,9 @@ if(isset($_POST["programa_base"])){
     $Horario = $programa_base[5];
     if(isset($_POST['jornada']) && $Horario != $_POST['jornada']){
         $Horario = $_POST['jornada'];
+    }
+    if($Horario == ''){
+        $Horario = NULL;
     }
     $new_data_update['jornada'] = $Horario;
     
@@ -42,6 +44,9 @@ if(isset($_POST["programa_base"])){
     $Modalidad = $programa_base[3];
     if(isset($_POST['modalidad']) && $Modalidad != $_POST['modalidad']){
         $Modalidad = $_POST['modalidad'];
+    }
+    if($Modalidad == ''){
+        $Modalidad = NULL;
     }
     $new_data_update['modalidad_programa'] = $Modalidad;
 
@@ -89,15 +94,27 @@ if(isset($_POST["programa_base"])){
             }
         }
     }
+    if($DIPLOMADO == ''){
+        $DIPLOMADO = NULL;
+    }
+    if($Tipo_Programa ==''){
+        $Tipo_Programa = NULL;
+    }
+    if($Siglas == ''){
+        $Siglas = NULL;
+    }
     $Tipo = generate_tipo_programa($Tipo_Programa,$Modalidad, $conducente);
-    
+    $nom_diploma = generate_nom_diploma($Nombre_Programa, $Codigo_Programa);
+    if($nom_diploma == ''){
+        $nom_diploma =NULL;
+    }
     //Asignamos a los datos nuevos lo que queremos actualizar
     $new_data_update['DIPLOMADO'] = $DIPLOMADO;
     $new_data_update['tipo_programa'] = $Tipo_Programa;
     $new_data_update['tipo'] = $Tipo;
     $new_data_update['codcatedraab'] = $Siglas;
     $new_data_update['cod_diploma'] = $Codigo_Programa;
-    $new_data_update['nom_diploma'] = generate_nom_diploma($Nombre_Programa, $Codigo_Programa);
+    $new_data_update['nom_diploma'] = $nom_diploma;
 
     
     $Area_Conocimiento = $programa_base[2];
@@ -114,16 +131,20 @@ if(isset($_POST["programa_base"])){
     if(isset($_POST['nivel']) && $Nivel != $_POST['nivel']){
         $Nivel = $_POST['nivel'];
     }
+    if($Nivel == ''){
+        $Nivel = NULL;
+    }
     $new_data_update['nivel'] = $Nivel;
-
     
     $Realizacion = $programa_base[7];
     if(isset($_POST['realizacion_en']) && $Realizacion != $_POST['realizacion_en']){
         $Realizacion = $_POST['realizacion_en'];
     }
+    if($Realizacion == ''){
+        $Realizacion =NULL;
+    }
     $new_data_update['realizacion_en'] = $Realizacion;
 
-    
     $Fecha_Inicio = $programa_base[8];
     if(isset($_POST['fecha_de_inicio']) && $Fecha_Inicio != $_POST['fecha_de_inicio']){
         $Fecha_Inicio = $_POST['fecha_de_inicio'];
@@ -133,10 +154,11 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['fecha_inicio'] = $Fecha_Inicio;
 
-    
     $Area_Negocios = $programa_base[12];
+    if($Area_Negocios == ''){
+        $Area_Negocios = NULL;
+    }
     $new_data_update['area_negocios'] = $Area_Negocios;
-
     
     $Habilitado = $programa_base[15];
     if(isset($_POST['habilitado']) && $Habilitado != $_POST['habilitado']){
@@ -156,13 +178,11 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['web_habilitado'] = $Habilitado_web;
     
-    
     $Horario_Web = $programa_base[18];
     if(isset($_POST['horario_web']) && $Horario_Web != $_POST['horario_web']){
         $Horario_Web = $_POST['horario_web'];
     }
     $new_data_update['horario_web'] = $Horario_Web;
-
     
     $Vacantes = $programa_base[20];
     if(isset($_POST['vacantes']) && $Vacantes != $_POST['vacantes']){
@@ -173,27 +193,30 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['vacantes'] = $Vacantes;
 
-    
     $Nombre_Web = $programa_base[24];
     if(isset($_POST['nombre_web']) && $Nombre_Web != $_POST['nombre_web']){
         $Nombre_Web = $_POST['nombre_web'];
     }
+    if($Nombre_Web == ''){
+        $Nombre_Web = NULL;
+    }
     $new_data_update['nombre_web'] = $Nombre_Web;
 
-    /*
     $ID_DA = $programa_base[25];
     if(isset($_POST['id_director_academico']) && $ID_DA != $_POST['id_director_academico']){
         $ID_DA = $_POST['id_director_academico'];
     }
     if($ID_DA == ''){
-        $ID_DA == NULL;
+        $ID_DA = NULL;
     }
     $new_data_update['id_DA'] = $ID_DA;
-
     
     $Director = $programa_base[26];
     if(isset($_POST['nombre_director_academico']) && $Director != $_POST['nombre_director_academico']){
         $Director = $_POST['nombre_director_academico'];
+    }
+    if($Director == ''){
+        $Director = NULL;
     }
     $new_data_update['Director'] = $Director;
 
@@ -201,15 +224,23 @@ if(isset($_POST["programa_base"])){
     if(isset($_POST['email_director_academico']) && $Email_Director != $_POST['email_director_academico']){
         $Email_Director = $_POST['email_director_academico'];
     }
+    if($Email_Director == ''){
+        $Email_Director = NULL;
+    }
     $new_data_update['emailDirector'] = $Email_Director;
     
-    
     $Token  = $programa_base[28];
+    if($Token == ''){
+        $Token = NULL;
+    }
     $new_data_update['token'] = $Token;
 
     $Nombre_Coordinador_Docente = $programa_base[29];
     if(isset($_POST['nombre_cordinador_docente']) && $Nombre_Coordinador_Docente != $_POST['nombre_cordinador_docente']){
-        $Nombre_Coordinador_Docente = $_POST[''];
+        $Nombre_Coordinador_Docente = $_POST['nombre_cordinador_docente'];
+    }
+    if($Nombre_Coordinador_Docente == ''){
+        $Nombre_Coordinador_Docente = NULL;
     }
     $new_data_update['nombre_cordinador_curso'] = $Nombre_Coordinador_Docente;
 
@@ -217,11 +248,17 @@ if(isset($_POST["programa_base"])){
     if(isset($_POST['usr_cordinador_docente']) && $ID_Coordinador_Docente != $_POST['usr_cordinador_docente']){
         $ID_Coordinador_Docente = $_POST['usr_cordinador_docente'];
     }
+    if($ID_Coordinador_Docente == ''){
+        $ID_Coordinador_Docente = NULL;
+    }
     $new_data_update['usr_cordinador_curso'] = $ID_Coordinador_Docente;
 
     $Email_Coordinador_Docente = $programa_base[31];
     if(isset($_POST['email_cordinador_docente']) && $Email_Coordinador_Docente != $_POST['email_cordinador_docente']){
         $Email_Coordinador_Docente = $_POST['email_cordinador_docente'];
+    }
+    if($Email_Coordinador_Docente == ''){
+        $Email_Coordinador_Docente = NULL;
     }
     $new_data_update['email_cordinador_curso'] = $Email_Coordinador_Docente;
 
@@ -229,9 +266,10 @@ if(isset($_POST["programa_base"])){
     if(isset($_POST['telefono_cordinador_docente']) && $Telefono_Coordinador_Docente != $_POST['telefono_cordinador_docente']){
         $Telefono_Coordinador_Docente = $_POST['telefono_cordinador_docente'];
     }
+    if($Telefono_Coordinador_Docente == ''){
+        $Telefono_Coordinador_Docente = NULL;
+    }
     $new_data_update['telefono_cordinador_curso'] = $Telefono_Coordinador_Docente;
-
-    */
     
     $Valor_Programa = $programa_base[33];
     if(isset($_POST['valor_diplomado']) && $Valor_Programa != $_POST['valor_diplomado']){
@@ -251,7 +289,6 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['moneda'] = $Tipo_Moneda;
 
-    
     $Fecha_Termino = $programa_base[35];
     if(isset($_POST['fecha_de_termino']) && $Fecha_Termino != $_POST['fecha_de_termino']){
         $Fecha_Termino = $_POST['fecha_de_termino'];
@@ -270,7 +307,6 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['horas'] = $Horas;
 
-    
     $Horas_Online = $programa_base[37];
     if(isset($_POST['hora_online']) && $Horas_Online != $_POST['hora_online']){
         $Horas_Online = $_POST['hora_online'];
@@ -307,7 +343,6 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['hora_termino'] = $Hora_Termino;
 
-    
     $Meta = $programa_base[41];
     if(isset($_POST['meta']) && $Meta != $_POST['meta']){
         $Meta = $_POST['meta'];
@@ -331,36 +366,40 @@ if(isset($_POST["programa_base"])){
         $Dias = NULL;
     }
     $new_data_update['dias'] =  $Dias;
-
-    /*
+    
     $ID_Ejecutivo_Admision = $programa_base[44];
     if(isset(   $_POST['usr_cordinador_ejecutivo']) && 
                 $ID_Ejecutivo_Admision != $_POST['usr_cordinador_ejecutivo']){
         $ID_Ejecutivo_Admision = $_POST['usr_cordinador_ejecutivo'];
     }
+    if($ID_Ejecutivo_Admision == ''){
+        $ID_Ejecutivo_Admision = NULL;
+    }
     $new_data_update['usr_cordinador_ad'] = $ID_Ejecutivo_Admision;
 
     $Nombre_Ejecutivo_Admision = $programa_base[45];
-    if(isset( $_POST['nombre_cordinador_ejecutivo']) &&
-        $ID_Ejecutivo_Admision != $_POST['nombre_cordinador_ejecutivo']){
-            $ID_Ejecutivo_Admision = $_POST['nombre_cordinador_ejecutivo'];
+    if(isset( $_POST['nombre_cordinador_ejecutivo']) && $Nombre_Ejecutivo_Admision != $_POST['nombre_cordinador_ejecutivo']){
+        $Nombre_Ejecutivo_Admision = $_POST['nombre_cordinador_ejecutivo'];
+    }
+    if($Nombre_Ejecutivo_Admision == ''){
+        $Nombre_Ejecutivo_Admision = NULL;
     }
     $new_data_update['nom_cordinadora_admision'] = $Nombre_Ejecutivo_Admision;
 
     $Telefono_ejecutivo_admision = $programa_base[46];
     if(isset( $_POST['telefono_cordinador_ejecutivo']) && $Telefono_ejecutivo_admision != $_POST['telefono_cordinador_ejecutivo']){
-        $ID_Ejecutivo_Admision = $_POST['telefono_cordinador_ejecutivo'];
+        $Telefono_ejecutivo_admision = $_POST['telefono_cordinador_ejecutivo'];
+    }
+    if($Telefono_ejecutivo_admision == ''){
+        $Telefono_ejecutivo_admision = NULL;
     }
     $new_data_update['telefono_cordinadora_admision'] = $Telefono_ejecutivo_admision;
 
     $Mail_Envio = $programa_base[14];
-    if(isset( $_POST['email_cordinador_ejecutivo']) &&
-        $ID_Ejecutivo_Admision != $_POST['email_cordinador_ejecutivo']){
-            $ID_Ejecutivo_Admision = $_POST['email_cordinador_ejecutivo'];
+    if(isset( $_POST['email_cordinador_ejecutivo']) && $Mail_Envio != $_POST['email_cordinador_ejecutivo']){
+            $Mail_Envio = $_POST['email_cordinador_ejecutivo'];
     }
     $new_data_update['mail_envio'] = $Mail_Envio;
-    */
-
     
     $Link_PDF = $programa_base[47];
     if($Link_PDF == ''){
@@ -377,15 +416,15 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['cod_sala'] = $Codigo_Sala;
 
-    /*
     $Secretaria = $programa_base[49];
     if(isset($_POST['id_secretaria']) && $_POST['id_secretaria'] != $Secretaria){
         $Secretaria = $_POST['id_secretaria'];
     }
+    if($Secretaria == ''){
+        $Secretaria = NULL;
+    }
     $new_data_update['secretaria'] = $Secretaria;
-    */
-
-
+    
     $Sala_Cafe = $programa_base[50];
     if(isset($_POST['sala_cafe']) && $_POST['sala_cafe'] != $Sala_Cafe){
         $Sala_Cafe = $_POST['sala_cafe'];
@@ -400,7 +439,6 @@ if(isset($_POST["programa_base"])){
         $In_Coffee = NULL;
     }
     $new_data_update['in_coffe'] = $In_Coffee;
-
     
     $Uso_pcs = $programa_base[52];
     if(isset($_POST['pc']) && $_POST['pc'] != $Uso_pcs){
@@ -457,14 +495,15 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['reglamento'] = $Reglamento;
 
-    /*
     $Usr_Coordinador_Comercial = $programa_base[58];
     if(isset($_POST['usr_coordinador_comercial']) && $Usr_Coordinador_Comercial != $_POST['usr_coordinador_comercial']){
         $Usr_Coordinador_Comercial = $_POST['usr_coordinador_comercial'];
     }
+    if($Usr_Coordinador_Comercial == ''){
+        $Usr_Coordinador_Comercial = NULL;
+    } 
     $new_data_update['usr_coordinador_comercial'] = $Usr_Coordinador_Comercial;
-    */
-
+    
     $Usr_Consultor_Corporativo = $programa_base[59];
     if($Usr_Consultor_Corporativo == ''){
         $Usr_Consultor_Corporativo = NULL;
@@ -511,3 +550,35 @@ if(isset($_POST["programa_base"])){
     $update_data_JSON = json_encode($new_data_update, JSON_UNESCAPED_UNICODE);
     update_data($update_data_JSON);
 }
+?>
+
+<div class="container-fluid">
+    <h1 class="mt-4">Editar Programas</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Programa Editado</li>
+        </ol>
+        <div id = "resultado_post_program">
+            <h3>
+                El programa fue editado exitosamente
+            </h3>
+        </div>
+        <div id = "volver al menu principal">
+            <a href = "diplomados.php">
+                Volver al menu Principal
+            </a>    
+        </div>
+</div>
+<?php
+    if(true){
+        #se cargo correctamente el programa en la base de datos
+        ?>
+        <script>
+            var parrafo = document.createElement("p");
+            parrafo.body.appendChild("Programa Cargado correctamente");
+            document.getElementById("resultado_post_program").appendChild(parrafo);
+        </script>
+        <?php
+    }
+
+include_once('C:\laragon\www\form\dashboard\dist\include\footer.php');
+?>

@@ -83,7 +83,6 @@
             if($i == $L){
                 if(!$list_campos[$i][1]){
                     unset($list_campos[$i]);
-                    echo "no era conducente";
                 }
             } else{
                 if($list_campos[$i][1] == ''){

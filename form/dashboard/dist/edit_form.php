@@ -8,7 +8,6 @@
     if(isset($_SESSION['can_load'])){
         if(isset($_POST['programaSeleccionado'])){
             $data = $_POST['programaSeleccionado'];
-            echo $data;
             $data =  explode('|', $data);
         }
     }
