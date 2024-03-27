@@ -84,7 +84,7 @@
                     <label>
                         Tipo Producto:
                         <br>
-                        <select name = "tipo" id ="tipo_producto">
+                        <select name = "tipo" id ="tipo_producto" onchange = 'changeCodDiploma()'>
                             <option value = "" selected = "true" disable = "disable" hidden></option>
                             <option value= "Diploma" id="Diploma">
                                 DIPLOMA
@@ -100,6 +100,7 @@
                             </option>
                         </select>
                     </label>
+                    <br>
                     <label id = "curso_conducente" disable = "disable" hidden>
                         <input type="checkbox" id="curso_conducente_box" name ="curso_conducente_box" value="Conducente"/> ¿Es un Curso Conducente?
                     </label>

@@ -5,11 +5,9 @@
 //la idea es que se tenga todo en un mismo archivo.
 //el objetivo principal es que pueda obtener los datos del programa a editar(seleccionado).
     //obtenemos los datos antes de cargar cualquier archivo.
-    if(isset($_SESSION['can_load'])){
-        if(isset($_POST['programaSeleccionado'])){
-            $data = $_POST['programaSeleccionado'];
-            $data =  explode('|', $data);
-        }
+    if(isset($_POST['programaSeleccionado'])){
+        $data = $_POST['programaSeleccionado'];
+        $data =  explode('|', $data);
     }
 ?>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -130,34 +128,29 @@
 
         var old_nom_diploma = "";
         var old_siglas = '';
+        var old_tipo = '<?php echo $data[1];?>';
+        
+        var old_nom_diploma = '<?php echo $data[0];?>';
+        old_siglas = '<?php echo $data[10];?>';
 
-        var can_load = <?php isset($_SESSION['can_load'])?>;
-        var programaSeleccionado = <?php isset($_POST['programaSeleccionado'])?>;
-
-        if(can_load && programaSeleccionado){
-            var nom_diploma = '<?php echo $data[0];?>';
-            old_siglas = '<?php echo $data[10];?>';
-
-            for(var i = 0; i<nom_diploma.length ; i++){
-                if(nom_diploma[i] == ' ' && nom_diploma[i+1] == '-'){
-                    break;
-                } else{
-                    old_nom_diploma = old_nom_diploma + nom_diploma[i];
-                }
+        for(var i = 0; i<nombre_program.length ; i++){
+            if(nombre_program[i] == ' ' && nombre_program[i+1] == '-'){
+                break;
+            } else{
+                old_nom_diploma = old_nom_diploma + nombre_program[i];
             }
         }
-
         var xhttp = new XMLHttpRequest();
-        xhttp.open('GET', 'procesar_data.php?input_cod_diploma='+ old_nom_diploma+','+nombre_program+','+periodo+','+jornada+','+version+','+old_siglas+','+tipo, true);
+        xhttp.open('GET', 'procesar_data.php?input_cod_diploma='+ old_nom_diploma+','+nombre_program+','+periodo+','+jornada+','+version+','+old_siglas+','+tipo+','+old_tipo, true);
         xhttp.send();
         
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 // Aquí puedes manejar la respuesta del servidor
                 var respuesta = this.responseText;
-                console.log(respuesta);
                 input_cod_diploma.value = respuesta;
             }
         };
     }
+
 </script>

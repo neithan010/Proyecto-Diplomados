@@ -21,7 +21,7 @@ $_SESSION['can_load'] = false;
                     <div class="">
                         <label>
                             Codigo Programa:
-                            <input name = "cod_diploma" id = "cod_diploma" type = "text" maxlength = "25" required/>
+                            <input name = "cod_diploma" id = "cod_diploma" type = "text" maxlength = "25"/>
                         </label>
                     </div>
                 </div>
@@ -30,7 +30,7 @@ $_SESSION['can_load'] = false;
                         <label>
                             Tipo Producto:
                             <br>
-                            <select name = "tipo" id ="tipo_producto">
+                            <select name = "tipo" id ="tipo_producto" onchange = 'changeCodDiploma()'>
                                 <option value = "" selected = "true" disable = "disable" hidden></option>
                                 <option value= "Diploma" id="Diploma">
                                     DIPLOMA
@@ -564,9 +564,12 @@ if(isset($_SESSION['can_load'])){
                 var jornada =document.getElementById('horario').value;
                 var version = document.getElementById('version').value;
                 var tipo =document.getElementById('tipo_producto').value;
+
                 var old_nom_diploma = "";
                 var old_siglas = '';
-
+                var old_tipo = '<?php echo $array_data[1];?>';
+                console.log(old_tipo);
+                console.log(tipo);
                 var getted_program = <?php echo $getted_program?>;
                 if(getted_program){
                     var nom_diploma = '<?php echo $array_data[0];?>';
@@ -582,14 +585,13 @@ if(isset($_SESSION['can_load'])){
                 }
 
                 var xhttp = new XMLHttpRequest();
-                xhttp.open('GET', 'procesar_data.php?input_cod_diploma='+ old_nom_diploma+','+nombre_program+','+periodo+','+jornada+','+version+','+old_siglas+','+tipo, true);
+                xhttp.open('GET', 'procesar_data.php?input_cod_diploma='+ old_nom_diploma+','+nombre_program+','+periodo+','+jornada+','+version+','+old_siglas+','+tipo+','+old_tipo, true);
                 xhttp.send();
                 
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         // Aquí puedes manejar la respuesta del servidor
                         var respuesta = this.responseText;
-                        console.log(respuesta);
                         input_cod_diploma.value = respuesta;
                     }
                 };
