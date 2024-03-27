@@ -29,6 +29,7 @@
                                                         overflow: hidden;
                                                         text-overflow: ellipsis;"  
                                                         name = "nombre_program" id = "nombre_program" 
+                                                        onchange = 'changeCodDiploma()'
                             type = "text" maxlength = "100"/>
                             <?php 
                                 $nombre_programa = $data[0];
@@ -53,6 +54,18 @@
                     </label>
                 </div>
             </div>
+            <div class="col">
+                    <div class="">
+                        <label>
+                            Codigo Programa:
+                            <br>
+                            <input name = "cod_diploma" id = "cod_diploma" type = "text" maxlength = "25" required/>
+                        </label>
+                        <script>
+                            document.getElementById('cod_diploma').value = '<?php echo $data[11];?>';
+                            </script>
+                    </div>
+                </div>
             <div class="col">
                 <div id = "cod_interno_t" name = "cod_interno_t">
                     <label>
@@ -345,7 +358,7 @@
                 <label>
                     Versión
                     <br>
-                    <select class="text-center" id = "version" name ="version">
+                    <select class="text-center" id = "version" name ="version" onchange = 'changeCodDiploma()'>
                         <option value = "" selected = "true" disable = "disable" hidden></option>
                         <option value = "V1" id = "V1" name ="V1">V1</option>
                         <option value = "V2" id = "V2" name ="V2">V2</option>

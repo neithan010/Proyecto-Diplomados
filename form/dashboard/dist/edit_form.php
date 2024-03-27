@@ -118,4 +118,46 @@
             button.setAttribute('formaction', 'get_edited_program.php');
         }
     }
+
+    function changeCodDiploma(){
+        var input_cod_diploma =document.getElementById('cod_diploma');
+
+        var nombre_program = document.getElementById('nombre_program').value;
+        var periodo =document.getElementById('periodo').value;
+        var jornada =document.getElementById('horario').value;
+        var version = document.getElementById('version').value;
+        var tipo =document.getElementById('tipo_producto').value;
+
+        var old_nom_diploma = "";
+        var old_siglas = '';
+
+        var can_load = <?php isset($_SESSION['can_load'])?>;
+        var programaSeleccionado = <?php isset($_POST['programaSeleccionado'])?>;
+
+        if(can_load && programaSeleccionado){
+            var nom_diploma = '<?php echo $data[0];?>';
+            old_siglas = '<?php echo $data[10];?>';
+
+            for(var i = 0; i<nom_diploma.length ; i++){
+                if(nom_diploma[i] == ' ' && nom_diploma[i+1] == '-'){
+                    break;
+                } else{
+                    old_nom_diploma = old_nom_diploma + nom_diploma[i];
+                }
+            }
+        }
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.open('GET', 'procesar_data.php?input_cod_diploma='+ old_nom_diploma+','+nombre_program+','+periodo+','+jornada+','+version+','+old_siglas+','+tipo, true);
+        xhttp.send();
+        
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // Aquí puedes manejar la respuesta del servidor
+                var respuesta = this.responseText;
+                console.log(respuesta);
+                input_cod_diploma.value = respuesta;
+            }
+        };
+    }
 </script>

@@ -61,6 +61,7 @@ include('formulario_program.php');
 
     var selectedElement = document.getElementById("buscar_create");
     selectedElement = document.setAttribute("selected", "true");
+    
 </script>   
 <?php
 include('C:\laragon\www\form\dashboard\dist\include\footer.php');

@@ -73,7 +73,6 @@ if(isset($_POST["programa_base"])){
     if(isset($_POST['nombre_program']) && $name != $_POST['nombre_program']){
         $Nombre_Programa = $_POST['nombre_program'];
         $Siglas = generate_siglas($Nombre_Programa, $conectores);
-        $Codigo_Programa = generate_cod_diploma($Siglas, $Periodo, $Horario, $Version);
 
         if(isset($_POST['tipo'])){
             $tipo = $_POST['tipo'];
@@ -82,6 +81,8 @@ if(isset($_POST["programa_base"])){
                 $Tipo_Programa = $tipo;
             }
         }
+        $Siglas_Tipo = generate_sigla_tipo($Tipo_Programa);
+        $Codigo_Programa = generate_cod_diploma($Siglas, $Periodo, $Horario, $Version, $Siglas_Tipo);
         $DIPLOMADO = generate_DIPLOMADO($Nombre_Programa, $Tipo_Programa);
 
     }

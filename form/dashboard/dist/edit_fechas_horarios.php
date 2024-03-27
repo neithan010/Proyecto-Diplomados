@@ -18,7 +18,7 @@
                             <label>
                                 Periodo
                                 <br>
-                                <select name = "periodo" id = "periodo" required>
+                                <select name = "periodo" id = "periodo" required onchange = 'changeCodDiploma()'>
                                     <option value = "" selected = "true" disable = "disable" hidden></option>
                                     <option value= "2022S1" id = "2022S1" disable = "disable" hidden>
                                         Primer Semestre 2022
@@ -56,7 +56,7 @@
                             <label>
                                 Horario
                                 <br>
-                                <select name = "jornada" id = "horario" required>
+                                <select name = "jornada" id = "horario" required onchange = 'changeCodDiploma()'>
                                     <option value = "" selected = "true" disable = "disable" hidden></option>
                                     <option value = "AM" id ="AM">
                                         AM

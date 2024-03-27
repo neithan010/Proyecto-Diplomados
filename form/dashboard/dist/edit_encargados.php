@@ -304,7 +304,7 @@
 
         if(inputName.value != ''){  
             var xhttp = new XMLHttpRequest();
-            xhttp.open('GET', 'procesar_encargados.php?input_value='+ tipo+','+inputName.value, true);
+            xhttp.open('GET', 'procesar_data.php?input_value='+ tipo+','+inputName.value, true);
             xhttp.send();
             
             xhttp.onreadystatechange = function() {

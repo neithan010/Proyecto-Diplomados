@@ -45,11 +45,12 @@
         $tipo_programa = generate_tipo_programa($tipo_producto,$modalidad, $conducente);
         $siglas_area = generate_area($area);
         $siglas = generate_siglas($DIPLOMADO, $conectores);
-
-        $cod_diploma_first = generate_cod_diploma($siglas, $periodo, $jornada, $version);
+        $sigla_tipo = generate_sigla_tipo($tipo_producto);
+        
+        $cod_diploma_first = generate_cod_diploma($siglas, $periodo, $jornada, $version, $sigla_tipo);
         $version = aprobe_version($version, $periodo, $DIPLOMADO);
 
-        $new_cod_diploma = generate_cod_diploma($siglas, $periodo, $jornada, $version);
+        $new_cod_diploma = generate_cod_diploma($siglas, $periodo, $jornada, $version, $sigla_tipo);
         $nom_diploma = generate_nom_diploma($name_program, $new_cod_diploma);
         include('post_program.php');
         

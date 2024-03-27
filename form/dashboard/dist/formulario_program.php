@@ -13,7 +13,15 @@ $_SESSION['can_load'] = false;
                     <div class="">
                         <label>
                             Nombre Programa:
-                            <input name = "nombre_program" id = "nombre_program" type = "text" maxlength = "100" required/>
+                            <input name = "nombre_program" id = "nombre_program" type = "text" maxlength = "100" onchange = 'changeCodDiploma()'/>
+                        </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="">
+                        <label>
+                            Codigo Programa:
+                            <input name = "cod_diploma" id = "cod_diploma" type = "text" maxlength = "25" required/>
                         </label>
                     </div>
                 </div>
@@ -115,7 +123,7 @@ $_SESSION['can_load'] = false;
                         <label>
                             Periodo
                             <br>
-                            <select name = "periodo" id = "periodo" onchange = "restringir_fechas()">
+                            <select name = "periodo" id = "periodo" onchange = 'changeCodDiploma()'>
                                 <option value = "" selected = "true" disable = "disable" hidden></option>
                                 <option value= "2022S1" id = "2022S1" disable = "disable" hidden>
                                     Primer Semestre 2022
@@ -150,7 +158,7 @@ $_SESSION['can_load'] = false;
                         <label>
                             Horario
                             <br>
-                            <select name = "jornada" id = "horario">
+                            <select name = "jornada" id = "horario" onchange = 'changeCodDiploma()'>
                                 <option value = "" selected = "true" disable = "disable" hidden></option>
                                 <option value = "AM" id ="AM">
                                     AM
@@ -256,22 +264,10 @@ $_SESSION['can_load'] = false;
                     <div class="">
                         <label >
                             Version
-                            <select id = "version" name ="version">
+                            <select id = "version" name ="version" onchange = 'changeCodDiploma()'>
                             <option value = "V1" selected = "true" disable = "disable" hidden></option>
                             </select>
                         </label>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="p-4">
-                        <div id = "submit_form_button">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="p-4">
-                        <div id = "submit_form_button_2">
-                        </div>
                     </div>
                 </div>
                 <div class="col">
@@ -282,6 +278,22 @@ $_SESSION['can_load'] = false;
                         </select>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="container text-center">
+            <div class="row row-cols-4 row-cols-lg-4 g-lg-3">
+                <div class="col">
+                        <div class="p-4">
+                            <div id = "submit_form_button">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="p-4">
+                            <div id = "submit_form_button_2">
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
     </form>
@@ -369,7 +381,6 @@ if(isset($_SESSION['can_load'])){
             //obtenemos la data de un programa ya existente
             $data = $_POST['programaSeleccionado'];
             $array_data = explode("|", $data);
-            echo '<pre>'.print_r($array_data, true).'</pre>';
             ?>
             <script>
                 //obtendremos los datos que necesitamos
@@ -396,6 +407,8 @@ if(isset($_SESSION['can_load'])){
                 var area = '<?php echo $array_data[19];?>';
                 var vacantes = '<?php echo $array_data[20];?>';
                 var ejecutivo_ventas_id = '<?php echo $array_data[21];?>';
+                var tipo = '<?php echo $array_data[22];?>';
+                var cod_diploma = '<?php echo $array_data[23];?>';
 
                 var new_nom_diploma = "";
                 for(var i = 0; i<nom_diploma.length ; i++){
@@ -413,16 +426,19 @@ if(isset($_SESSION['can_load'])){
                 if(tipo_programa == "Diploma" || tipo_programa == "Diploma Postitulo" || tipo_programa == "Curso"){
                         var tipo_producto = document.getElementById(tipo_programa);
                         tipo_producto.setAttribute("selected","true");
-                } else if(tipo_programa == "Curso Conducente"){
-                    var tipo_producto = document.getElementById('Curso');
-                    tipo_producto.setAttribute('selected', 'true');
 
-                    var conducente = document.getElementById('curso_conducente');
-                    conducente.removeAttribute('hidden');
-                    conducente.removeAttribute('disable');
 
-                    var conducente_box = document.getElementById('curso_conducente_box');
-                    conducente_box.setAttribute('checked', 'true');
+                        if(tipo_programa == 'Curso'){
+
+                            var conducente = document.getElementById('curso_conducente');
+                            conducente.removeAttribute('hidden');
+                            conducente.removeAttribute('disable');
+
+                            if(tipo == "Curso Conducente"){
+                            var conducente_box = document.getElementById('curso_conducente_box');
+                            conducente_box.setAttribute('checked', 'true');
+                            }
+                        }
                 }
 
                 if(area_conocimiento == "Innovación y Emprendimiento" || area_conocimiento == "Finanzas e Inversiones" || area_conocimiento == "Marketing y Ventas" || area_conocimiento == "Estrategia y Gestión" ||
@@ -530,9 +546,56 @@ if(isset($_SESSION['can_load'])){
                         var ejecutivo_ventas_select = document.getElementById(ejecutivo_ventas_id);
                         ejecutivo_ventas_select.setAttribute('selected', 'true');
                     }
+
+                input_cod_diploma =document.getElementById('cod_diploma');
+                input_cod_diploma.readonly = true;
+                input_cod_diploma.value =cod_diploma;
             </script>
             <?php
         }
+
+        ?>
+        <script>
+            function changeCodDiploma(){
+                var input_cod_diploma =document.getElementById('cod_diploma');
+
+                var nombre_program = document.getElementById('nombre_program').value;
+                var periodo =document.getElementById('periodo').value;
+                var jornada =document.getElementById('horario').value;
+                var version = document.getElementById('version').value;
+                var tipo =document.getElementById('tipo_producto').value;
+                var old_nom_diploma = "";
+                var old_siglas = '';
+
+                var getted_program = <?php echo $getted_program?>;
+                if(getted_program){
+                    var nom_diploma = '<?php echo $array_data[0];?>';
+                    old_siglas = '<?php echo $array_data[10];?>';
+
+                    for(var i = 0; i<nom_diploma.length ; i++){
+                        if(nom_diploma[i] == ' ' && nom_diploma[i+1] == '-'){
+                            break;
+                        } else{
+                            old_nom_diploma = old_nom_diploma + nom_diploma[i];
+                        }
+                    }
+                }
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.open('GET', 'procesar_data.php?input_cod_diploma='+ old_nom_diploma+','+nombre_program+','+periodo+','+jornada+','+version+','+old_siglas+','+tipo, true);
+                xhttp.send();
+                
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // Aquí puedes manejar la respuesta del servidor
+                        var respuesta = this.responseText;
+                        console.log(respuesta);
+                        input_cod_diploma.value = respuesta;
+                    }
+                };
+            }
+        </script>
+        <?php
     } 
 }
 ?>

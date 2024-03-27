@@ -1,10 +1,12 @@
 <?php
     #podria recibir solo un nombre de programa
-    if (isset($_POST['nombre_program'])) {
+    if (isset($_POST['nombre_program']) && isset($_POST['cod_diploma'])) {
 
         $nombre_program = $_POST['nombre_program'];
         $name_program = htmlspecialchars(addslashes($nombre_program));
     
+        $cod_diploma = $_POST['cod_diploma'];
+
         if(isset($_POST['tipo'])){
             $tipo_producto = $_POST['tipo'];
         } else{$tipo_producto= "";}
@@ -60,17 +62,17 @@
             }
         }
         
-        $list_campos = [['nombre_program',$name_program], ['tipo_programa',$tipo_producto], ['area',$area], 
+        $list_campos = [['nombre_program',$name_program],['cod_diploma', $cod_diploma], ['tipo_programa',$tipo_producto], ['area',$area], 
         ['modalidad',$modalidad], ['periodo',$periodo], ['horario',$jornada],
         ['nivel',$nivel], ['realización_en',$realizacion_en], ['fecha_de_inicio',$fecha_de_inicio],
         ['usr_cordinador_ej', $usr_ejecutivo_ventas] /*,['version', $version]*/, ['conducente', $conducente]];
 
-        if($list_campos[8][1] === ''){
-            unset($list_campos[8]);
+        if($list_campos[9][1] === ''){
+            unset($list_campos[9]);
         } else{
             if(verify_date($fecha_de_inicio)){
                 //si es menor a la fecha actual, cambiamos a la fecha actual
-                $list_campos[8][1] = get_this_date();
+                $list_campos[9][1] = get_this_date();
             }
         }
 

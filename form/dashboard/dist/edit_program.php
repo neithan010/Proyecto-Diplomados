@@ -26,7 +26,7 @@ include('formulario_program.php');
     button_remover.setAttribute("type", "reset");
     document.getElementById("submit_form_button_2").appendChild(button_remover);
     
-        //enseñamos los 2 ultimos años
+    //enseñamos los 2 ultimos años
     var j20221 = document.getElementById('2022S1');
     var j20222 = document.getElementById('2022S2');
     var j20231 = document.getElementById('2023S1');
@@ -59,7 +59,7 @@ include('formulario_program.php');
     j20252.setAttribute("disable", "disable");
 
     var selectedElement = document.getElementById("buscar_edit");
-    selectedElement = document.setAttribute("selected", "true");
+    selectedElement.setAttribute("selected", "true");
 </script>
 <?php
 include('C:\laragon\www\form\dashboard\dist\include\footer.php');
