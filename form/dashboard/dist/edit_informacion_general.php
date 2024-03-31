@@ -8,6 +8,7 @@
     <h5>
         <div id = "nombre_program_title" name = "nombre_program_title">
             <?php
+                #Nombre que se enseña como titular al momento de editar infor general
                 //nom_diploma 
                 echo $data[0];
             ?>
@@ -24,6 +25,8 @@
                     <label>
                         Nombre Programa:
                         <br>
+                        <?php #Input que cambia el codigo del diploma cuando se cambia este valor
+                        ?>
                         <input style = "width: 300px;
                                                         white-space: nowrap;
                                                         overflow: hidden;
@@ -32,6 +35,7 @@
                                                         onchange = 'changeCodDiploma()'
                             type = "text" maxlength = "100"/>
                             <?php 
+                                #Obtenemos el nombre y lo filtrmos para agregarlo en el input
                                 $nombre_programa = $data[0];
                                 $l = strlen($nombre_programa);
                                 $name = '';
@@ -47,7 +51,7 @@
                                 } 
                             ?>
                             <script>
-                              //nombre_diploma
+                              //asignamos el nombre obtenido en el input
                                 var nombre = '<?php echo $name;?>'; 
                                 document.getElementById('nombre_program').value = nombre;
                             </script>   
@@ -59,9 +63,12 @@
                         <label>
                             Codigo Programa:
                             <br>
+                            <?php #codigo diploma que tiene el maximo según la base de datos
+                            ?>
                             <input name = "cod_diploma" id = "cod_diploma" type = "text" maxlength = "25" required/>
                         </label>
                         <script>
+                            //Asignamos el codigo del diploma
                             document.getElementById('cod_diploma').value = '<?php echo $data[11];?>';
                             </script>
                     </div>
@@ -71,9 +78,11 @@
                     <label>
                         Código Interno:
                         <br>
+                        <?php #codigo interno que tiene el maximo según la base de datos
+                            ?>
                         <input name = "cod_interno" id = "cod_interno" type = "text" maxlength = "10"/>
                         <script>
-                            //Codigo Interno
+                            //asignamos codigo interno
                             document.getElementById('cod_interno').value = '<?php echo $data[22];?>';
                         </script>
                     </label>
@@ -105,7 +114,7 @@
                         <input type="checkbox" id="curso_conducente_box" name ="curso_conducente_box" value="Conducente"/> ¿Es un Curso Conducente?
                     </label>
                     <script> 
-                        //Tipo Producto
+                        //Fijamos el tipo de producto según el tipo y si es conducente o no para su checkbox
                         var tipo_programa = '<?php echo $data[1];?>';
                         if(tipo_programa == "Diploma" || tipo_programa == "Diploma Postitulo" || tipo_programa == "Curso"){
                             var tipo_producto = document.getElementById(tipo_programa);
@@ -176,7 +185,7 @@
                     </select> 
                 </label>
                 <script>
-                    //area
+                    //asignamos el area segun el tipo o sus variantes
                     var area_conocimiento = '<?php echo $data[2];?>';
                     if(area_conocimiento == "Innovación y Emprendimiento" || area_conocimiento == "Finanzas e Inversiones" || area_conocimiento == "Marketing y Ventas" || area_conocimiento == "Estrategia y Gestión" ||
                         area_conocimiento == "Personas y Equipos" || area_conocimiento == "Operaciones y Logística" || area_conocimiento == "Dirección de Instituciones de Salud"){
@@ -254,7 +263,7 @@
                     </select>
                 </label>
                 <script>
-                    //modalidad
+                    //asignamos la modalidad segun su tipo o sus variantes
                     var modalidad_programa = '<?php echo $data[3];?>';
                     if(modalidad_programa == "Presencial" || modalidad_programa == "B-Learning" || modalidad_programa == "E-Learning" || modalidad_programa == "Virtual" ||
                         modalidad_programa == "Mixto" || modalidad_programa == "Híbrido"){
@@ -297,7 +306,7 @@
                     </select>
                 </label>
                 <script>
-                    //nivel
+                    //asignamos el nivel según su tipo si es que tiene
                     var nivel = '<?php echo $data[6];?>';
                     if(nivel == 'Inicial' || nivel == 'Intermedio' || nivel == 'Avanzado' || nivel == 'Experto'){
                         var nivel_val = document.getElementById(nivel);
@@ -308,7 +317,6 @@
                         nivel_val.textContent = nivel;
                         
                         var select_nivel = document.getElementById('nivel');
-                        select_nivel.setAttribute('placeholder', 'hola');
                     }
                 </script>
             </div>
@@ -341,7 +349,7 @@
                     </select>
                 </label>
                 <script>
-                    //realización en:
+                    //asignamos donde se realiza si es que es del tipo correcto
                     var realizacion_en = '<?php echo $data[7];?>';
                     if(realizacion_en == "FEN" || realizacion_en == "FUERA" || realizacion_en == "INTERNACIONAL" || realizacion_en == "Oriente"){
                         var realizacion = document.getElementById(realizacion_en);
@@ -374,7 +382,7 @@
                     </select>
                 </label>
                 <script>
-                    //version
+                    //asignamos la verisón si es que es parte de esta lista, en otro caso se agrega como otro
                     var version_option = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9'];
                     var version = '<?php echo $data[9];?>';
                     if(version_option.includes(version)){
@@ -395,6 +403,8 @@
 <br>
 <br>
 <div id = "programa_habilitado_title" name = "programa_habilitado_title" style = "margin-left: 20px;">
+<?php #seccion de hablitación de un programa 
+?>
     <h4>
         Habilitación del Programa
     </h4>
@@ -409,6 +419,8 @@
                     <label>
                         Habilitado
                         <br>
+                        <?php #habilitado es 0 si lo esta o 1 si no lo esta, se asigna más abajo el valor obtenido
+                        ?>
                         <select id = "habilitado" name ="habilitado" class="text-center">
                             <option value = "" selected = "true" disable = "disable" hidden></option>
                             <option value = "0" id = "habilitado_0">Si</option>
@@ -426,6 +438,8 @@
                     <label>
                         Habilitado en la Web
                         <br>
+                        <?php #habilitado web es 1 si lo esta o 0 si no lo esta, se asigna más abajo el valor obtenido
+                        ?>
                         <select id = "web_habilitado" name = "web_habilitado" class="text-center">
                             <option value = "" selected = "true" disable = "disable" hidden></option>
                             <option value = "1" id = "web_1">Si</option>
@@ -445,6 +459,8 @@
 <br>
 <div id = "valor_diplomado_title" name = "valor_diplomado_title" style = "margin-left: 20px;">
     <h4>
+    <?php #seccion de los costos de un programa
+?>
         Costo Programa
     </h4>
 </div>
@@ -457,10 +473,12 @@
                 <div id = "valor_diplomado_t" name = "valor_diplomado_t">
                     <label>
                         Valor Diplomado
+                        <?php #recibe un numero decimal como input: 1.00, 10.24,... 
+                        ?>
                         <input id = "valor_diplomado" name = "valor_diplomado" pattern="[0-9]{1,}\.[0-9]{1,}" placeholder = "Ingrese número decimal">
                     </label>
                     <script>
-                        //valor diplomado
+                        //asignamos valor diplomado
                         document.getElementById('valor_diplomado').value = '<?php echo $data[33];?>'
                     </script>
                 </div>
@@ -479,6 +497,7 @@
                         </select>
                     </label>
                     <script>
+                        //se asigna el tipo de moneda si es que existe en la lista, de no ser asi se crea otro.
                         var moneda_d = '<?php echo $data[34];?>';
                         if(moneda_d == 'CLP' || moneda_d == 'USD' || moneda_d == 'UF'){
                             var m = document.getElementById(moneda_d);
@@ -501,7 +520,7 @@
                         <input id = "vacantes" name = "vacantes" placeholder = "Ingrese número vacantes">
                     </label>
                     <script>
-                        //vacante
+                        //se agregan las vacantes si es que hay
                         var vacantes = '<?php echo $data[20];?>';
                         if(vacantes != ''){
                             document.getElementById('vacantes').value = vacantes;
@@ -520,7 +539,7 @@
                         <input type = 'number' id = "meta" name = "meta" pattern="[0-9]{1,}" placeholder = "Ingrese valor meta">
                     </label>
                     <script>
-                        //meta
+                        //se agrega la meta si es que hay
                         var meta = '<?php echo $data[41];?>';
                         if(meta != ''){
                             document.getElementById('meta').value = meta;
@@ -533,10 +552,11 @@
                     <label>
                         Valor Meta
                         <br>
+                        
                         <input type = 'number' id = "valor_meta" name = "valor_meta" pattern="[0-9]{1,}" placeholder = "Ingrese número decimal">
                     </label>
                     <script>
-                        //valor meta
+                        //se agrega el valor meta si es que hay
                         var val_meta = '<?php echo $data[42];?>';
                         if(val_meta != ''){
                             document.getElementById('valor_meta').value = val_meta;

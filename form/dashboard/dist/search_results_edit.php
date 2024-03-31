@@ -1,7 +1,11 @@
 <?php
 session_start();
 include_once('C:/laragon/www/form/dashboard/dist/include/header.php');
+
+#Como estamos editando, esto es false, para poder saber si estamos editando o creando
 $create = false;
+
+#Aqui obtenemos la data y la procesamos, nuevamente como es create = false, sabremos la distinción entre ambas acciones.
 include('get_data.php');
 ?>
 <div class="container-fluid">
@@ -14,6 +18,7 @@ include('get_data.php');
     </ol>
 </div>
 <?php
+    #Enseñamos los resultados obtenidos en get_data.php.
     include('display_program_results.php');
     include_once('C:\laragon\www\form\dashboard\dist\include\footer.php');
 ?>

@@ -2,7 +2,11 @@
 session_start();
 include_once('C:/laragon/www/form/dashboard/dist/include/header.php');
 $create = true;
+
+#Agregamos el archivo get_data.php
 include('get_data.php');
+
+#Lo de más adelante es el menú de Crear Programa.
 ?>
 <div class="container-fluid">
     <h1 class="mt-4">Crear Programa</h1>
@@ -15,6 +19,8 @@ include('get_data.php');
     </ol>
 </div>
 <?php
+    #Incluimos el archivo que enseñará los resultados.
     include('display_program_results.php');
+    
     include_once('C:\laragon\www\form\dashboard\dist\include\footer.php');
 ?>

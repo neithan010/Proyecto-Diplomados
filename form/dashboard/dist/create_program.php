@@ -1,6 +1,9 @@
 <?php
 session_start();
 include('C:/laragon/www/form/dashboard/dist/include/header.php');
+
+#Aqui solo se escribe el menú con sus respectivos nombres
+#Se enseñan las opciones de crear un programa desde 0 o crear uno usando uno existente
 ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

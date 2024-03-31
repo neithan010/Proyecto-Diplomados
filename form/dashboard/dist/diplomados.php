@@ -1,6 +1,8 @@
 <?php
 session_start();
 include_once('C:/laragon/www/form/dashboard/dist/include/header.php');
+
+#Esta es la pagina principal donde se plantean las opciones de crear un programa o de editar un programa
 ?>
     <div class="container-fluid">
         <h1 class="mt-4">Crear Programas</h1>

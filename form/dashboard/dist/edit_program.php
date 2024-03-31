@@ -12,15 +12,19 @@ include_once('C:/laragon/www/form/dashboard/dist/include/header.php');
 </div>
 
 <?php
+#Este archivo es la interfaz de busqueda de un programa para cuando queremos editar un programa
+#Incluimos el formulario y lo personalizamos a lo que necesitamos
 include('formulario_program.php');
 ?>
 <script>
+    //Como vamos a editar creamos un boton submit que nos lleva a search_results_edit.php 
     var button = document.createElement("button");
     button.innerHTML = "Buscar";
     button.setAttribute('type', 'submit');
     button.setAttribute('formaction', 'search_results_edit.php');
     document.getElementById("submit_form_button").appendChild(button);
 
+    //Boton que borra los datos puestos en el formulario
     var button_remover = document.createElement("button");
     button_remover.innerHTML = "Borrar";
     button_remover.setAttribute("type", "reset");
@@ -58,6 +62,7 @@ include('formulario_program.php');
     j20252.setAttribute("hidden","true");
     j20252.setAttribute("disable", "disable");
 
+    //fijamos el select especial en buscar_edit
     var selectedElement = document.getElementById("buscar_edit");
     selectedElement.setAttribute("selected", "true");
 </script>

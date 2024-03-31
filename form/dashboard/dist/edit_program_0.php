@@ -15,6 +15,7 @@ include_once('C:/laragon/www/form/dashboard/dist/include/header.php');
     </ol>
 </div>
 <?php 
+    #SE agrega el formulario para editar los datos de un programa Seleccionado
     include('edit_form.php');
     include_once('C:\laragon\www\form\dashboard\dist\include\footer.php');
 ?>

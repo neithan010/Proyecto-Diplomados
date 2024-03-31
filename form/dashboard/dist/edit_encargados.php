@@ -15,6 +15,15 @@
             <div class = "col">
                 <div id = "coordinador_ejecutivo_t" name = "coordinador_ejecutivo_t">
                     <label>
+                        <?php
+                            #Sección que representa a un Coordinador Ejecutivo
+                            #Tiene como input el nombre, ususario, telefono y email, que son las necesarias en un programa
+                            #El usuario del coordinador ejecutivo es un campo escondido que se llena sin que el usuario se de cuenta de ello
+
+                            #El email está restringido a correos @unegocios.cl y @hotmail.com, pueden agregarse más
+
+                            #Tiene un boton para buscar coordinadores ejecutivos, que al hacer click se ejecuta una función(display_search_ejecutivo)
+                        ?>
                         <div class = 'text-center'>
                             Coordinador Ejecutivo
                         </div>
@@ -35,7 +44,7 @@
                         </label>
                     </label>
                     <script>
-                        //coordinador ejecutivo
+                        //asignamos los valores obtenidos de seleccionar un programa sobre un coordinador ejecutivo
                         var nombre_cordinador_ejecutivo = '<?php echo $data[45];?>';
                         var telefono_cordinador_ejecutivo = '<?php echo $data[46];?>';
                         var email_cordinador_ejecutivo = '<?php echo $data[14];?>';
@@ -49,6 +58,13 @@
             <div class = "col">
                 <div id = "director_academico_t" name = "director_academico_t">
                     <label>
+                        <?php
+                            #Sección que representa a un Director Academico
+                            #Tiene como input el nombre, id y email, que son las necesarias en un programa
+                            #El id de un Director Academico es un campo escondido que se llena sin que el usuario se de cuenta de ello
+
+                            #Tiene un boton para buscar un director academico, que al hacer click se ejecuta una función(display_search_ejecutivo)
+                        ?>
                         <div class = 'text-center'>
                             Director Academico
                         </div>
@@ -65,7 +81,7 @@
                         </label>
                     </label>
                     <script>
-                        //director academico
+                        //asignamos los valores obtenidos de seleccionar un programa sobre un director academico
                         var nombre_director_academico = '<?php echo $data[26];?>';
                         var id_director_academico = '<?php echo $data[25];?>';
                         var email_director_academico = '<?php echo $data[27];?>';
@@ -79,6 +95,15 @@
             <div class = "col">
                 <div id = "coordinador_docente_t" name = "coordinador_docente_t">
                     <label> 
+                        <?php
+                            #Sección que representa a un Coordinador Docente
+                            #Tiene como input el nombre, ususario, telefono y email, que son las necesarias en un programa
+                            #El usuario del coordinador docente es un campo escondido que se llena sin que el usuario se de cuenta de ello
+
+                            #El email está restringido a correos @unegocios.cl y @hotmail.com, pueden agregarse más
+
+                            #Tiene un boton para buscar coordinadores docente, que al hacer click se ejecuta una función(display_search_ejecutivo)
+                        ?>
                         <div class = 'text-center'>
                             Coordinador Docente
                         </div>
@@ -100,7 +125,7 @@
                     </label>
                 </div>
                 <script>
-                    //coordinador docente
+                    //asignamos los valores obtenidos de seleccionar un programa sobre un coordinador docente
                     var nombre_cordinador_docente = '<?php echo $data[29];?>';
                     var telefono_cordinador_docente = '<?php echo $data[32];?>';
                     var email_cordinador_docente = '<?php echo $data[31];?>';
@@ -116,6 +141,13 @@
         <div class = "col">
             <div id = "secretaria_t" name = "secretaria_t">
                 <label>
+                <?php
+                    #Sección que representa a una secretaria
+                    #Tiene como input el nombre e id, que son las necesarias en un programa
+                    #El id de la secretaria es un campo escondido que se llena sin que el usuario se de cuenta de ello
+
+                    #Tiene un boton para buscar coordinadores ejecutivos, que al hacer click se ejecuta una función(display_search_ejecutivo)
+                ?>
                     <div class = 'text-center'>
                         Secretaria
                     </div>
@@ -127,7 +159,8 @@
                     </label>
                 </label>
                 <?php
-                    //secretaria
+                    //asignamos los valores obtenidos de seleccionar un programa sobre un coordinador docente, si el nombre de la secretaria no es
+                    //vacio se agrega el nombre completo
                     $id = $data[49];
                     $nombre_secretaria='';
                     if($id != ''){
@@ -136,6 +169,7 @@
                     }
                 ?>
                 <script>
+                    //aqui se asigna el nombre, antes se define para luego capturarlo
                     var nombre_secretaria = '<?php echo $nombre_secretaria?>';
                     document.getElementById('nombre_secretaria').value = nombre_secretaria;
                 </script>
@@ -144,6 +178,13 @@
         <div class = "col">
             <div id = "coordinador_comercial_t" name = "coordinador_comercial_t">
                 <label>
+                    <?php
+                        #Sección que representa a un Coordinador Comercial
+                        #Tiene como input el nombre y ususario , que son las necesarias en un programa
+                        #El usuario del coordinador comercial es un campo escondido que se llena sin que el usuario se de cuenta de ello
+
+                        #Tiene un boton para buscar coordinadores docente, que al hacer click se ejecuta una función(display_search_ejecutivo)
+                    ?>
                     <div class = 'text-center'>
                         Coordinador Comercial
                     </div>
@@ -153,6 +194,7 @@
                     <input type = 'button' value = 'Buscador' onclick = 'display_search_encargados("coordinador comercial")'>
                 </label>
                 <?php 
+                    #Se obtiene el usuario y el nombre, si el usuario no es vacio obtenemos el nombre completo
                     $usr_cord_comercial = $data[58];
                     $nombre_cord_comercial = '';
                     if($usr_cord_comercial !=''){
@@ -161,6 +203,7 @@
                     }
                 ?>
                 <script>
+                    //Fijamos el nombre del cordinador comercial
                     var nombre_cord_comercial = '<?php echo $nombre_cord_comercial?>';
                     document.getElementById('nombre_coordinador_comercial').value = nombre_cord_comercial;
                 </script>
@@ -169,6 +212,11 @@
     </div>
 </div>
 <br>
+<?php
+#Sección que representa el buscador generico de un encargado, todo esto se mantiene escondido hasta que se hace click en el buscador de algún
+#encargado, el cual despliega un buscador con los nombres o titulos dependiendo del boton del encargado que se haga click.
+#Esta sección tambien se esconde cuando se selecciona un encargado que queremos cambiar luego de buscar y encontrar el que queremos
+?>
 <div style ="margin-left: 20px;" id = 'buscador_encargados' hidden>
     <h5 id = 'title_buscador'>
     </h5>
@@ -181,6 +229,10 @@
                     <div>
                         Nombre
                     </div>
+                    <?php
+                        #Creamos un formulario donde se tiene un input para buscar un nombre, un input para el tipo de encargado y un boton
+                        #el id lo usamos para encontrar de forma especifica un tipo de coordinador en especifico
+                    ?>
                     <form id="search">
                         <input id = 'buscar_name_encargado' name = 'buscar_name_encargado' type = 'text' maxlength = '100'>
                         <input id = 'tipo_encargado' name = 'tipo_encargado' type = 'text' hidden>
@@ -192,6 +244,9 @@
         </div>
     </div>
     <br>
+    <?php #Aqui tenemos una tabla donde se enseñaran todos los resultados de utilizar el buscador anterior, esta tabla se mantiene escondida
+        #hasta que se busque un nombre, tambien se esconde cuando se vuelve a presioanar algun boton de buscador de algun encargado
+    ?>
     <div id = 'table_results' hidden>
         <div class="container-fluid">
             <div class="table-responsive">
@@ -201,12 +256,18 @@
                 </div>
                 <br>
                 <div class ="margin-left">
+                    <?php #Aqui esta el boton que se encarga de seleccionar un encargado cuando lo encontramos
+                    ?>
                     <form>
                         <button type="button" id = 'select_encargado'>
                             Seleccionar
                         </button>
                     </form>
                 </div>
+                <?php   #Tabla donde se enseñan los encargados encontrados en un buscador, se tienen 3 columnas con id por que van cambiando
+                        #segun el tipo de encargado que se busque, ya que no todos necesitan los mismos datos, por ello el id secretaria permanecerá
+                        #oculto hasta que se busque un encargado que sea secretaria.
+                        ?>
                 <div class="card-body">
                     <table class="table table-bordered small" id="dataTableEncargados" width="100%" cellspacing="0">
                         <thead>
@@ -228,7 +289,11 @@
 </div>
 <script>
 
+    //Función que se encarga de enconder y resetear el contenido de tablas, buscador, nombre botones, etc
     function hide_search_content(){
+
+        //Obtenemos la sección completa del buscador, el input para buscar con un nombre, el titulo del buscador, el boton para buscar un encargado,
+        //la tabla de encargados(el cuerpo) y la tabla completa de encargados.
         var buscador_encargados = document.getElementById('buscador_encargados');
         var input_name = document.getElementById('buscar_name_encargado');
         var title_buscador = document.getElementById('title_buscador');
@@ -236,8 +301,12 @@
         var tabla_encargados = document.getElementById('tableBody');
         var contenido_completo = document.getElementById('table_results');
 
+        //Escondemos el buscador completo al igual que la tabla, lo hacemos por separado para que cuando se quiera volver a buscar un encargado
+        //al hacer click este vuelva a enseñar solo el buscador, excluyendo la tabla creada que estará vacía.
         buscador_encargados.setAttribute('hidden', 'true');
         contenido_completo.setAttribute('hidden', 'true');
+
+        //Dejamos el contenido y valores de los demás elementos en vacio para volver a agregarlos cuando se quiera volver a agregar un encargado
         title_buscador.textContent = '';
         value_button.value = '';
         input_name.placeholder = '';
@@ -300,46 +369,66 @@
     //dicha funcion se aplica al presionar el boton que diga Buscar X, donde X son los distintos tipos de encargados
     //este boton es el que está en el buscador.
     function showResultsEncargados(tipo){
+        //Obtenemos el input y si es que el valor no es vacio
         var inputName = document.getElementById('buscar_name_encargado');
 
         if(inputName.value != ''){  
+            //Hacemos un envio AJAX para procesar el input ingresado por el usuario para encontrar a todos los encargados según el nombre
             var xhttp = new XMLHttpRequest();
+
+            //Se envia como get a procesar_data como input_value, le enviamos el tipo y el nombre a buscar para saber donde buscar.
             xhttp.open('GET', 'procesar_data.php?input_value='+ tipo+','+inputName.value, true);
             xhttp.send();
             
+            //Esperando una respuesta de procesar_data.php
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    // Aquí puedes manejar la respuesta del servidor
+                    // Aquí  se recibe la respuesta o echo del otro archivo
                     var respuesta = this.responseText;
-                    console.log(respuesta);
 
+                    //Hacemos un parse par
                     respuesta = JSON.parse(respuesta);
+
+                    //Llamamos a esta función que enseña los resultados en la tabla creada usando el tipo y el array.
                     display_results_encargados(tipo, respuesta);
                 }
             };
         }
     }
     
+    //Función que se encarga de enseñar el resultado de los encargados encontrados segun su tipo
     function display_results_encargados(tipo, data_encargados) {
+
+        //Ahora el boton para seleccionar una de las filas que hay como opciones de los encargados
+        //tendrá una función asociada cuando se le haga click.
         var select =document.getElementById('select_encargado');
         select.setAttribute('onclick', 'change_input("' + tipo + '")');
 
+        //obtenemos la tabla completa y el cuerpo de la tabla, el cuerpo nos aseguramos de que esté vacio
         var tableResults =document.getElementById('table_results');
         var tabla_encargados = document.getElementById('tableBody');
         tabla_encargados.innerHTML = '';
 
+        //recorremos todos los tipos de encargados
+        //segun el tipo seran las columnas que usaremos para agregar los datos
         if(tipo == 'secretaria'){
+
+            //obtenemos las columnas necesarias, ya sea para agregar el dato o por que se deban esconder.
             var id_secretaria_column =document.getElementById('id_secretaria_column');
             var telefono_column = document.getElementById('telefono_column');
             var email_column = document.getElementById('email_column');
 
+            //enseñamos la columna id secretaria, y escondemos telefono y email que no los usa
             id_secretaria_column.removeAttribute('hidden');
             telefono_column.setAttribute('hidden', 'true');
             email_column.setAttribute('hidden', 'true');
             
+            //recorremos todo el array de encargados encontrados
             data_encargados.forEach(function(encargado){
+                //generamos una nueva fila y centramos el texto
                 var newRow = tabla_encargados.insertRow(-1);
                 newRow.classList.add('text-center');
+
                 // Crear celdas en la fila y asignar los valores de los encargados
                 var cellSeleccionar = newRow.insertCell(0);
                 var cellID = newRow.insertCell(1);
@@ -351,7 +440,9 @@
                 cellNombre.innerHTML = encargado.Nombre+' '+encargado.Apellido;
             });
 
+            //repetimos para director academico
         } else if(tipo == 'director academico'){
+            //enseñamos al usuario la columna id secretaira y escondemos la columna telefono
             var id_secretaria_column =document.getElementById('id_secretaria_column');
             var telefono_column = document.getElementById('telefono_column');
 
@@ -359,8 +450,10 @@
             telefono_column.setAttribute('hidden', 'true');
 
             data_encargados.forEach(function(encargado){
+                //creamos la fila y las distintas celdas
                 var newRow = tabla_encargados.insertRow(-1);
                 newRow.classList.add('text-center');
+
                 // Crear celdas en la fila y asignar los valores de los encargados
                 var cellSeleccionar = newRow.insertCell(0);
                 var cellID = newRow.insertCell(1);
@@ -374,7 +467,9 @@
                 cellEmail.innerHTML = encargado.Email;
             });
 
+            //Repetimos con cordinador comercial
         } else if(tipo == 'coordinador comercial'){
+            //escondemos telefono y email
             var telefono_column = document.getElementById('telefono_column');
             var email_column =document.getElementById('email_column');
 
@@ -382,6 +477,7 @@
             email_column.setAttribute('hidden', 'true');
 
             data_encargados.forEach(function(encargado){
+                //creamos una fila para los datos necesarios de dicho encargado
                 var newRow = tabla_encargados.insertRow(-1);
                 newRow.classList.add('text-center');
                 // Crear celdas en la fila y asignar los valores de los encargados
@@ -389,6 +485,8 @@
                 var cellNombre = newRow.insertCell(1);
                 var cellusr = newRow.insertCell(2);
 
+                //escondemos el usuario del cordinador comercial para el usuario en pantalla, pero sabemos que
+                //aun existe ese campo.
                 cellusr.setAttribute('hidden', 'true');
                 cellusr.innerHTML = encargado.Usr;
 
@@ -398,6 +496,10 @@
             });
         }
         else{
+            //Este else representa todos los casos que no son especiales y que pueden usar la tabla creada
+            //tal cual está
+            //nos aseguramos de esconder el id secretaria y de enseñar telefono y email, que son las columnas que
+            //se esconden en los casos anteriores
             var id_secretaria_column =document.getElementById('id_secretaria_column');
             var telefono_column = document.getElementById('telefono_column');
             var email_column = document.getElementById('email_column');
@@ -406,16 +508,22 @@
             telefono_column.removeAttribute('hidden');
             email_column.removeAttribute('hidden');
 
+            //recorremos los datos
             data_encargados.forEach(function(encargado) {
+                //por cada fila creamos una fila
                 var newRow = tabla_encargados.insertRow(-1);
                 newRow.classList.add('text-center');
 
+                //Creamos las columnas para dicha fila
                 // Crear celdas en la fila y asignar los valores de los encargados
                 var cellSeleccionar = newRow.insertCell(0);
                 var cellNombre = newRow.insertCell(1);
                 var cellTelefono = newRow.insertCell(2);
                 var cellEmail = newRow.insertCell(3);
 
+                //Como son otros cordinadores hay un caso, es que ambos cordinadores tambien reciben un id
+                //esto se hizo asi para poder extenderse a otros tipos de encargados en el futuro
+                //si son estos tipos entonces creamos tambien eul usuario pero lo dejamos escondido al ususario en pantalla.
                 if(tipo == 'coordinador docente' || tipo == 'coordinador ejecutivo'){
                     var cellusr = newRow.insertCell(4);
                     cellusr.setAttribute('hidden', 'true');
@@ -431,15 +539,16 @@
             });
         }
 
-        //si la tabla esta escondida entonces la enseñamos
+        //si la tabla esta escondida entonces la enseñamos, esto es un metodo de precaución solamente.
         if(tableResults.hasAttribute('hidden')){
             tableResults.removeAttribute('hidden');
         }
     }
-
     
     //esta función es la encargada de luego de seleccionar una fila de la tabla(es decir los resultados encontrados)
-    //se cambie los datos existentes por los nuevos seleccionados, dependiendo del encargado es que datos se cambiarán.
+    //se cambie los datos existentes del formulario por los nuevos seleccionados, dependiendo del encargado es que datos se cambiarán.
+    //es decir, cuando un usuario escoge un encargado de la tabla y le hace click al boton seleccionar dejara los datos de dicho encargado como
+    //los nuevos datos de dicho encargado en el formulario donde se esta editando.
     function change_input(tipo){
 
         //obtenemos todos los botones radiales de cada fila en la tabla, como tambien el id de la tabla
@@ -456,8 +565,7 @@
                 break;
             }
         }
-        console.log(info);
-        
+
         //segun el tipo de encargado es que dato vamos a buscar y agregar en nuestros datos a editar
         if(tipo == 'coordinador ejecutivo'){
             //obtenemos nombre, telefono y email del coordinador ejecutivo

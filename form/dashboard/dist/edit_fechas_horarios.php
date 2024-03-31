@@ -18,6 +18,9 @@
                             <label>
                                 Periodo
                                 <br>
+                                <?php
+                                    #Periodo es un select, cambia el diploma cuando se escoja alguna opción, la función ya esta explicada
+                                ?>
                                 <select name = "periodo" id = "periodo" required onchange = 'changeCodDiploma()'>
                                     <option value = "" selected = "true" disable = "disable" hidden></option>
                                     <option value= "2022S1" id = "2022S1" disable = "disable" hidden>
@@ -56,6 +59,9 @@
                             <label>
                                 Horario
                                 <br>
+                                <?php
+                                    #Jornada es un select, cuando se cambia una jornada se aplinca la función
+                                ?>
                                 <select name = "jornada" id = "horario" required onchange = 'changeCodDiploma()'>
                                     <option value = "" selected = "true" disable = "disable" hidden></option>
                                     <option value = "AM" id ="AM">
@@ -82,6 +88,9 @@
                             <label>
                                 Fecha de Inicio
                                 <br>
+                                <?php 
+                                    #Fecha de inicio que es un input tipo date
+                                ?>
                                 <input name = "fecha_de_inicio" type = "date" id = "fecha_de_inicio">
                             </label>
                         </div>
@@ -91,6 +100,9 @@
                             <label>
                                 Fecha de Termino    
                                 <br>
+                                <?php 
+                                    #Fecha de termino que es un input tipo date
+                                ?>
                                 <input name = "fecha_de_termino" type = "date" id = "fecha_de_termino">
                             </label>
                         </div>
@@ -116,6 +128,7 @@
                                 <input type = "time" id = "hora_inicio" name = "hora_inicio">
                             </label>
                             <script>
+                                //Se asigna la hora de inicio al input
                                 var hora_inicio = '<?php echo $data[39];?>';
                                 document.getElementById('hora_inicio').value = hora_inicio;
                             </script>
@@ -126,9 +139,11 @@
                             <label>
                                 Hora Final
                                 <br>
+                                
                                 <input type = "time" id = "hora_final" name = "hora_final">
                             </label>
                             <script>
+                                //Se asigna la hora de termino al input
                                 var hora_termino = '<?php echo $data[40];?>';
                                 document.getElementById('hora_final').value = hora_termino;
                             </script>
@@ -176,6 +191,9 @@
                             <label>
                                 Nombre Web Programa
                                 <br>
+                                <?php
+                                    #Nombre Web es un input con un maximo de 110 caracteres 
+                                ?>
                                 <input style = "width: 300px;
                                                         white-space: nowrap;
                                                         overflow: hidden;
@@ -189,6 +207,9 @@
                             <label>
                                 Horario Web Programa
                                 <br>
+                                <?php
+                                    #Horario web es un input con un maximo de 225 caracteres 
+                                ?>
                                 <input style = "width: 300px;
                                                         white-space: nowrap;
                                                         overflow: hidden;
@@ -203,7 +224,7 @@
     </div>
 </body>
 <script>
-    //periodo
+    //Obtenemos el periodo y si es que coincide seleccionamos dicha opción, en otro caso, lo dejamos en la opción otro periodo
     var periodo = '<?php echo $data[4];?>';
     if(periodo == '2022S1' || periodo == '2022S2' || periodo == '2023S1' || periodo == '2023S2' || periodo =='2024S1' ||
         periodo == '2024S2'){
@@ -219,7 +240,7 @@
         otro_periodo.value = periodo;
     }
 
-    //jornada horario
+    //Obtenemos el horario o jornada, si es que coincide con las opciones se deja seleccionada, en otro caso se deja otra jornada como opción seleccionada
     var horario = '<?php echo $data[5];?>';
     if(horario == 'AM' || horario == 'PM' || horario == 'WK' || horario == 'TD'){
         var horario_val = document.getElementById(horario);
@@ -232,11 +253,13 @@
         otro_jornada.value = horario;
     }
 
-    //fecha de inicio 
+    //Obtenemos y dejamos la fecha de inicio en el input necesario
     var fecha_de_inicio = '<?php echo $data[8];?>';
     document.getElementById('fecha_de_inicio').value = fecha_de_inicio;
 
+
     //Restringimos fechas seleccionadas por semestre.
+    //Esto es similar a lo enseñado en formulario_program.php
     document.getElementById('periodo').addEventListener('change', function() {
         var periodo = this.value;
         var fechaInicio = document.getElementById('fecha_de_inicio');
@@ -293,7 +316,7 @@
         }
     });
 
-    //fecha de termino 
+    //Se asigna la fecha de termino en el input
     var fecha_de_termino = '<?php echo $data[35];?>';
     document.getElementById('fecha_de_termino').value = fecha_de_termino;
 
@@ -306,7 +329,7 @@
         document.getElementById('fecha_de_termino').value = fecha_de_termino;
     }*/
 
-    //horas totales, online y pedagogicas
+    //se asignnan las horas totales, online y pedagogicas a sus respectivos campos
     var hora_totales = '<?php echo $data[36];?>';
     var hora_online = '<?php echo $data[37];?>';
     var hora_pedagogicas = '<?php echo $data[38];?>';
@@ -315,7 +338,7 @@
     document.getElementById('hora_online').value = hora_online;
     document.getElementById('hora_pedagogicas').value = hora_pedagogicas;
 
-    //nombre web
+    //se asigna el nombre y horario web a su respectivo input.
     var nombre_web = '<?php echo $data[24];?>';
     document.getElementById('nombre_web').value = nombre_web;
 

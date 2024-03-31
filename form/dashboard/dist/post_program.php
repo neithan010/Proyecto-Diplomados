@@ -2,17 +2,11 @@
 #Aqui ya tenemos los datos necesarios para insertar un programa nuevo.
 #Aqui debemos insertar el programa nuevo completando todos los campos necesarios.
 
-#cod_diploma = Siglas Nombre.Siglas Años.1 o 2(semestre).periodo+versión.
-#DIPLOMADO = consultar
-#d.tipo
-#area = ver siglas
-#area_negocios = Ejecutiva/Corporativa
-
 /**
  * nom_diploma     = nombre_programa
- * tipo_producto   = tipo_programa **
+ * tipo_producto   = tipo_programa
  * area            = area_conocimiento
- * tipo_porgrama   = tipo **
+ * tipo_porgrama   = tipo 
  * modalidad       = modalidad_programa
  * periodo         = Periodo
  * jornada         = horario
@@ -21,6 +15,7 @@
  * fecha_de_inicio = fecha_inicio
  * version         = version
 **/
+#Se crea el sql que inserta una fila en la tabla de diplomados
 $sql_insert_program = "INSERT INTO intranet.diplomados 
                         (nom_diploma, 
                         tipo_programa,
@@ -75,7 +70,9 @@ $sql_insert_program = "INSERT INTO intranet.diplomados
                                 :usr_cordinador_ej,
                                 :nom_ejecutivo_admision,
                                 :telefono_ejecutivo_admision)";
-        
+
+#Aqui obtenemos todas las variables del archivo post_data.php para crear un programa desde 0 y las agregamos
+#En la consulta sql hay valores por defecto modificables, como por ejemplo los cupos, que son 35 por default.
 $stmt_insert_program = $con->prepare($sql_insert_program);
 $stmt_insert_program->setFetchMode(PDO::FETCH_ASSOC);
 $stmt_insert_program->bindParam(':DIPLOMADO', $nom_diploma);

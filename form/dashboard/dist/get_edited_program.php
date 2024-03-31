@@ -88,6 +88,7 @@ if(isset($_POST["programa_base"])){
     }
     $conducente = false;
 
+    #Si es un curso conducente lo dejamos true
     if($Tipo_Programa == 'Curso'){
         if(isset($_POST['curso_conducente_box'])){
             if($_POST['curso_conducente_box'] == 'Conducente'){
@@ -95,6 +96,8 @@ if(isset($_POST["programa_base"])){
             }
         }
     }
+
+    //Si alguno de los atributos son '' los hacemos NULL para efectos de la base de datos 
     if($DIPLOMADO == ''){
         $DIPLOMADO = NULL;
     }
@@ -104,11 +107,14 @@ if(isset($_POST["programa_base"])){
     if($Siglas == ''){
         $Siglas = NULL;
     }
+
+    //Generamos el tipo de programa y el nombre del diploma, de ser '' lo dejamos NULL
     $Tipo = generate_tipo_programa($Tipo_Programa,$Modalidad, $conducente);
     $nom_diploma = generate_nom_diploma($Nombre_Programa, $Codigo_Programa);
     if($nom_diploma == ''){
         $nom_diploma =NULL;
     }
+
     //Asignamos a los datos nuevos lo que queremos actualizar
     $new_data_update['DIPLOMADO'] = $DIPLOMADO;
     $new_data_update['tipo_programa'] = $Tipo_Programa;
@@ -117,7 +123,7 @@ if(isset($_POST["programa_base"])){
     $new_data_update['cod_diploma'] = $Codigo_Programa;
     $new_data_update['nom_diploma'] = $nom_diploma;
 
-    
+    #Comparamos areas y la dejamos en la lista de datos, lo mismo con los demas datos, revisando si es vacio lo dejamos NULL
     $Area_Conocimiento = $programa_base[2];
     $Area = generate_area($Area_Conocimiento);
     if(isset($_POST['area']) && $Area_Conocimiento != $_POST['area']){
@@ -547,7 +553,8 @@ if(isset($_POST["programa_base"])){
     }
     $new_data_update['ID_ORDEN'] = $ID_ORDEN;
 
-
+    #Luego de actualizar todo lo recibido, hacemos un json encode para enviar los datos como json
+    #Llamamos a update_data
     $update_data_JSON = json_encode($new_data_update, JSON_UNESCAPED_UNICODE);
     update_data($update_data_JSON);
 }
